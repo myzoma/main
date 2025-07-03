@@ -29,13 +29,13 @@ const pages = [
     {
         id: 3,
         title: "خدماتنا",
-        description: "اكتشف جميع الخدمات التي نقدمها",
+        description: "سباق العملات",
         icon: "fas fa-cogs",
-        url: "pages/services.html",
+        url: "https://myzoma.github.io/yaser-crypto/",
         features: [
-            "خدمات متنوعة",
-            "جودة عالية",
-            "أسعار تنافسية",
+            "الاعلى تداول",
+            "الافضل فنيا",
+            "الاكثر صعودا",
             "دعم فني 24/7"
         ]
     },
