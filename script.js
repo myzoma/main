@@ -70,7 +70,7 @@ const pages = [
         title: "االقيمة السوقية للعملات",
         description: "معلومات شاملة عن العملات",
         icon: "fa-solid fa-trophy",
-        url: "pages/contact.html",
+        url: "https://tj155.blogspot.com/",
         features: [
             "أعلى 4 عملات من حيث القيمة السوقية",
 "أدنى 4 عملات من حيث القيمة السوقية",
