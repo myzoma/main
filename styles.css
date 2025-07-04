@@ -1,23 +1,48 @@
+/* إعادة تعيين الأنماط الأساسية */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* الأنماط الأساسية للجسم */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 50%, #2d2d2d 100%);
     color: #ffffff;
     min-height: 100vh;
     direction: rtl;
+    position: relative;
+    overflow-x: hidden;
 }
 
+/* خلفية متحركة */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 153, 204, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(0, 102, 255, 0.1) 0%, transparent 50%);
+    animation: backgroundMove 20s ease infinite;
+    z-index: -2;
+    pointer-events: none;
+}
+
+/* الحاوي الرئيسي */
 .container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
+    position: relative;
+    z-index: 1;
 }
 
+/* رأس الصفحة */
 .header {
     text-align: center;
     margin-bottom: 50px;
@@ -38,6 +63,7 @@ body {
 .main-title i {
     margin-left: 15px;
     color: #00d4ff;
+    -webkit-text-fill-color: #00d4ff;
 }
 
 .subtitle {
@@ -46,6 +72,32 @@ body {
     font-weight: 300;
 }
 
+/* حقل البحث */
+.search-input {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px 20px;
+    border: 2px solid #333;
+    border-radius: 25px;
+    background: rgba(30, 30, 30, 0.8);
+    color: white;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #00d4ff;
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.search-input::placeholder {
+    color: #888;
+}
+
+/* شبكة البطاقات */
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -53,6 +105,7 @@ body {
     padding: 20px 0;
 }
 
+/* البطاقات */
 .card {
     background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
     border-radius: 20px;
@@ -62,6 +115,11 @@ body {
     border: 1px solid #333;
     position: relative;
     overflow: hidden;
+    will-change: transform;
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.1),
+        0 8px 16px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .card::before {
@@ -74,18 +132,46 @@ body {
     background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .card:hover::before {
     opacity: 1;
 }
 
+.card:hover::after {
+    animation: lightSweep 0.8s ease;
+}
+
 .card:hover {
     transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+    box-shadow: 
+        0 8px 16px rgba(0, 212, 255, 0.2),
+        0 16px 32px rgba(0, 212, 255, 0.1),
+        0 0 0 1px rgba(0, 212, 255, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
     border-color: #00d4ff;
 }
 
+.card:active {
+    transform: translateY(-5px) scale(0.98);
+}
+
+/* محتوى البطاقة */
 .card-icon {
     font-size: 3rem;
     color: #00d4ff;
@@ -93,6 +179,15 @@ body {
     text-align: center;
     position: relative;
     z-index: 1;
+}
+
+.card-icon i {
+    transition: all 0.3s ease;
+}
+
+.card:hover .card-icon i {
+    transform: scale(1.2) rotate(5deg);
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
 }
 
 .card-title {
@@ -103,6 +198,23 @@ body {
     text-align: center;
     position: relative;
     z-index: 1;
+    overflow: hidden;
+}
+
+.card-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #00d4ff, #0099cc);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.card:hover .card-title::after {
+    width: 80%;
 }
 
 .card-description {
@@ -152,11 +264,33 @@ body {
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+    will-change: transform;
+}
+
+.card-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.card-btn:hover::before {
+    left: 100%;
 }
 
 .card-btn:hover {
     background: linear-gradient(45deg, #0099cc, #0066ff);
     transform: scale(1.05);
+}
+
+.card-btn:active {
+    transform: translateY(0) scale(0.95);
 }
 
 /* النافذة المنبثقة */
@@ -189,6 +323,21 @@ body {
     border: 1px solid #333;
     overflow: hidden;
     animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    position: relative;
+    will-change: transform;
+}
+
+.modal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #00d4ff, #0099cc, #0066ff, #00d4ff);
+    background-size: 200% 100%;
+    animation: gradientMove 3s ease infinite;
 }
 
 .modal-header {
@@ -240,6 +389,7 @@ body {
     justify-content: center;
 }
 
+/* الأزرار العامة */
 .btn {
     padding: 10px 20px;
     border: none;
@@ -250,6 +400,11 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+    will-change: transform;
+}
+
+.btn:active {
+    transform: translateY(0) scale(0.95);
 }
 
 .btn-primary {
@@ -270,88 +425,6 @@ body {
 .btn-secondary:hover {
     background: #555;
     transform: translateY(-2px);
-}
-
-/* الرسوم المتحركة */
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: scale(0.8) translateY(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-    }
-}
-
-/* التصميم المتجاوب */
-@media (max-width: 768px) {
-    .main-title {
-        font-size: 2.5rem;
-    }
-    
-    .cards-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .card {
-        padding: 20px;
-    }
-    
-    .modal {
-        width: 95%;
-        height: 90%;
-    }
-    
-    .modal-footer {
-        flex-direction: column;
-    }
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 10px;
-    }
-    
-    .main-title {
-        font-size: 2rem;
-    }
-    
-    .subtitle {
-        font-size: 1.1rem;
-    }
-}
-/* إضافات CSS للتأثيرات الجديدة */
-
-/* حقل البحث */
-.search-input {
-    width: 100%;
-    max-width: 400px;
-    padding: 15px 20px;
-    border: 2px solid #333;
-    border-radius: 25px;
-    background: rgba(30, 30, 30, 0.8);
-    color: white;
-    font-size: 1.1rem;
-    margin-top: 20px;
-    transition: all 0.3s ease;
-    text-align: center;
-}
-
-.search-input:focus {
-    outline: none;
-    border-color: #00d4ff;
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-}
-
-.search-input::placeholder {
-    color: #888;
 }
 
 /* تأثير التحميل */
@@ -385,11 +458,6 @@ body {
     color: #b0b0b0;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
 /* الجسيمات المتحركة */
 .particles-container {
     position: fixed;
@@ -412,6 +480,122 @@ body {
     opacity: 0.6;
 }
 
+/* مؤشر التمرير */
+.scroll-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #00d4ff, #0099cc);
+    transform-origin: left;
+    transform: scaleX(0);
+    z-index: 1001;
+    transition: transform 0.1s ease;
+}
+
+/* تأثيرات الظهور */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease forwards;
+}
+
+.card.visible {
+    animation: cardPulse 0.6s ease;
+}
+
+/* الرسوم المتحركة */
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+    }
+    to { 
+        opacity: 1; 
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes cardPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes lightSweep {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+        opacity: 0;
+    }
+}
+
+@keyframes gradientMove {
+    0% { 
+        background-position: 0% 50%; 
+    }
+    50% { 
+        background-position: 100% 50%; 
+    }
+    100% { 
+        background-position: 0% 50%; 
+    }
+}
+
+@keyframes backgroundMove {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+    }
+    33% {
+        transform: scale(1.1) rotate(1deg);
+    }
+    66% {
+        transform: scale(0.9) rotate(-1deg);
+    }
+}
+
+@keyframes spin {
+    0% { 
+        transform: rotate(0deg); 
+    }
+    100% { 
+        transform: rotate(360deg); 
+    }
+}
+
 @keyframes float {
     0% {
         transform: translateY(100vh) rotate(0deg);
@@ -429,206 +613,36 @@ body {
     }
 }
 
-/* تأثيرات الظهور */
-.fade-in-up {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.6s ease forwards;
-}
-
-.fade-in {
-    animation: fadeIn 0.4s ease forwards;
-}
-
-@keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* تأثيرات إضافية للبطاقات */
-.card.visible {
-    animation: cardPulse 0.6s ease;
-}
-
-@keyframes cardPulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-/* تأثير الضوء المتحرك */
-.card::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
-    transform: rotate(45deg);
-    transition: all 0.6s ease;
-    opacity: 0;
-}
-
-.card:hover::after {
-    animation: lightSweep 0.8s ease;
-}
-
-@keyframes lightSweep {
-    0% {
-        transform: translateX(-100%) translateY(-100%) rotate(45deg);
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(100%) translateY(100%) rotate(45deg);
-        opacity: 0;
-    }
-}
-
-/* تحسينات للنافذة المنبثقة */
-.modal {
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-    position: relative;
-    overflow: hidden;
-}
-
-.modal::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #00d4ff, #0099cc, #0066ff, #00d4ff);
-    background-size: 200% 100%;
-    animation: gradientMove 3s ease infinite;
-}
-
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* تأثيرات التمرير */
-.scroll-indicator {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, #00d4ff, #0099cc);
-    transform-origin: left;
-    transform: scaleX(0);
-    z-index: 1001;
-    transition: transform 0.1s ease;
-}
-
-/* تحسينات الأزرار */
-.card-btn {
-    position: relative;
-    overflow: hidden;
-}
-
-.card-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
-}
-
-.card-btn:hover::before {
-    left: 100%;
-}
-
-/* تأثيرات الأيقونات */
-.card-icon i {
-    transition: all 0.3s ease;
-}
-
-.card:hover .card-icon i {
-    transform: scale(1.2) rotate(5deg);
-    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-}
-
-/* تحسينات للعناوين */
-.card-title {
-    position: relative;
-    overflow: hidden;
-}
-
-.card-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #00d4ff, #0099cc);
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-}
-
-.card:hover .card-title::after {
-    width: 80%;
-}
-
-/* تأثيرات الخلفية المتحركة */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(0, 153, 204, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(0, 102, 255, 0.1) 0%, transparent 50%);
-    animation: backgroundMove 20s ease infinite;
-    z-index: -2;
-}
-
-@keyframes backgroundMove {
-    0%, 100% {
-        transform: scale(1) rotate(0deg);
-    }
-    33% {
-        transform: scale(1.1) rotate(1deg);
-    }
-    66% {
-        transform: scale(0.9) rotate(-1deg);
-    }
-}
-
-/* تحسينات للتصميم المتجاوب */
+/* التصميم المتجاوب */
 @media (max-width: 1024px) {
     .cards-grid {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 25px;
     }
+    
+    .container {
+        padding: 15px;
+    }
 }
 
 @media (max-width: 768px) {
+    .main-title {
+        font-size: 2.5rem;
+    }
+    
+    .subtitle {
+        font-size: 1.2rem;
+    }
+    
     .search-input {
         max-width: 300px;
         font-size: 1rem;
         padding: 12px 18px;
+    }
+    
+    .cards-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
     
     .card {
@@ -643,6 +657,11 @@ body::before {
         font-size: 1.6rem;
     }
     
+    .modal {
+        width: 95%;
+        height: 90%;
+    }
+    
     .modal-header {
         padding: 15px 20px;
     }
@@ -650,12 +669,43 @@ body::before {
     .modal-header h3 {
         font-size: 1.3rem;
     }
+    
+    .modal-footer {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .btn {
+        justify-content: center;
+    }
 }
 
 @media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .header {
+        padding: 20px 0;
+        margin-bottom: 30px;
+    }
+    
+    .main-title {
+        font-size: 2rem;
+    }
+    
+    .main-title i {
+        margin-left: 10px;
+    }
+    
+    .subtitle {
+        font-size: 1.1rem;
+    }
+    
     .search-input {
         max-width: 250px;
         padding: 10px 15px;
+        font-size: 0.9rem;
     }
     
     .card {
@@ -664,19 +714,55 @@ body::before {
     
     .card-icon {
         font-size: 2rem;
+        margin-bottom: 15px;
     }
     
     .card-title {
         font-size: 1.4rem;
+        margin-bottom: 12px;
     }
     
     .card-description {
         font-size: 0.9rem;
+        margin-bottom: 15px;
     }
     
     .card-features li {
         font-size: 0.9rem;
         padding: 6px 0;
+        padding-right: 20px;
+    }
+    
+    .card-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .modal {
+        width: 98%;
+        height: 95%;
+        border-radius: 15px;
+    }
+    
+    .modal-header {
+        padding: 12px 15px;
+    }
+    
+    .modal-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .close-btn {
+        font-size: 1.3rem;
+    }
+    
+    .modal-footer {
+        padding: 12px 15px;
+    }
+    
+    .btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
     }
     
     .loading-spinner i {
@@ -688,34 +774,139 @@ body::before {
     }
 }
 
-/* تأثيرات خاصة للتفاعل */
-.card:active {
-    transform: translateY(-5px) scale(0.98);
+/* تحسينات إضافية للأداء */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
-.btn:active {
-    transform: translateY(0) scale(0.95);
+/* تحسينات للطباعة */
+@media print {
+    .modal-overlay,
+    .particles-container,
+    .scroll-indicator {
+        display: none !important;
+    }
+    
+    .card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #333;
+    }
+    
+    .card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+    
+    body::before {
+        display: none;
+    }
 }
 
-/* تحسينات الأداء */
-.card,
-.modal,
-.btn {
-    will-change: transform;
+/* تحسينات للوضع المظلم */
+@media (prefers-color-scheme: dark) {
+    .search-input {
+        background: rgba(20, 20, 20, 0.9);
+        border-color: #444;
+    }
+    
+    .card {
+        background: linear-gradient(145deg, #1a1a1a, #252525);
+        border-color: #444;
+    }
+    
+    .modal {
+        background: linear-gradient(145deg, #1a1a1a, #252525);
+        border-color: #444;
+    }
 }
 
-/* تأثيرات الظلال المتقدمة */
-.card {
-    box-shadow: 
-        0 4px 8px rgba(0, 0, 0, 0.1),
-        0 8px 16px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+/* تحسينات للشاشات عالية الدقة */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .card-icon i {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .main-title {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
 }
 
-.card:hover {
-    box-shadow: 
-        0 8px 16px rgba(0, 212, 255, 0.2),
-        0 16px 32px rgba(0, 212, 255, 0.1),
-        0 0 0 1px rgba(0, 212, 255, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+/* تحسينات للمس */
+@media (hover: none) and (pointer: coarse) {
+    .card:hover {
+        transform: none;
+        box-shadow: 
+            0 4px 8px rgba(0, 0, 0, 0.1),
+            0 8px 16px rgba(0, 0, 0, 0.1),
+            inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+    
+    .card:active {
+        transform: scale(0.98);
+    }
+    
+    .btn:hover {
+        transform: none;
+    }
+    
+    .btn:active {
+        transform: scale(0.95);
+    }
 }
+
+/* إضافات للوصولية */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* تحسينات للتركيز */
+.card:focus,
+.btn:focus,
+.search-input:focus,
+.close-btn:focus {
+    outline: 2px solid #00d4ff;
+    outline-offset: 2px;
+}
+
+/* تحسينات للنصوص */
+.card-title,
+.main-title {
+    text-rendering: optimizeLegibility;
+}
+
+/* تحسينات للصور */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* تحسينات للتمرير */
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
+
+/* إنهاء الملف */
