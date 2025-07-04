@@ -32,8 +32,9 @@ body {
 .site-logo {
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* إزاحة إلى اليمين */
+    justify-content: flex-start; /* تغيير إلى flex-start */
     gap: 30px;
+    text-align: right;
 }
 
 .site-logo i {
@@ -41,7 +42,6 @@ body {
     color: #f1c40f;
     text-shadow: 0 0 25px rgba(241, 196, 15, 0.7);
     animation: pulse 2s infinite;
-    order: 2; /* الأيقونة على اليمين */
 }
 
 @keyframes pulse {
@@ -53,9 +53,8 @@ body {
 .logo-text {
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* محاذاة النصوص لليمين */
+    align-items: flex-start; /* تغيير إلى flex-start */
     text-align: right;
-    order: 1; /* النص على اليسار */
 }
 
 .brand-names {
@@ -63,7 +62,7 @@ body {
     align-items: center;
     gap: 15px;
     margin-bottom: 15px;
-    flex-direction: row-reverse; /* ياسر أولاً ثم كريبتو */
+    direction: rtl; /* إضافة direction */
 }
 
 /* تلوين ياسر ذهبي */
@@ -98,6 +97,7 @@ body {
     font-weight: 400;
     text-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
     font-family: 'Cairo', sans-serif;
+    text-align: right;
 }
 
 .main-title {
@@ -366,18 +366,16 @@ body {
     }
     
     .site-logo {
-        flex-direction: column-reverse;
+        flex-direction: column;
         text-align: center;
         gap: 20px;
     }
     
     .site-logo i {
         font-size: 50px;
-        order: 1;
     }
     
     .logo-text {
-        order: 2;
         align-items: center;
         text-align: center;
     }
