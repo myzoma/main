@@ -17,7 +17,7 @@ const pages = [
         id: 2,
         title: "نقـــاط الارنكـــــاز",
         description: "تحليل نقاط الارتكاز Pivot",
-        icon: "fa-sharp fa-solid fa-table-pivot",
+        icon: "fa-solid fa-chart-area",
         url: "https://myzoma.github.io/pivot/",
         features: [
             "تحديد نقاط الارتكاز",
