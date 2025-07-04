@@ -18,10 +18,49 @@ body {
     padding: 20px;
 }
 
+/* CSS */
 .header {
-    text-align: center;
-    margin-bottom: 50px;
-    padding: 40px 0;
+  background-color: #1e1e2f;
+  padding: 20px;
+  direction: rtl; /* لأن النص عربي */
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* لجعل المحتوى جهة اليمين */
+  color: white;
+}
+
+.site-logo i {
+  font-size: 32px;
+  margin-left: 10px;
+  color: #f1c40f;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* لمحاذاة النصوص لليمين */
+}
+
+.yaser {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.crypto {
+  font-size: 20px;
+  font-weight: 500;
+  color: #00aced;
+  margin-top: -5px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #cccccc;
+  margin-top: 5px;
 }
 
 .main-title {
