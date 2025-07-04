@@ -15,15 +15,15 @@ const pages = [
     },
     {
         id: 2,
-        title: "من نحن",
-        description: "تعرف على فريقنا ورؤيتنا ورسالتنا",
-        icon: "fas fa-exchange-alt",
+        title: "نقـــاط الارنكـــــاز",
+        description: "تحليل نقاط الارتكاز Pivot",
+        icon: "fa-sharp fa-solid fa-table-pivot",
         url: "https://myzoma.github.io/pivot/",
         features: [
-            "معلومات شاملة عن الشركة",
-            "تاريخ وإنجازات",
-            "فريق العمل",
-            "القيم والمبادئ"
+            "تحديد نقاط الارتكاز",
+            "البحث عن النقاط المفقودة",
+            "تحديد الترند",
+            "تحديد الاهداف ووقف الخسارة"
         ]
     },
     { id: 3,
