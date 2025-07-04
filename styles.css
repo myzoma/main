@@ -19,19 +19,97 @@ body {
 }
 
 .header {
-    text-align: center;
     margin-bottom: 50px;
     padding: 40px 0;
 }
 
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+/* قسم الشعار واسم الموقع */
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #00d4ff, #0099cc, #0066ff);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.logo::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: logoShine 3s ease-in-out infinite;
+}
+
+.logo i {
+    font-size: 2.5rem;
+    color: white;
+    z-index: 1;
+    position: relative;
+}
+
+.site-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.site-name {
+    font-size: 2rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #00d4ff, #0099cc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+}
+
+.site-tagline {
+    font-size: 1rem;
+    color: #888;
+    font-weight: 300;
+    margin: 0;
+}
+
+/* القسم الرئيسي للهيدر */
+.header-main {
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
 .main-title {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     font-weight: 700;
     background: linear-gradient(45deg, #00d4ff, #0099cc, #0066ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 15px;
+    margin: 0;
     text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
 }
 
@@ -41,9 +119,10 @@ body {
 }
 
 .subtitle {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: #b0b0b0;
     font-weight: 300;
+    margin: 0;
 }
 
 /* حقل البحث */
@@ -56,7 +135,7 @@ body {
     background: rgba(30, 30, 30, 0.8);
     color: white;
     font-size: 1.1rem;
-    margin-top: 20px;
+    margin-top: 10px;
     transition: all 0.3s ease;
     text-align: center;
 }
@@ -71,6 +150,20 @@ body {
     color: #888;
 }
 
+/* الرسوم المتحركة */
+@keyframes logoShine {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    50% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+}
+
+/* باقي الأنماط */
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -426,16 +519,74 @@ body::before {
 }
 
 /* التصميم المتجاوب */
+@media (max-width: 1200px) {
+    .header-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .logo-section {
+        order: 1;
+    }
+    
+    .header-main {
+        order: 2;
+    }
+}
+
 @media (max-width: 1024px) {
     .cards-grid {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 25px;
     }
+    
+    .main-title {
+        font-size: 2.2rem;
+    }
+    
+    .site-name {
+        font-size: 1.8rem;
+    }
 }
 
 @media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .header {
+        padding: 20px 0;
+    }
+    
+    .header-content {
+        gap: 20px;
+    }
+    
+    .logo {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .logo i {
+        font-size: 2rem;
+    }
+    
+    .site-name {
+        font-size: 1.5rem;
+    }
+    
+    .site-tagline {
+        font-size: 0.9rem;
+    }
+    
     .main-title {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
     }
     
     .search-input {
@@ -476,25 +627,48 @@ body::before {
     
     .modal-footer {
         flex-direction: column;
+        padding: 15px 20px;
     }
 }
 
 @media (max-width: 480px) {
-    .container {
-        padding: 10px;
+    .header-content {
+        gap: 15px;
+    }
+    
+    .logo-section {
+        gap: 15px;
+    }
+    
+    .logo {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .logo i {
+        font-size: 1.5rem;
+    }
+    
+    .site-name {
+        font-size: 1.3rem;
+    }
+    
+    .site-tagline {
+        font-size: 0.8rem;
     }
     
     .main-title {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
     
     .subtitle {
-        font-size: 1.1rem;
+        font-size: 0.9rem;
     }
     
     .search-input {
         max-width: 250px;
         padding: 10px 15px;
+        font-size: 0.9rem;
     }
     
     .card {
@@ -525,22 +699,23 @@ body::before {
     .loading-spinner p {
         font-size: 1rem;
     }
+    
+    .modal-footer .btn {
+        justify-content: center;
+        padding: 12px 20px;
+    }
 }
 
 /* تحسينات الأداء */
 .card {
     will-change: transform;
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .modal {
     will-change: transform;
-}
-
-/* إزالة التأثيرات المتضاربة */
-.card {
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
 }
 
 /* تأثيرات بسيطة وثابتة */
@@ -550,4 +725,81 @@ body::before {
 
 .btn:active {
     transform: translateY(0) scale(0.95);
+}
+
+/* تأثيرات إضافية للشعار */
+.logo:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
+}
+
+.logo:hover i {
+    transform: rotate(360deg);
+    transition: transform 0.6s ease;
+}
+
+/* تحسينات للنصوص */
+.site-name:hover {
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+}
+
+/* تأثيرات التمرير السلس */
+html {
+    scroll-behavior: smooth;
+}
+
+/* تحسينات للتباين */
+.card:focus {
+    outline: 2px solid #00d4ff;
+    outline-offset: 2px;
+}
+
+.btn:focus {
+    outline: 2px solid #00d4ff;
+    outline-offset: 2px;
+}
+
+.search-input:focus {
+    outline: none;
+}
+
+/* تأثيرات الانتقال المحسنة */
+* {
+    transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* إزالة التأثيرات المتضاربة للبطاقات */
+.card {
+    animation-fill-mode: both;
+}
+
+/* تحسين عرض البطاقات */
+.cards-grid .card {
+    opacity: 1;
+    visibility: visible;
+    display: block;
+    position: relative;
+}
+
+/* تأثيرات خاصة للهيدر */
+.header-content {
+    position: relative;
+}
+
+.header-content::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+}
+
+@media (max-width: 1200px) {
+    .header-content::after {
+        bottom: -15px;
+        width: 80px;
+    }
 }
