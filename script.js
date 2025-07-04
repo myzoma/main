@@ -17,7 +17,7 @@ const pages = [
         id: 2,
         title: "من نحن",
         description: "تعرف على فريقنا ورؤيتنا ورسالتنا",
-        icon: "fas fa-users",
+        icon: "fas fa-exchange-alt",
         url: "https://myzoma.github.io/pivot/",
         features: [
             "معلومات شاملة عن الشركة",
