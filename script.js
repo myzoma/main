@@ -26,17 +26,16 @@ const pages = [
             "القيم والمبادئ"
         ]
     },
-    {
-        id: 3,
-        title: "خدماتنا",
-        description: "سباق العملات",
-        icon: "fas fa-cogs",
+    { id: 3,
+        title: "سبـــاق العملات",
+        description: "سباق العملات وافضل العملات من حيث النقاط الاجابية",
+        icon: "fas fa-tachometer-alt",
         url: "https://myzoma.github.io/yaser-crypto/",
         features: [
             "الاعلى تداول",
             "الافضل فنيا",
             "الاكثر صعودا",
-            "دعم فني 24/7"
+            "الافضل من حيث المؤشرات الفنيه"
         ]
     },
     {
