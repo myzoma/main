@@ -69,7 +69,7 @@ const pages = [
         id: 6,
         title: "االقيمة السوقية للعملات",
         description: "معلومات شاملة عن العملات",
-        icon: "fas fa-phone",
+        icon: "fa-solid fa-trophy",
         url: "pages/contact.html",
         features: [
             "أعلى 4 عملات من حيث القيمة السوقية",
