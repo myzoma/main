@@ -1,48 +1,23 @@
-/* إعادة تعيين الأنماط الأساسية */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* الأنماط الأساسية للجسم */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #0c0c0c 0%, #1a1a1a 50%, #2d2d2d 100%);
     color: #ffffff;
     min-height: 100vh;
     direction: rtl;
-    position: relative;
-    overflow-x: hidden;
 }
 
-/* خلفية متحركة */
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: 
-        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(0, 153, 204, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(0, 102, 255, 0.1) 0%, transparent 50%);
-    animation: backgroundMove 20s ease infinite;
-    z-index: -2;
-    pointer-events: none;
-}
-
-/* الحاوي الرئيسي */
 .container {
     max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
-    position: relative;
-    z-index: 1;
 }
 
-/* رأس الصفحة */
 .header {
     text-align: center;
     margin-bottom: 50px;
@@ -63,7 +38,6 @@ body::before {
 .main-title i {
     margin-left: 15px;
     color: #00d4ff;
-    -webkit-text-fill-color: #00d4ff;
 }
 
 .subtitle {
@@ -97,7 +71,6 @@ body::before {
     color: #888;
 }
 
-/* شبكة البطاقات */
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -105,7 +78,6 @@ body::before {
     padding: 20px 0;
 }
 
-/* البطاقات */
 .card {
     background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
     border-radius: 20px;
@@ -115,11 +87,9 @@ body::before {
     border: 1px solid #333;
     position: relative;
     overflow: hidden;
-    will-change: transform;
-    box-shadow: 
-        0 4px 8px rgba(0, 0, 0, 0.1),
-        0 8px 16px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInUp 0.6s ease forwards;
 }
 
 .card::before {
@@ -132,46 +102,18 @@ body::before {
     background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
     opacity: 0;
     transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.card::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
-    transform: rotate(45deg);
-    transition: all 0.6s ease;
-    opacity: 0;
-    pointer-events: none;
 }
 
 .card:hover::before {
     opacity: 1;
 }
 
-.card:hover::after {
-    animation: lightSweep 0.8s ease;
-}
-
 .card:hover {
     transform: translateY(-10px) scale(1.02);
-    box-shadow: 
-        0 8px 16px rgba(0, 212, 255, 0.2),
-        0 16px 32px rgba(0, 212, 255, 0.1),
-        0 0 0 1px rgba(0, 212, 255, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
     border-color: #00d4ff;
 }
 
-.card:active {
-    transform: translateY(-5px) scale(0.98);
-}
-
-/* محتوى البطاقة */
 .card-icon {
     font-size: 3rem;
     color: #00d4ff;
@@ -179,15 +121,11 @@ body::before {
     text-align: center;
     position: relative;
     z-index: 1;
-}
-
-.card-icon i {
     transition: all 0.3s ease;
 }
 
-.card:hover .card-icon i {
-    transform: scale(1.2) rotate(5deg);
-    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+.card:hover .card-icon {
+    transform: scale(1.1);
 }
 
 .card-title {
@@ -198,23 +136,6 @@ body::before {
     text-align: center;
     position: relative;
     z-index: 1;
-    overflow: hidden;
-}
-
-.card-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #00d4ff, #0099cc);
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-}
-
-.card:hover .card-title::after {
-    width: 80%;
 }
 
 .card-description {
@@ -266,22 +187,6 @@ body::before {
     font-size: 1rem;
     position: relative;
     overflow: hidden;
-    will-change: transform;
-}
-
-.card-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
-}
-
-.card-btn:hover::before {
-    left: 100%;
 }
 
 .card-btn:hover {
@@ -289,8 +194,8 @@ body::before {
     transform: scale(1.05);
 }
 
-.card-btn:active {
-    transform: translateY(0) scale(0.95);
+.card-btn i {
+    margin-left: 8px;
 }
 
 /* النافذة المنبثقة */
@@ -325,7 +230,6 @@ body::before {
     animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
     position: relative;
-    will-change: transform;
 }
 
 .modal::before {
@@ -373,58 +277,13 @@ body::before {
 .modal-body {
     height: calc(100% - 140px);
     padding: 0;
+    position: relative;
 }
 
 .modal-body iframe {
     width: 100%;
     height: 100%;
     border: none;
-}
-
-.modal-footer {
-    background: #1a1a1a;
-    padding: 15px 30px;
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-}
-
-/* الأزرار العامة */
-.btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    will-change: transform;
-}
-
-.btn:active {
-    transform: translateY(0) scale(0.95);
-}
-
-.btn-primary {
-    background: linear-gradient(45deg, #00d4ff, #0099cc);
-    color: white;
-}
-
-.btn-primary:hover {
-    background: linear-gradient(45deg, #0099cc, #0066ff);
-    transform: translateY(-2px);
-}
-
-.btn-secondary {
-    background: #333;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background: #555;
-    transform: translateY(-2px);
 }
 
 /* تأثير التحميل */
@@ -458,65 +317,50 @@ body::before {
     color: #b0b0b0;
 }
 
-/* الجسيمات المتحركة */
-.particles-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-    overflow: hidden;
+.modal-footer {
+    background: #1a1a1a;
+    padding: 15px 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
 }
 
-.particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
     background: linear-gradient(45deg, #00d4ff, #0099cc);
-    border-radius: 50%;
-    animation: float linear infinite;
-    opacity: 0.6;
+    color: white;
 }
 
-/* مؤشر التمرير */
-.scroll-indicator {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, #00d4ff, #0099cc);
-    transform-origin: left;
-    transform: scaleX(0);
-    z-index: 1001;
-    transition: transform 0.1s ease;
+.btn-primary:hover {
+    background: linear-gradient(45deg, #0099cc, #0066ff);
+    transform: translateY(-2px);
 }
 
-/* تأثيرات الظهور */
-.fade-in-up {
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.6s ease forwards;
+.btn-secondary {
+    background: #333;
+    color: white;
 }
 
-.fade-in {
-    animation: fadeIn 0.4s ease forwards;
-}
-
-.card.visible {
-    animation: cardPulse 0.6s ease;
+.btn-secondary:hover {
+    background: #555;
+    transform: translateY(-2px);
 }
 
 /* الرسوم المتحركة */
 @keyframes fadeIn {
-    from { 
-        opacity: 0; 
-    }
-    to { 
-        opacity: 1; 
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes slideIn {
@@ -531,48 +375,42 @@ body::before {
 }
 
 @keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-@keyframes cardPulse {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes lightSweep {
-    0% {
-        transform: translateX(-100%) translateY(-100%) rotate(45deg);
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(100%) translateY(100%) rotate(45deg);
-        opacity: 0;
-    }
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 @keyframes gradientMove {
-    0% { 
-        background-position: 0% 50%; 
-    }
-    50% { 
-        background-position: 100% 50%; 
-    }
-    100% { 
-        background-position: 0% 50%; 
-    }
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* تأثيرات الخلفية */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 153, 204, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(0, 102, 255, 0.05) 0%, transparent 50%);
+    animation: backgroundMove 20s ease infinite;
+    z-index: -1;
+    pointer-events: none;
 }
 
 @keyframes backgroundMove {
@@ -587,51 +425,17 @@ body::before {
     }
 }
 
-@keyframes spin {
-    0% { 
-        transform: rotate(0deg); 
-    }
-    100% { 
-        transform: rotate(360deg); 
-    }
-}
-
-@keyframes float {
-    0% {
-        transform: translateY(100vh) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.6;
-    }
-    90% {
-        opacity: 0.6;
-    }
-    100% {
-        transform: translateY(-100px) rotate(360deg);
-        opacity: 0;
-    }
-}
-
 /* التصميم المتجاوب */
 @media (max-width: 1024px) {
     .cards-grid {
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 25px;
     }
-    
-    .container {
-        padding: 15px;
-    }
 }
 
 @media (max-width: 768px) {
     .main-title {
         font-size: 2.5rem;
-    }
-    
-    .subtitle {
-        font-size: 1.2rem;
     }
     
     .search-input {
@@ -672,11 +476,6 @@ body::before {
     
     .modal-footer {
         flex-direction: column;
-        gap: 10px;
-    }
-    
-    .btn {
-        justify-content: center;
     }
 }
 
@@ -685,17 +484,8 @@ body::before {
         padding: 10px;
     }
     
-    .header {
-        padding: 20px 0;
-        margin-bottom: 30px;
-    }
-    
     .main-title {
         font-size: 2rem;
-    }
-    
-    .main-title i {
-        margin-left: 10px;
     }
     
     .subtitle {
@@ -705,7 +495,6 @@ body::before {
     .search-input {
         max-width: 250px;
         padding: 10px 15px;
-        font-size: 0.9rem;
     }
     
     .card {
@@ -714,55 +503,19 @@ body::before {
     
     .card-icon {
         font-size: 2rem;
-        margin-bottom: 15px;
     }
     
     .card-title {
         font-size: 1.4rem;
-        margin-bottom: 12px;
     }
     
     .card-description {
         font-size: 0.9rem;
-        margin-bottom: 15px;
     }
     
     .card-features li {
         font-size: 0.9rem;
         padding: 6px 0;
-        padding-right: 20px;
-    }
-    
-    .card-btn {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
-    
-    .modal {
-        width: 98%;
-        height: 95%;
-        border-radius: 15px;
-    }
-    
-    .modal-header {
-        padding: 12px 15px;
-    }
-    
-    .modal-header h3 {
-        font-size: 1.1rem;
-    }
-    
-    .close-btn {
-        font-size: 1.3rem;
-    }
-    
-    .modal-footer {
-        padding: 12px 15px;
-    }
-    
-    .btn {
-        padding: 8px 15px;
-        font-size: 0.9rem;
     }
     
     .loading-spinner i {
@@ -774,139 +527,27 @@ body::before {
     }
 }
 
-/* تحسينات إضافية للأداء */
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
+/* تحسينات الأداء */
+.card {
+    will-change: transform;
 }
 
-/* تحسينات للطباعة */
-@media print {
-    .modal-overlay,
-    .particles-container,
-    .scroll-indicator {
-        display: none !important;
-    }
-    
-    .card {
-        break-inside: avoid;
-        box-shadow: none;
-        border: 1px solid #333;
-    }
-    
-    .card:hover {
-        transform: none;
-        box-shadow: none;
-    }
-    
-    body::before {
-        display: none;
-    }
+.modal {
+    will-change: transform;
 }
 
-/* تحسينات للوضع المظلم */
-@media (prefers-color-scheme: dark) {
-    .search-input {
-        background: rgba(20, 20, 20, 0.9);
-        border-color: #444;
-    }
-    
-    .card {
-        background: linear-gradient(145deg, #1a1a1a, #252525);
-        border-color: #444;
-    }
-    
-    .modal {
-        background: linear-gradient(145deg, #1a1a1a, #252525);
-        border-color: #444;
-    }
+/* إزالة التأثيرات المتضاربة */
+.card {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
-/* تحسينات للشاشات عالية الدقة */
-@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-    .card-icon i {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-    
-    .main-title {
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
+/* تأثيرات بسيطة وثابتة */
+.card:active {
+    transform: translateY(-5px) scale(0.98);
 }
 
-/* تحسينات للمس */
-@media (hover: none) and (pointer: coarse) {
-    .card:hover {
-        transform: none;
-        box-shadow: 
-            0 4px 8px rgba(0, 0, 0, 0.1),
-            0 8px 16px rgba(0, 0, 0, 0.1),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    }
-    
-    .card:active {
-        transform: scale(0.98);
-    }
-    
-    .btn:hover {
-        transform: none;
-    }
-    
-    .btn:active {
-        transform: scale(0.95);
-    }
+.btn:active {
+    transform: translateY(0) scale(0.95);
 }
-
-/* إضافات للوصولية */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
-
-/* تحسينات للتركيز */
-.card:focus,
-.btn:focus,
-.search-input:focus,
-.close-btn:focus {
-    outline: 2px solid #00d4ff;
-    outline-offset: 2px;
-}
-
-/* تحسينات للنصوص */
-.card-title,
-.main-title {
-    text-rendering: optimizeLegibility;
-}
-
-/* تحسينات للصور */
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-}
-
-/* تحسينات للتمرير */
-html {
-    scroll-behavior: smooth;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
-}
-
-/* إنهاء الملف */
