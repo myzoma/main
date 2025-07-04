@@ -43,7 +43,7 @@ const pages = [
         id: 4,
         title: "الصياد الذكي",
         description: "بوت اكتشاف افضل الفرص",
-        icon: "fas fa-box",
+        icon: "fa-solid fa-user-secret",
         url: "https://myzoma.github.io/bott/",
         features: [
             "فرص الشراء",
