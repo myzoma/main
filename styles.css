@@ -10,7 +10,7 @@ body {
     color: #ffffff;
     min-height: 100vh;
     direction: rtl;
-    max-width: 900px; /* إضافة عرض أقصى للبودي */
+    max-width: 1200x; /* إضافة عرض أقصى للبودي */
     margin: 0 auto; /* توسيط البودي */
 }
 
