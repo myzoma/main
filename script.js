@@ -54,15 +54,15 @@ const pages = [
     },
     {
         id: 5,
-        title: "المدونة",
+        title: "اخبار السوق",
         description: "اقرأ أحدث المقالات والأخبار",
         icon: "fas fa-blog",
-        url: "pages/blog.html",
+        url: "https://myzoma.github.io/news/",
         features: [
             "مقالات تقنية متخصصة",
             "نصائح وإرشادات",
-            "أخبار القطاع",
-            "محتوى حصري"
+            "اخبار العملات",
+            "اراء الخبراء"
         ]
     },
     {
