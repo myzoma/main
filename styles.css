@@ -10,10 +10,12 @@ body {
     color: #ffffff;
     min-height: 100vh;
     direction: rtl;
+    max-width: 900px; /* إضافة عرض أقصى للبودي */
+    margin: 0 auto; /* توسيط البودي */
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1400px;
     margin: 0 auto;
     padding: 20px;
 }
