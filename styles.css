@@ -1014,3 +1014,74 @@ html {
         justify-content: space-between;
     }
 }
+/* إضافة في نهاية ملف styles.css */
+
+/* تأثيرات متحركة للفوتر */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+/* تحسين النافذة المنبثقة */
+.modal-overlay.active {
+    display: flex !important;
+}
+
+/* تحسين المحتوى النصي في النافذة */
+#modalContent {
+    padding: 2rem;
+    line-height: 1.8;
+    color: #333;
+    max-height: 400px;
+    overflow-y: auto;
+    background: white;
+    border-radius: 8px;
+}
+
+#modalContent h3 {
+    color: #007bff;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+#modalContent p {
+    margin-bottom: 1rem;
+}
+
+#modalContent ul {
+    margin: 1rem 0;
+    padding-right: 2rem;
+}
+
+#modalContent li {
+    margin-bottom: 0.5rem;
+}
+
+/* تحسين شريط التمرير */
+#modalContent::-webkit-scrollbar {
+    width: 8px;
+}
+
+#modalContent::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#modalContent::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 4px;
+}
+
+#modalContent::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
+}
