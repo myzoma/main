@@ -78,11 +78,22 @@ body {
 .site-name {
     font-size: 2rem;
     font-weight: 700;
-    background: linear-gradient(45deg, #00d4ff, #0099cc);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
     margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem; /* مسافة صغيرة بين الكلمات */
+}
+
+/* الجزء الأول - أزرق سماوي */
+.site-name .blue-part {
+    color: #00BFFF; /* أزرق سماوي */
+    text-shadow: 0 2px 4px rgba(0, 191, 255, 0.3);
+}
+
+/* الجزء الثاني - ذهبي */
+.site-name .gold-part {
+    color: #FFD700; /* ذهبي */
+    text-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
 }
 
 .site-tagline {
@@ -90,6 +101,17 @@ body {
     color: #888;
     font-weight: 300;
     margin: 0;
+}
+
+/* تأثير تفاعلي عند التمرير */
+.site-name .blue-part:hover {
+    color: #87CEEB; /* أزرق سماوي فاتح */
+    transition: color 0.3s ease;
+}
+
+.site-name .gold-part:hover {
+    color: #FFA500; /* ذهبي برتقالي */
+    transition: color 0.3s ease;
 }
 
 /* القسم الرئيسي للهيدر */
