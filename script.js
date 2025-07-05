@@ -5,9 +5,9 @@ const pages = [
         title: "الصفحة الرئيسية",
         description: "الصفحة الرئيسية للموقع تحتوي على نظرة عامة شاملة",
         icon: "fas fa-home",
-        url: "https://edraone.blogspot.com/", // ضع رابط صفحتك هنا
+        url: "https://edraone.blogspot.com/",
         features: [
-            "اافضل 60 عملة",
+            "افضل 60 عملة",
             "من حيث السيولة",
             "صفقات الشراء",
             "من حيث اختراق المقاومات"
@@ -24,10 +24,11 @@ const pages = [
             "البحث عن النقاط المفقودة",
             "تحديد الترند",
             "تحديد الاهداف ووقف الخسارة",
-            "تحديد القمم والقيعان التاريخية",
+            "تحديد القمم والقيعان التاريخية"
         ]
     },
-    { id: 3,
+    {
+        id: 3,
         title: "سبـــاق العملات",
         description: "سباق العملات وافضل العملات من حيث النقاط الاجابية",
         icon: "fas fa-tachometer-alt",
@@ -67,43 +68,16 @@ const pages = [
     },
     {
         id: 6,
-        title: "االقيمة السوقية للعملات",
+        title: "القيمة السوقية للعملات",
         description: "معلومات شاملة عن العملات",
         icon: "fa-solid fa-trophy",
         url: "https://tj155.blogspot.com/",
         features: [
             "أعلى 4 عملات من حيث القيمة السوقية",
-"أدنى 4 عملات من حيث القيمة السوقية",
+            "أدنى 4 عملات من حيث القيمة السوقية",
             "أعلى 4 عملات من حيث العدد المعروض",
-"أدنى 4 عملات من حيث العدد المعروض",
-            "أعلى 4 عملات من حيث النشاط المجتمعي",
-    
-        ]
-    },
-    {
-        id: 7,
-        title: "المعرض",
-        description: "شاهد معرض الصور والأعمال",
-        icon: "fas fa-images",
-        url: "pages/gallery.html",
-        features: [
-            "صور عالية الجودة",
-            "عرض تفاعلي",
-            "تصنيفات متنوعة",
-            "تحميل سريع"
-        ]
-    },
-    {
-        id: 8,
-        title: "الأسئلة الشائعة",
-        description: "إجابات على الأسئلة الأكثر شيوعاً",
-        icon: "fas fa-question-circle",
-        url: "pages/faq.html",
-        features: [
-            "أسئلة شاملة",
-            "إجابات مفصلة",
-            "بحث سريع",
-            "تحديث مستمر"
+            "أدنى 4 عملات من حيث العدد المعروض",
+            "أعلى 4 عملات من حيث النشاط المجتمعي"
         ]
     }
 ];
@@ -120,25 +94,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // رسم البطاقات
 function renderCards() {
-    const cardsGrid = document.getElementById('cardsGrid');
+    const cardsGrid = document.querySelector('.cards-grid'); // تغيير من getElementById إلى querySelector
+    if (!cardsGrid) {
+        console.error('لم يتم العثور على عنصر .cards-grid');
+        return;
+    }
+    
     cardsGrid.innerHTML = '';
-
-    pages.forEach(page => {
-        const card = createCard(page);
+    pages.forEach((page, index) => {
+        const card = createCard(page, index);
         cardsGrid.appendChild(card);
     });
 }
 
 // إنشاء بطاقة
-function createCard(page) {
+function createCard(page, index) {
     const card = document.createElement('div');
     card.className = 'card';
     card.setAttribute('data-page-id', page.id);
+    card.style.animationDelay = `${index * 0.1}s`;
     
-    const featuresHTML = page.features.map(feature => 
+    const featuresHTML = page.features.map(feature =>
         `<li>${feature}</li>`
     ).join('');
-
+    
     card.innerHTML = `
         <div class="card-icon">
             <i class="${page.icon}"></i>
@@ -149,33 +128,31 @@ function createCard(page) {
             ${featuresHTML}
         </ul>
         <div class="card-footer">
-            <button class="card-btn" onclick="openModal('${page.url}', '${page.title}')">
+            <button class="card-btn" onclick="openModal('${page.url}', '${page.title.replace(/'/g, "\\'")}')">
                 <i class="fas fa-eye"></i>
                 عرض الصفحة
             </button>
         </div>
     `;
-
+    
     // إضافة حدث النقر على البطاقة
     card.addEventListener('click', function(e) {
         if (!e.target.closest('.card-btn')) {
             openModal(page.url, page.title);
         }
     });
-
+    
     return card;
 }
 
 // إعداد مستمعي الأحداث
 function setupEventListeners() {
     const modalOverlay = document.getElementById('modalOverlay');
-    const closeBtn = document.getElementById('closeBtn');
-    const closeModal = document.getElementById('closeModal');
-    const openInNewTab = document.getElementById('openInNewTab');
-
-    // إغلاق النافذة المنبثقة
-    closeBtn.addEventListener('click', closeModalWindow);
-    closeModal.addEventListener('click', closeModalWindow);
+    
+    if (!modalOverlay) {
+        console.error('لم يتم العثور على عنصر modalOverlay');
+        return;
+    }
     
     // إغلاق عند النقر خارج النافذة
     modalOverlay.addEventListener('click', function(e) {
@@ -183,20 +160,23 @@ function setupEventListeners() {
             closeModalWindow();
         }
     });
-
-    // فتح في تبويب جديد
-    openInNewTab.addEventListener('click', function() {
-        if (currentPageUrl) {
-            window.open(currentPageUrl, '_blank');
-        }
-    });
-
+    
     // إغلاق بمفتاح Escape
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             closeModalWindow();
         }
     });
+    
+    // زر فتح في نافذة جديدة
+    const openInNewTabBtn = document.querySelector('.btn-primary');
+    if (openInNewTabBtn) {
+        openInNewTabBtn.addEventListener('click', function() {
+            if (currentPageUrl) {
+                window.open(currentPageUrl, '_blank');
+            }
+        });
+    }
 }
 
 // فتح النافذة المنبثقة
@@ -207,20 +187,32 @@ function openModal(url, title) {
     const modalOverlay = document.getElementById('modalOverlay');
     const modalTitle = document.getElementById('modalTitle');
     const modalFrame = document.getElementById('modalFrame');
-
-    modalTitle.textContent = title;
-    modalFrame.src = url;
+    const loadingOverlay = document.getElementById('loadingOverlay');
     
+    if (!modalOverlay || !modalTitle || !modalFrame || !loadingOverlay) {
+        console.error('لم يتم العثور على عناصر النافذة المنبثقة');
+        return;
+    }
+    
+    modalTitle.textContent = title;
     modalOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
-
-    // إضافة تأثير التحميل
-    showLoadingState();
     
-    // إزالة تأثير التحميل عند اكتمال التحميل
+    // إظهار شاشة التحميل
+    loadingOverlay.style.display = 'flex';
+    
+    // تحميل الصفحة
+    modalFrame.src = url;
+    
+    // إخفاء شاشة التحميل عند اكتمال التحميل
     modalFrame.onload = function() {
-        hideLoadingState();
+        loadingOverlay.style.display = 'none';
     };
+    
+    // إخفاء شاشة التحميل بعد 5 ثوان في حالة عدم التحميل
+    setTimeout(() => {
+        loadingOverlay.style.display = 'none';
+    }, 5000);
 }
 
 // إغلاق النافذة المنبثقة
@@ -228,35 +220,22 @@ function closeModalWindow() {
     const modalOverlay = document.getElementById('modalOverlay');
     const modalFrame = document.getElementById('modalFrame');
     
-    modalOverlay.classList.remove('active');
-    document.body.style.overflow = 'auto';
+    if (modalOverlay) {
+        modalOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
     
     // تأخير إزالة المحتوى لإتمام الرسوم المتحركة
     setTimeout(() => {
-        modalFrame.src = '';
+        if (modalFrame) {
+            modalFrame.src = '';
+        }
     }, 300);
 }
 
-// عرض حالة التحميل
-function showLoadingState() {
-    const modalBody = document.querySelector('.modal-body');
-    const loadingDiv = document.createElement('div');
-    loadingDiv.className = 'loading-overlay';
-    loadingDiv.innerHTML = `
-        <div class="loading-spinner">
-            <i class="fas fa-spinner fa-spin"></i>
-            <p>جاري التحميل...</p>
-        </div>
-    `;
-    modalBody.appendChild(loadingDiv);
-}
-
-// إخفاء حالة التحميل
-function hideLoadingState() {
-    const loadingOverlay = document.querySelector('.loading-overlay');
-    if (loadingOverlay) {
-        loadingOverlay.remove();
-    }
+// دالة إغلاق للاستخدام في HTML
+function closeModal() {
+    closeModalWindow();
 }
 
 // إضافة تأثيرات إضافية للبطاقات
@@ -280,7 +259,7 @@ function observeCards() {
     }, {
         threshold: 0.1
     });
-
+    
     document.querySelectorAll('.card').forEach(card => {
         observer.observe(card);
     });
@@ -292,19 +271,50 @@ window.addEventListener('load', function() {
     observeCards();
 });
 
-// إضافة وظائف إضافية للبحث والتصفية
+// إضافة وظائف البحث
 function addSearchFunctionality() {
+    const header = document.querySelector('.header');
+    if (!header) return;
+    
+    const searchContainer = document.createElement('div');
+    searchContainer.className = 'search-container';
+    searchContainer.style.cssText = `
+        margin-top: 20px;
+        text-align: center;
+    `;
+    
     const searchInput = document.createElement('input');
     searchInput.type = 'text';
     searchInput.placeholder = 'ابحث عن صفحة...';
     searchInput.className = 'search-input';
+    searchInput.style.cssText = `
+        padding: 12px 20px;
+        border: 2px solid #333;
+        border-radius: 25px;
+        background: #1a1a1a;
+        color: white;
+        font-size: 1rem;
+        width: 300px;
+        max-width: 100%;
+        transition: all 0.3s ease;
+    `;
     
-    const header = document.querySelector('.header');
-    header.appendChild(searchInput);
+    searchContainer.appendChild(searchInput);
+    header.appendChild(searchContainer);
     
     searchInput.addEventListener('input', function(e) {
         const searchTerm = e.target.value.toLowerCase();
         filterCards(searchTerm);
+    });
+    
+    searchInput.addEventListener('focus', function() {
+        this.style.borderColor = '#00d4ff';
+        this.style.boxShadow = '0 0 10px rgba(0, 212, 255, 0.3)';
+    });
+    
+    searchInput.addEventListener('blur', function() {
+        this.style.borderColor = '#333';
+        this.style.boxShadow = 'none';
     });
 }
 
@@ -315,76 +325,21 @@ function filterCards(searchTerm) {
     cards.forEach(card => {
         const title = card.querySelector('.card-title').textContent.toLowerCase();
         const description = card.querySelector('.card-description').textContent.toLowerCase();
+        const features = Array.from(card.querySelectorAll('.card-features li'))
+            .map(li => li.textContent.toLowerCase())
+            .join(' ');
         
-        if (title.includes(searchTerm) || description.includes(searchTerm)) {
+        if (title.includes(searchTerm) || description.includes(searchTerm) || features.includes(searchTerm)) {
             card.style.display = 'block';
-            card.classList.add('fade-in');
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
         } else {
             card.style.display = 'none';
         }
     });
 }
 
-// إضافة المزيد من الرسوم المتحركة
-function addMoreAnimations() {
-    // تأثير الجسيمات في الخلفية
-    createParticles();
-    
-    // تأثير الموجة عند التمرير
-    addScrollWaveEffect();
-}
-
-// إنشاء جسيمات متحركة في الخلفية
-function createParticles() {
-    const particlesContainer = document.createElement('div');
-    particlesContainer.className = 'particles-container';
-    document.body.appendChild(particlesContainer);
-    
-    for (let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 20 + 's';
-        particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-        particlesContainer.appendChild(particle);
-    }
-}
-
-// تأثير الموجة عند التمرير
-function addScrollWaveEffect() {
-    let ticking = false;
-    
-    function updateCards() {
-        const cards = document.querySelectorAll('.card');
-        const scrollTop = window.pageYOffset;
-        
-        cards.forEach((card, index) => {
-            const cardTop = card.offsetTop;
-            const cardHeight = card.offsetHeight;
-            const windowHeight = window.innerHeight;
-            
-            if (scrollTop + windowHeight > cardTop && scrollTop < cardTop + cardHeight) {
-                const progress = (scrollTop + windowHeight - cardTop) / (windowHeight + cardHeight);
-                const wave = Math.sin(progress * Math.PI * 2 + index * 0.5) * 10;
-                card.style.transform = `translateY(${wave}px)`;
-            }
-        });
-        
-        ticking = false;
-    }
-    
-    function requestTick() {
-        if (!ticking) {
-            requestAnimationFrame(updateCards);
-            ticking = true;
-        }
-    }
-    
-    window.addEventListener('scroll', requestTick);
-}
-
 // تشغيل الوظائف الإضافية
 setTimeout(() => {
     addSearchFunctionality();
-    addMoreAnimations();
 }, 1000);
