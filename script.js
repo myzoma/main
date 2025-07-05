@@ -296,7 +296,7 @@ function filterCards(searchTerm) {
 
 // تشغيل الوظائف الإضافية
 setTimeout(() => {
-    addSearchFunctionality();
+    //addSearchFunctionality();
 }, 1000);
 // إضافة هذه الدوال إلى script.js الموجود
 
