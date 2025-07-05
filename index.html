@@ -1,56 +1,66 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة الموقع الرئيسية</title>
+    <title>اسم الموقع</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-      <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-<header class="header">
-    <div class="header-main">
-        <h1 class="main-title">
-            <i class="fas fa-star"></i>
-            عنوان الموقع الرئيسي
-        </h1>
-        <p class="subtitle">وصف مختصر وجذاب للموقع</p>
-       
-        </div>
-    </div>
-</header>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="site-info">
+                        <h1 class="site-name">
+                            <span class="blue-part">اسم</span>
+                            <span class="gold-part">الموقع</span>
+                        </h1>
+                        <p class="site-tagline">وصف الموقع هنا</p>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-        <div class="cards-grid" id="cardsGrid">
-            <!-- البطاقات ستتم إضافتها ديناميكياً بواسطة JavaScript -->
-        </div>
+        <main class="cards-grid">
+            <!-- البطاقات هنا -->
+        </main>
     </div>
 
-    <!-- النافذة المنبثقة -->
+    <!-- النوافذ المنبثقة -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <div class="modal-header">
-                <h3 id="modalTitle"></h3>
-                <button class="close-btn" id="closeBtn">
+                <h3 id="modalTitle">عنوان النافذة</h3>
+                <button class="close-btn" onclick="closeModal()">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
             <div class="modal-body">
-                <iframe id="modalFrame" src="" frameborder="0"></iframe>
+                <div class="loading-overlay" id="loadingOverlay">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner"></i>
+                        <p>جاري التحميل...</p>
+                    </div>
+                </div>
+                <iframe id="modalFrame" src=""></iframe>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" id="openInNewTab">
+                <button class="btn btn-primary">
                     <i class="fas fa-external-link-alt"></i>
-                    فتح في تبويب جديد
+                    فتح في نافذة جديدة
                 </button>
-                <button class="btn btn-secondary" id="closeModal">
+                <button class="btn btn-secondary" onclick="closeModal()">
                     <i class="fas fa-times"></i>
                     إغلاق
                 </button>
             </div>
         </div>
     </div>
-
-    <script src="script.js"></script>
+        <script src="script.js"></script>
 </body>
 </html>
