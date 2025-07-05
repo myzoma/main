@@ -9,37 +9,77 @@
 </head>
 <body>
     <div class="container">
-      <header class="header">
-    <div class="header-content">
-        <div class="logo-section">
-            <div class="logo">
-                <i class="fas fa-rocket"></i>
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="site-info">
+                        <h1 class="site-name">
+                            <span class="blue-part">CRYPTO</span>
+                            <span class="gold-part">YASER</span>
+                        </h1>
+                        <p class="site-tagline">بوابتك الى التداول المحترف والمسؤل</p>
+                    </div>
+                </div>
+                
+                <div class="support-section">
+                    <div class="capital-strategy-item" style="display: flex; flex-direction: column; align-items: center;">
+                        <span class="strategy-medal">💳</span>
+                        <span class="strategy-score-range">الدعم اختياري من 5-10$</span>
+                        <a href="https://buy.stripe.com/test_aFa00j9CSfHn3NV4an97G03" target="_blank" class="donate-btn">
+                            إرســال دعــم 💙
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="site-info">
-                <h1 class="site-name">
-                    <span class="blue-part">CRYPTO</span>
-                    <span class="gold-part">YASER</span>
-                </h1>
-                <p class="site-tagline">بوابتك الى التداول المحترف والمسؤل</p>
-            </div>
-        </div>
+        </header>
         
-        <div class="support-section">
-            <div class="capital-strategy-item" style="display: flex; flex-direction: column; align-items: center;">
-                <span class="strategy-medal">💳</span>
-                <span class="strategy-score-range">الدعم اختياري من 5-10$</span>
-                <a href="https://buy.stripe.com/test_aFa00j9CSfHn3NV4an97G03" target="_blank" class="donate-btn">
-                    إرســال دعــم 💙
-                </a>
-            </div>
-        </div>
-    </div>
-</header>
-
         <main class="cards-grid">
             <!-- البطاقات ستظهر هنا تلقائياً -->
         </main>
     </div>
+
+    <!-- الفوتر الجديد -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <div class="logo">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3 class="footer-site-name">
+                    <span class="blue-part">CRYPTO</span>
+                    <span class="gold-part">YASER</span>
+                </h3>
+                <p class="footer-tagline">بوابتك الى التداول المحترف والمسؤل</p>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#" class="footer-link" onclick="openFooterModal('سياسة الموقع', 'site-policy')">
+                    <i class="fas fa-file-contract"></i>
+                    <span>سياسة الموقع</span>
+                </a>
+                <a href="#" class="footer-link" onclick="openFooterModal('سياسة الخصوصية', 'privacy-policy')">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>سياسة الخصوصية</span>
+                </a>
+                <a href="#" class="footer-link" onclick="openFooterModal('اتصل بنا', 'contact-us')">
+                    <i class="fas fa-envelope"></i>
+                    <span>اتصل بنا</span>
+                </a>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 CRYPTO YASER. جميع الحقوق محفوظة</p>
+                <div class="footer-social">
+                    <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- النوافذ المنبثقة -->
     <div class="modal-overlay" id="modalOverlay">
@@ -58,6 +98,7 @@
                     </div>
                 </div>
                 <iframe id="modalFrame" src=""></iframe>
+                <div id="modalContent" class="modal-text-content" style="display: none;"></div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary">
@@ -71,7 +112,7 @@
             </div>
         </div>
     </div>
-
+    
     <script src="script.js"></script>
 </body>
 </html>
