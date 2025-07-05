@@ -298,3 +298,134 @@ function filterCards(searchTerm) {
 setTimeout(() => {
     addSearchFunctionality();
 }, 1000);
+// إضافة هذه الدوال إلى script.js الموجود
+
+function openFooterModal(title, type) {
+    const modal = document.getElementById('modalOverlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalFrame = document.getElementById('modalFrame');
+    const modalContent = document.getElementById('modalContent');
+    
+    modalTitle.textContent = title;
+    
+    // إخفاء الإطار وإظهار المحتوى النصي
+    modalFrame.style.display = 'none';
+    modalContent.style.display = 'block';
+    
+    // محتوى كل صفحة
+    let content = '';
+    
+    switch(type) {
+        case 'site-policy':
+            content = `
+                <h3>سياسة الموقع</h3>
+                <p>مرحباً بك في موقع CRYPTO YASER. باستخدامك لهذا الموقع، فإنك توافق على الشروط والأحكام التالية:</p>
+                <ul>
+                    <li>المحتوى المقدم هو لأغراض تعليمية فقط</li>
+                    <li>التداول في العملات المشفرة ينطوي على مخاطر عالية</li>
+                    <li>نحن لا نقدم نصائح استثمارية مالية</li>
+                    <li>يجب عليك إجراء بحثك الخاص قبل اتخاذ أي قرارات استثمارية</li>
+                    <li>الموقع محمي بحقوق الطبع والنشر</li>
+                </ul>
+                <p>نحتفظ بالحق في تعديل هذه السياسة في أي وقت دون إشعار مسبق.</p>
+            `;
+            break;
+            
+        case 'privacy-policy':
+            content = `
+                <h3>سياسة الخصوصية</h3>
+                <p>نحن نحترم خصوصيتك ونلتزم بحماية معلوماتك الشخصية:</p>
+                <ul>
+                    <li>لا نجمع معلومات شخصية إلا بموافقتك</li>
+                    <li>نستخدم ملفات تعريف الارتباط لتحسين تجربة المستخدم</li>
+                    <li>لا نشارك معلوماتك مع أطراف ثالثة</li>
+                    <li>نحمي بياناتك باستخدام أحدث تقنيات الأمان</li>
+                    <li>يمكنك طلب حذف بياناتك في أي وقت</li>
+                </ul>
+                <p>للاستفسارات حول الخصوصية، يرجى التواصل معنا.</p>
+            `;
+            break;
+            
+      // تكملة الكود السابق
+
+        case 'contact-us':
+            content = `
+                <h3>اتصل بنا</h3>
+                <p>نحن هنا لمساعدتك! يمكنك التواصل معنا من خلال:</p>
+                <div style="text-align: center; margin: 2rem 0;">
+                    <p><i class="fas fa-envelope" style="color: #007bff; margin-left: 10px;"></i> البريد الإلكتروني: info@cryptoyaser.com</p>
+                    <p><i class="fab fa-telegram" style="color: #007bff; margin-left: 10px;"></i> تليجرام: @CryptoYaser</p>
+                    <p><i class="fab fa-twitter" style="color: #007bff; margin-left: 10px;"></i> تويتر: @CryptoYaser</p>
+                    <p><i class="fas fa-clock" style="color: #007bff; margin-left: 10px;"></i> أوقات العمل: 24/7</p>
+                </div>
+                <p>نحن نرد على جميع الاستفسارات خلال 24 ساعة. لا تتردد في التواصل معنا لأي استفسار أو اقتراح.</p>
+                <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                    <p style="margin: 0; color: #666;"><strong>ملاحظة:</strong> نحن لا نقدم نصائح استثمارية شخصية. جميع المحتوى المقدم هو لأغراض تعليمية فقط.</p>
+                </div>
+            `;
+            break;
+            
+        default:
+            content = '<p>المحتوى غير متوفر حالياً.</p>';
+    }
+    
+    modalContent.innerHTML = content;
+    modal.style.display = 'flex';
+    
+    // إخفاء زر "فتح في نافذة جديدة" للمحتوى النصي
+    const externalBtn = document.querySelector('.btn-primary');
+    if (externalBtn) {
+        externalBtn.style.display = 'none';
+    }
+}
+
+// تعديل دالة closeModal الموجودة لإظهار الإطار مرة أخرى
+function closeModal() {
+    const modal = document.getElementById('modalOverlay');
+    const modalFrame = document.getElementById('modalFrame');
+    const modalContent = document.getElementById('modalContent');
+    const externalBtn = document.querySelector('.btn-primary');
+    
+    modal.style.display = 'none';
+    modalFrame.style.display = 'block';
+    modalContent.style.display = 'none';
+    
+    // إظهار زر "فتح في نافذة جديدة" مرة أخرى
+    if (externalBtn) {
+        externalBtn.style.display = 'inline-flex';
+    }
+}
+
+// إضافة تأثير التمرير السلس للفوتر
+document.addEventListener('DOMContentLoaded', function() {
+    // تأثير الظهور التدريجي للفوتر عند التمرير
+    const footer = document.querySelector('.footer');
+    
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const footerObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    if (footer) {
+        footer.style.opacity = '0';
+        footer.style.transform = 'translateY(30px)';
+        footer.style.transition = 'all 0.6s ease';
+        footerObserver.observe(footer);
+    }
+    
+    // تأثير التحريك للروابط
+    const footerLinks = document.querySelectorAll('.footer-link');
+    footerLinks.forEach((link, index) => {
+        link.style.animationDelay = `${index * 0.1}s`;
+        link.classList.add('fade-in-up');
+    });
+});
