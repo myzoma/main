@@ -271,52 +271,6 @@ window.addEventListener('load', function() {
     observeCards();
 });
 
-// إضافة وظائف البحث
-function addSearchFunctionality() {
-    const header = document.querySelector('.header');
-    if (!header) return;
-    
-    const searchContainer = document.createElement('div');
-    searchContainer.className = 'search-container';
-    searchContainer.style.cssText = `
-        margin-top: 20px;
-        text-align: center;
-    `;
-    
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.placeholder = 'ابحث عن صفحة...';
-    searchInput.className = 'search-input';
-    searchInput.style.cssText = `
-        padding: 12px 20px;
-        border: 2px solid #333;
-        border-radius: 25px;
-        background: #1a1a1a;
-        color: white;
-        font-size: 1rem;
-        width: 300px;
-        max-width: 100%;
-        transition: all 0.3s ease;
-    `;
-    
-    searchContainer.appendChild(searchInput);
-    header.appendChild(searchContainer);
-    
-    searchInput.addEventListener('input', function(e) {
-        const searchTerm = e.target.value.toLowerCase();
-        filterCards(searchTerm);
-    });
-    
-    searchInput.addEventListener('focus', function() {
-        this.style.borderColor = '#00d4ff';
-        this.style.boxShadow = '0 0 10px rgba(0, 212, 255, 0.3)';
-    });
-    
-    searchInput.addEventListener('blur', function() {
-        this.style.borderColor = '#333';
-        this.style.boxShadow = 'none';
-    });
-}
 
 // تصفية البطاقات
 function filterCards(searchTerm) {
