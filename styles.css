@@ -12,22 +12,50 @@ body {
     direction: rtl;
 }
 
+/* تقليل عرض الصفحة مع مسافات جانبية */
 .container {
-    max-width: 1400px;
+    max-width: 1000px; /* تقليل العرض من 1400px إلى 1000px */
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 40px; /* مسافات جانبية أكبر */
 }
 
+/* تنسيق الهيدر */
 .header {
     margin-bottom: 50px;
-    padding: 40px 0;
+    padding: 30px 0;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.3),
+        0 2px 10px rgba(0, 212, 255, 0.1);
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+    border-radius: 15px;
+    position: relative;
+    overflow: hidden;
 }
 
+/* تأثير خلفية الهيدر */
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 153, 204, 0.1) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* محتوى الهيدر - إزاحة الشعار واسم الموقع لليمين */
 .header-content {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 40px;
+    justify-content: flex-end; /* إزاحة لليمين */
+    align-items: center;
+    padding: 20px 40px;
+    position: relative;
+    z-index: 1;
 }
 
 /* قسم الشعار واسم الموقع */
@@ -49,6 +77,7 @@ body {
     box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
     position: relative;
     overflow: hidden;
+    transition: all 0.3s ease;
 }
 
 .logo::before {
@@ -67,33 +96,56 @@ body {
     color: white;
     z-index: 1;
     position: relative;
+    transition: transform 0.6s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+    box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
+}
+
+.logo:hover i {
+    transform: rotate(360deg);
 }
 
 .site-info {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 8px;
 }
 
+/* اسم الموقع بلونين منفصلين */
 .site-name {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
     margin: 0;
     display: flex;
     align-items: center;
-    gap: 0.3rem; /* مسافة صغيرة بين الكلمات */
+    gap: 0.4rem;
 }
 
 /* الجزء الأول - أزرق سماوي */
 .site-name .blue-part {
-    color: #00BFFF; /* أزرق سماوي */
+    color: #00BFFF;
     text-shadow: 0 2px 4px rgba(0, 191, 255, 0.3);
+    transition: all 0.3s ease;
 }
 
 /* الجزء الثاني - ذهبي */
 .site-name .gold-part {
-    color: #FFD700; /* ذهبي */
+    color: #FFD700;
     text-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.site-name:hover .blue-part {
+    color: #87CEEB;
+    text-shadow: 0 0 15px rgba(135, 206, 235, 0.5);
+}
+
+.site-name:hover .gold-part {
+    color: #FFA500;
+    text-shadow: 0 0 15px rgba(255, 165, 0, 0.5);
 }
 
 .site-tagline {
@@ -103,185 +155,11 @@ body {
     margin: 0;
 }
 
-/* تأثير تفاعلي عند التمرير */
-.site-name .blue-part:hover {
-    color: #87CEEB; /* أزرق سماوي فاتح */
-    transition: color 0.3s ease;
-}
-
-.site-name .gold-part:hover {
-    color: #FFA500; /* ذهبي برتقالي */
-    transition: color 0.3s ease;
-}
-
-/* تنسيق الهيدر الرئيسي */
-.header {
-    width: 80%;
-    min-height: 200px; /* ارتفاع أدنى للهيدر */
-    padding: 30px 20px; /* حشو داخلي */
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    box-shadow: 
-        0 4px 20px rgba(0, 0, 0, 0.3), /* ظل خفيف للأسفل */
-        0 2px 10px rgba(0, 212, 255, 0.1); /* ظل ملون خفيف */
-    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
-    position: relative;
-    overflow: hidden;
-}
-
-/* إضافة تأثير خلفية متحركة للهيدر */
-.header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: 
-        radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(0, 153, 204, 0.1) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* القسم الرئيسي للهيدر */
-.header-main {
-    flex: 1;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px; /* زيادة المسافة بين العناصر */
-    position: relative;
-    z-index: 1;
-    max-width: 1200px; /* عرض أقصى */
-    margin: 0 auto; /* توسيط */
-    padding: 20px 0; /* حشو عمودي إضافي */
-}
-
-.main-title {
-    font-size: 2.8rem; /* زيادة حجم الخط قليلاً */
-    font-weight: 700;
-    background: linear-gradient(45deg, #00d4ff, #0099cc, #0066ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 0;
-    text-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
-    line-height: 1.2; /* تحسين المسافة بين الأسطر */
-}
-
-.main-title i {
-    margin-left: 15px;
-    color: #00d4ff;
-    filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.4));
-}
-
-.subtitle {
-    font-size: 1.3rem; /* زيادة حجم الخط قليلاً */
-    color: #b0b0b0;
-    font-weight: 300;
-    margin: 0;
-    max-width: 600px; /* عرض أقصى للنص */
-    line-height: 1.4;
-}
-
-/* حقل البحث */
-.search-container {
-    width: 100%;
-    max-width: 500px; /* زيادة العرض الأقصى */
-    position: relative;
-    margin-top: 15px;
-}
-
-.search-input {
-    width: 100%;
-    padding: 18px 25px; /* زيادة الحشو */
-    border: 2px solid #333;
-    border-radius: 30px; /* زيادة الانحناء */
-    background: rgba(30, 30, 30, 0.9); /* زيادة الشفافية */
-    color: white;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    text-align: center;
-    box-shadow: 
-        0 4px 15px rgba(0, 0, 0, 0.2), /* ظل خفيف */
-        inset 0 1px 3px rgba(255, 255, 255, 0.1); /* ظل داخلي */
-}
-
-.search-input:focus {
-    outline: none;
-    border-color: #00d4ff;
-    box-shadow: 
-        0 0 25px rgba(0, 212, 255, 0.4),
-        0 4px 20px rgba(0, 0, 0, 0.3),
-        inset 0 1px 3px rgba(255, 255, 255, 0.1);
-    transform: translateY(-2px); /* رفع خفيف عند التركيز */
-}
-
-.search-input::placeholder {
-    color: #888;
-    font-weight: 300;
-}
-
-/* تنسيق متجاوب */
-@media (max-width: 768px) {
-    .header {
-        min-height: 180px;
-        padding: 20px 15px;
-    }
-    
-    .header-main {
-        gap: 15px;
-        padding: 15px 0;
-    }
-    
-    .main-title {
-        font-size: 2.2rem;
-    }
-    
-    .subtitle {
-        font-size: 1.1rem;
-    }
-    
-    .search-input {
-        padding: 15px 20px;
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .header {
-        min-height: 160px;
-        padding: 15px 10px;
-    }
-    
-    .main-title {
-        font-size: 1.8rem;
-    }
-    
-    .subtitle {
-        font-size: 1rem;
-    }
-}
-
-/* الرسوم المتحركة */
-@keyframes logoShine {
-    0% {
-        transform: translateX(-100%) translateY(-100%) rotate(45deg);
-    }
-    50% {
-        transform: translateX(100%) translateY(100%) rotate(45deg);
-    }
-    100% {
-        transform: translateX(-100%) translateY(-100%) rotate(45deg);
-    }
-}
-
-/* باقي الأنماط */
+/* شبكة البطاقات */
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
     padding: 20px 0;
 }
 
@@ -429,9 +307,9 @@ body {
     background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
     border-radius: 20px;
     width: 90%;
-    max-width: 1200px;
+    max-width: 1000px; /* تقليل العرض الأقصى */
     height: 80%;
-    max-height: 800px;
+    max-height: 700px;
     border: 1px solid #333;
     overflow: hidden;
     animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -493,7 +371,6 @@ body {
     border: none;
 }
 
-/* تأثير التحميل */
 .loading-overlay {
     position: absolute;
     top: 0;
@@ -565,6 +442,18 @@ body {
 }
 
 /* الرسوم المتحركة */
+@keyframes logoShine {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+    50% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+    }
+    100% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    }
+}
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -611,7 +500,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: 
+    background:
         radial-gradient(circle at 20% 80%, rgba(0, 212, 255, 0.05) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(0, 153, 204, 0.05) 0%, transparent 50%),
         radial-gradient(circle at 40% 40%, rgba(0, 102, 255, 0.05) 0%, transparent 50%);
@@ -633,49 +522,40 @@ body::before {
 }
 
 /* التصميم المتجاوب */
-@media (max-width: 1200px) {
-    .header-content {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 30px;
-    }
-    
-    .logo-section {
-        order: 1;
-    }
-    
-    .header-main {
-        order: 2;
-    }
-}
-
 @media (max-width: 1024px) {
-    .cards-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 25px;
+    .container {
+        max-width: 900px;
+        padding: 0 30px;
     }
     
-    .main-title {
-        font-size: 2.2rem;
+    .cards-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
     }
     
     .site-name {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
 }
 
 @media (max-width: 768px) {
     .container {
-        padding: 15px;
+        max-width: 100%;
+        padding: 0 20px;
     }
     
     .header {
         padding: 20px 0;
+        margin-bottom: 30px;
     }
     
     .header-content {
-        gap: 20px;
+        justify-content: center; /* توسيط في الشاشات الصغيرة */
+        padding: 15px 20px;
+    }
+    
+    .logo-section {
+        gap: 15px;
     }
     
     .logo {
@@ -688,25 +568,11 @@ body::before {
     }
     
     .site-name {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
     }
     
     .site-tagline {
         font-size: 0.9rem;
-    }
-    
-    .main-title {
-        font-size: 1.8rem;
-    }
-    
-    .subtitle {
-        font-size: 1rem;
-    }
-    
-    .search-input {
-        max-width: 300px;
-        font-size: 1rem;
-        padding: 12px 18px;
     }
     
     .cards-grid {
@@ -729,6 +595,7 @@ body::before {
     .modal {
         width: 95%;
         height: 90%;
+        max-width: 500px;
     }
     
     .modal-header {
@@ -746,12 +613,16 @@ body::before {
 }
 
 @media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+    
     .header-content {
-        gap: 15px;
+        padding: 10px 15px;
     }
     
     .logo-section {
-        gap: 15px;
+        gap: 12px;
     }
     
     .logo {
@@ -764,25 +635,11 @@ body::before {
     }
     
     .site-name {
-        font-size: 1.3rem;
+        font-size: 1.4rem;
     }
     
     .site-tagline {
         font-size: 0.8rem;
-    }
-    
-    .main-title {
-        font-size: 1.5rem;
-    }
-    
-    .subtitle {
-        font-size: 0.9rem;
-    }
-    
-    .search-input {
-        max-width: 250px;
-        padding: 10px 15px;
-        font-size: 0.9rem;
     }
     
     .card {
@@ -832,34 +689,13 @@ body::before {
     will-change: transform;
 }
 
-/* تأثيرات بسيطة وثابتة */
+/* تأثيرات تفاعلية */
 .card:active {
     transform: translateY(-5px) scale(0.98);
 }
 
 .btn:active {
     transform: translateY(0) scale(0.95);
-}
-
-/* تأثيرات إضافية للشعار */
-.logo:hover {
-    transform: scale(1.1);
-    box-shadow: 0 15px 40px rgba(0, 212, 255, 0.4);
-}
-
-.logo:hover i {
-    transform: rotate(360deg);
-    transition: transform 0.6s ease;
-}
-
-/* تحسينات للنصوص */
-.site-name:hover {
-    text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-}
-
-/* تأثيرات التمرير السلس */
-html {
-    scroll-behavior: smooth;
 }
 
 /* تحسينات للتباين */
@@ -873,18 +709,9 @@ html {
     outline-offset: 2px;
 }
 
-.search-input:focus {
-    outline: none;
-}
-
 /* تأثيرات الانتقال المحسنة */
 * {
     transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* إزالة التأثيرات المتضاربة للبطاقات */
-.card {
-    animation-fill-mode: both;
 }
 
 /* تحسين عرض البطاقات */
@@ -903,17 +730,50 @@ html {
 .header-content::after {
     content: '';
     position: absolute;
-    bottom: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
+    bottom: -10px;
+    right: 20px; /* تغيير من left إلى right للتوافق مع الإزاحة */
+    width: 80px;
     height: 2px;
-    background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+    background: linear-gradient(90deg, #00d4ff, #FFD700, #00d4ff);
 }
 
+/* تحسين التمرير */
+html {
+    scroll-behavior: smooth;
+}
+
+/* تأثيرات إضافية للألوان */
+.site-name .blue-part:hover {
+    transform: scale(1.05);
+}
+
+.site-name .gold-part:hover {
+    transform: scale(1.05);
+}
+
+/* تحسينات نهائية للتصميم المتجاوب */
 @media (max-width: 1200px) {
     .header-content::after {
-        bottom: -15px;
-        width: 80px;
+        bottom: -8px;
+        width: 60px;
+        right: 50%;
+        transform: translateX(50%);
     }
 }
+
+@media (max-width: 768px) {
+    .header-content::after {
+        bottom: -5px;
+        width: 50px;
+    }
+}
+
+/* إزالة الكود المكرر والتأكد من عدم وجود تضارب */
+.header-main,
+.main-title,
+.subtitle,
+.search-container,
+.search-input {
+    display: none; /* إخفاء العناصر غير المستخدمة */
+}
+
