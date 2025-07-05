@@ -14,9 +14,9 @@ body {
 
 /* تقليل عرض الصفحة مع مسافات جانبية */
 .container {
-    max-width: 1000px; /* تقليل العرض من 1400px إلى 1000px */
+    max-width: 1000px;
     margin: 0 auto;
-    padding: 0 40px; /* مسافات جانبية أكبر */
+    padding: 0 40px;
 }
 
 /* تنسيق الهيدر */
@@ -51,7 +51,7 @@ body {
 /* محتوى الهيدر - إزاحة الشعار واسم الموقع لليمين */
 .header-content {
     display: flex;
-    justify-content: flex-end; /* إزاحة لليمين */
+    justify-content: flex-end;
     align-items: center;
     padding: 20px 40px;
     position: relative;
@@ -141,11 +141,13 @@ body {
 .site-name:hover .blue-part {
     color: #87CEEB;
     text-shadow: 0 0 15px rgba(135, 206, 235, 0.5);
+    transform: scale(1.05);
 }
 
 .site-name:hover .gold-part {
     color: #FFA500;
     text-shadow: 0 0 15px rgba(255, 165, 0, 0.5);
+    transform: scale(1.05);
 }
 
 .site-tagline {
@@ -307,7 +309,7 @@ body {
     background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
     border-radius: 20px;
     width: 90%;
-    max-width: 1000px; /* تقليل العرض الأقصى */
+    max-width: 1000px;
     height: 80%;
     max-height: 700px;
     border: 1px solid #333;
@@ -550,7 +552,7 @@ body::before {
     }
     
     .header-content {
-        justify-content: center; /* توسيط في الشاشات الصغيرة */
+        justify-content: center;
         padding: 15px 20px;
     }
     
@@ -680,9 +682,6 @@ body::before {
 /* تحسينات الأداء */
 .card {
     will-change: transform;
-    display: block !important;
-    opacity: 1 !important;
-    visibility: visible !important;
 }
 
 .modal {
@@ -714,24 +713,12 @@ body::before {
     transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* تحسين عرض البطاقات */
-.cards-grid .card {
-    opacity: 1;
-    visibility: visible;
-    display: block;
-    position: relative;
-}
-
 /* تأثيرات خاصة للهيدر */
-.header-content {
-    position: relative;
-}
-
 .header-content::after {
     content: '';
     position: absolute;
     bottom: -10px;
-    right: 20px; /* تغيير من left إلى right للتوافق مع الإزاحة */
+    right: 20px;
     width: 80px;
     height: 2px;
     background: linear-gradient(90deg, #00d4ff, #FFD700, #00d4ff);
@@ -767,13 +754,3 @@ html {
         width: 50px;
     }
 }
-
-/* إزالة الكود المكرر والتأكد من عدم وجود تضارب */
-.header-main,
-.main-title,
-.subtitle,
-.search-container,
-.search-input {
-    display: none; /* إخفاء العناصر غير المستخدمة */
-}
-
