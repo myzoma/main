@@ -43,14 +43,15 @@ const pages = [
     {
         id: 4,
         title: "الصياد الذكي",
-        description: "بوت اكتشاف افضل الفرص",
+        description: "بوت استراتيجية خاصة لاكتشاف افضل الفرص في السوق",
         icon: "fa-solid fa-user-secret",
         url: "https://myzoma.github.io/bott/",
         features: [
             "فرص الشراء",
             "فرص البيع",
             "تحديد الاهداف",
-            "تحديد وقف الخسارة"
+            "تحديد وقف الخسارة",
+            "فريمات متعددة",
         ]
     },
     {
