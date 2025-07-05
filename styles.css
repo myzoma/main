@@ -821,7 +821,7 @@ html {
 }
 /* تصميم الفوتر */
 .footer {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
     color: #ffffff;
     padding: 3rem 0 1rem;
     margin-top: 4rem;
