@@ -91,11 +91,12 @@ let currentPageTitle = '';
 document.addEventListener('DOMContentLoaded', function() {
     renderCards();
     setupEventListeners();
+    setupFooterAnimations();
 });
 
 // رسم البطاقات
 function renderCards() {
-    const cardsGrid = document.querySelector('.cards-grid'); // تغيير من getElementById إلى querySelector
+    const cardsGrid = document.querySelector('.cards-grid');
     if (!cardsGrid) {
         console.error('لم يتم العثور على عنصر .cards-grid');
         return;
@@ -158,14 +159,14 @@ function setupEventListeners() {
     // إغلاق عند النقر خارج النافذة
     modalOverlay.addEventListener('click', function(e) {
         if (e.target === modalOverlay) {
-            closeModalWindow();
+            closeModal();
         }
     });
     
     // إغلاق بمفتاح Escape
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            closeModalWindow();
+            closeModal();
         }
     });
     
@@ -180,7 +181,7 @@ function setupEventListeners() {
     }
 }
 
-// فتح النافذة المنبثقة
+// فتح النافذة المنبثقة العادية (للبطاقات)
 function openModal(url, title) {
     currentPageUrl = url;
     currentPageTitle = title;
@@ -188,7 +189,9 @@ function openModal(url, title) {
     const modalOverlay = document.getElementById('modalOverlay');
     const modalTitle = document.getElementById('modalTitle');
     const modalFrame = document.getElementById('modalFrame');
+    const modalContent = document.getElementById('modalContent');
     const loadingOverlay = document.getElementById('loadingOverlay');
+    const externalBtn = document.querySelector('.btn-primary');
     
     if (!modalOverlay || !modalTitle || !modalFrame || !loadingOverlay) {
         console.error('لم يتم العثور على عناصر النافذة المنبثقة');
@@ -196,6 +199,18 @@ function openModal(url, title) {
     }
     
     modalTitle.textContent = title;
+    
+    // إظهار الإطار وإخفاء المحتوى النصي
+    modalFrame.style.display = 'block';
+    if (modalContent) {
+        modalContent.style.display = 'none';
+    }
+    
+    // إظهار زر "فتح في نافذة جديدة"
+    if (externalBtn) {
+        externalBtn.style.display = 'inline-flex';
+    }
+    
     modalOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
     
@@ -216,101 +231,29 @@ function openModal(url, title) {
     }, 5000);
 }
 
-// إغلاق النافذة المنبثقة
-function closeModalWindow() {
-    const modalOverlay = document.getElementById('modalOverlay');
-    const modalFrame = document.getElementById('modalFrame');
-    
-    if (modalOverlay) {
-        modalOverlay.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-    
-    // تأخير إزالة المحتوى لإتمام الرسوم المتحركة
-    setTimeout(() => {
-        if (modalFrame) {
-            modalFrame.src = '';
-        }
-    }, 300);
-}
-
-// دالة إغلاق للاستخدام في HTML
-function closeModal() {
-    closeModalWindow();
-}
-
-// إضافة تأثيرات إضافية للبطاقات
-function addCardAnimations() {
-    const cards = document.querySelectorAll('.card');
-    
-    cards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-        card.classList.add('fade-in-up');
-    });
-}
-
-// تأثير الظهور التدريجي للبطاقات
-function observeCards() {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, {
-        threshold: 0.1
-    });
-    
-    document.querySelectorAll('.card').forEach(card => {
-        observer.observe(card);
-    });
-}
-
-// تشغيل التأثيرات عند تحميل الصفحة
-window.addEventListener('load', function() {
-    addCardAnimations();
-    observeCards();
-});
-
-
-// تصفية البطاقات
-function filterCards(searchTerm) {
-    const cards = document.querySelectorAll('.card');
-    
-    cards.forEach(card => {
-        const title = card.querySelector('.card-title').textContent.toLowerCase();
-        const description = card.querySelector('.card-description').textContent.toLowerCase();
-        const features = Array.from(card.querySelectorAll('.card-features li'))
-            .map(li => li.textContent.toLowerCase())
-            .join(' ');
-        
-        if (title.includes(searchTerm) || description.includes(searchTerm) || features.includes(searchTerm)) {
-            card.style.display = 'block';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        } else {
-            card.style.display = 'none';
-        }
-    });
-}
-
-// تشغيل الوظائف الإضافية
-setTimeout(() => {
-    //addSearchFunctionality();
-}, 1000);
-// إضافة هذه الدوال إلى script.js الموجود
-
+// فتح نوافذ الفوتر (للمحتوى النصي)
 function openFooterModal(title, type) {
     const modal = document.getElementById('modalOverlay');
     const modalTitle = document.getElementById('modalTitle');
     const modalFrame = document.getElementById('modalFrame');
     const modalContent = document.getElementById('modalContent');
+    const externalBtn = document.querySelector('.btn-primary');
+    
+    if (!modal || !modalTitle || !modalContent) {
+        console.error('لم يتم العثور على عناصر النافذة المنبثقة');
+        return;
+    }
     
     modalTitle.textContent = title;
     
     // إخفاء الإطار وإظهار المحتوى النصي
     modalFrame.style.display = 'none';
     modalContent.style.display = 'block';
+    
+    // إخفاء زر "فتح في نافذة جديدة" للمحتوى النصي
+    if (externalBtn) {
+        externalBtn.style.display = 'none';
+    }
     
     // محتوى كل صفحة
     let content = '';
@@ -346,8 +289,6 @@ function openFooterModal(title, type) {
             `;
             break;
             
-      // تكملة الكود السابق
-
         case 'contact-us':
             content = `
                 <h3>اتصل بنا</h3>
@@ -366,56 +307,76 @@ function openFooterModal(title, type) {
             break;
             
         default:
-            content = '<p>المحتوى غير متوفر حالياً.</p>';
+                       content = '<p>المحتوى غير متوفر حالياً.</p>';
     }
     
     modalContent.innerHTML = content;
-    modal.style.display = 'flex';
-    
-    // إخفاء زر "فتح في نافذة جديدة" للمحتوى النصي
-    const externalBtn = document.querySelector('.btn-primary');
-    if (externalBtn) {
-        externalBtn.style.display = 'none';
-    }
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
 }
 
-// تعديل دالة closeModal الموجودة لإظهار الإطار مرة أخرى
+// إغلاق النافذة المنبثقة (دالة موحدة)
 function closeModal() {
     const modal = document.getElementById('modalOverlay');
     const modalFrame = document.getElementById('modalFrame');
     const modalContent = document.getElementById('modalContent');
     const externalBtn = document.querySelector('.btn-primary');
     
-    modal.style.display = 'none';
-    modalFrame.style.display = 'block';
-    modalContent.style.display = 'none';
+    if (!modal) return;
+    
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+    
+    // إعادة تعيين الحالة الافتراضية
+    if (modalFrame) {
+        modalFrame.style.display = 'block';
+        // تأخير إزالة المحتوى لإتمام الرسوم المتحركة
+        setTimeout(() => {
+            modalFrame.src = '';
+        }, 300);
+    }
+    
+    if (modalContent) {
+        modalContent.style.display = 'none';
+        modalContent.innerHTML = '';
+    }
     
     // إظهار زر "فتح في نافذة جديدة" مرة أخرى
     if (externalBtn) {
         externalBtn.style.display = 'inline-flex';
     }
+    
+    // إخفاء شاشة التحميل
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    if (loadingOverlay) {
+        loadingOverlay.style.display = 'none';
+    }
+    
+    // إعادة تعيين المتغيرات
+    currentPageUrl = '';
+    currentPageTitle = '';
 }
 
-// إضافة تأثير التمرير السلس للفوتر
-document.addEventListener('DOMContentLoaded', function() {
+// إعداد تأثيرات الفوتر
+function setupFooterAnimations() {
     // تأثير الظهور التدريجي للفوتر عند التمرير
     const footer = document.querySelector('.footer');
     
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const footerObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-    
     if (footer) {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const footerObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
         footer.style.opacity = '0';
         footer.style.transform = 'translateY(30px)';
         footer.style.transition = 'all 0.6s ease';
@@ -428,4 +389,70 @@ document.addEventListener('DOMContentLoaded', function() {
         link.style.animationDelay = `${index * 0.1}s`;
         link.classList.add('fade-in-up');
     });
+}
+
+// إضافة تأثيرات إضافية للبطاقات
+function addCardAnimations() {
+    const cards = document.querySelectorAll('.card');
+    
+    cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.1}s`;
+        card.classList.add('fade-in-up');
+    });
+}
+
+// تأثير الظهور التدريجي للبطاقات
+function observeCards() {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+    
+    document.querySelectorAll('.card').forEach(card => {
+        observer.observe(card);
+    });
+}
+
+// تصفية البطاقات
+function filterCards(searchTerm) {
+    const cards = document.querySelectorAll('.card');
+    
+    cards.forEach(card => {
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+        const description = card.querySelector('.card-description').textContent.toLowerCase();
+        const features = Array.from(card.querySelectorAll('.card-features li'))
+            .map(li => li.textContent.toLowerCase())
+            .join(' ');
+            
+        if (title.includes(searchTerm) || description.includes(searchTerm) || features.includes(searchTerm)) {
+            card.style.display = 'block';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
+// دالة البحث (اختيارية)
+function addSearchFunctionality() {
+    console.log('Search functionality initialized');
+    // يمكنك إضافة وظيفة البحث هنا لاحقاً
+}
+
+// تشغيل التأثيرات عند تحميل الصفحة
+window.addEventListener('load', function() {
+    addCardAnimations();
+    observeCards();
 });
+
+// تشغيل الوظائف الإضافية
+setTimeout(() => {
+    addSearchFunctionality();
+}, 1000);
+
