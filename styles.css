@@ -116,7 +116,7 @@ body {
 
 /* تنسيق الهيدر الرئيسي */
 .header {
-    width: 100%;
+    width: 80%;
     min-height: 200px; /* ارتفاع أدنى للهيدر */
     padding: 30px 20px; /* حشو داخلي */
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
