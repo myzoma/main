@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            background: #2c3e50;
+            color: white;
+            font-family: Arial, sans-serif;
+            height: 50px;
+            overflow: hidden;
+        }
+        .ticker {
+            background: #e74c3c;
+            color: white;
+            padding: 15px 20px;
+            white-space: nowrap;
+            animation: scroll 30s linear infinite;
+        }
+        .ticker a {
+            color: white;
+            text-decoration: none;
+            margin-left: 50px;
+        }
+        .ticker i {
+            margin-left: 8px;
+        }
+        @keyframes scroll {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="ticker">
+        <a href="/page1.html"><i class="fas fa-fire"></i> خبر من الصفحة الأولى</a>
+        <a href="/page2.html"><i class="fas fa-bolt"></i> خبر من الصفحة الثانية</a>
+        <a href="/page3.html"><i class="fas fa-rocket"></i> خبر من الصفحة الثالثة</a>
+        <a href="/page4.html"><i class="fas fa-lightbulb"></i> خبر من الصفحة الرابعة</a>
+        <a href="/page5.html"><i class="fas fa-bullseye"></i> خبر من الصفحة الخامسة</a>
+        <a href="/page6.html"><i class="fas fa-bullhorn"></i> خبر من الصفحة السادسة</a>
+    </div>
+</body>
+</html>
