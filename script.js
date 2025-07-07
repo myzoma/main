@@ -59,7 +59,7 @@ const pages = [
         ]
     },
     {
-        id: 5,
+        id: 7,
         title: "اخبار السوق",
         description: "اقرأ أحدث المقالات والأخبار",
         icon: "fas fa-blog",
@@ -86,7 +86,7 @@ const pages = [
         ]
     },
     {
-        id: 7,
+        id: 5,
         title: "مستويات الدعم والمقاومة",
         description: "تحديد مستويات الدعم والمقاومة آليا",
         icon: "fa-solid fa-not-equal",
