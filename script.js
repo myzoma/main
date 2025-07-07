@@ -99,7 +99,7 @@ const pages = [
             "تحديد قوة الاختراقات",
         ]
 }
-};
+}
 
 // متغيرات عامة
 let currentPageUrl = '';
