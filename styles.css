@@ -1097,10 +1097,7 @@ html {
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
     border: 1px solid #4caf50;
     border-radius: 10px;
-    box-shadow: 
-        0 8px 32px rgba(0, 0, 0, 0.3),
-        0 0 25px rgba(76, 175, 80, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  
     
     /* النص */
     color: #4caf50;
