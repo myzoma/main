@@ -52,7 +52,20 @@
     </iframe>
 </div>
 
+<script>
+const predictionText = localStorage.getItem('bitcoinPredictionText');
+if (predictionText) {
+    document.getElementById('bitcoin-prediction').textContent = predictionText;
+}
 
+// تحديث تلقائي كل 30 ثانية
+setInterval(() => {
+    const updatedText = localStorage.getItem('bitcoinPredictionText');
+    if (updatedText) {
+        document.getElementById('bitcoin-prediction').textContent = updatedText;
+    }
+}, 30000);
+</script>
         
         <main class="cards-grid">
             <!-- البطاقات ستظهر هنا تلقائياً -->
