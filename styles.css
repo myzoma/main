@@ -1085,3 +1085,38 @@ html {
 #modalContent::-webkit-scrollbar-thumb:hover {
     background: #0056b3;
 }
+.prediction-display {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 25px;
+    background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+    border: 2px solid #4caf50;
+    border-radius: 20px;
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.prediction-icon {
+    font-size: 2.5em;
+    color: #ffa500;
+    margin-bottom: 15px;
+    text-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+}
+
+.prediction-text {
+    color: #4caf50;
+    font-family: 'Arial', sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    line-height: 1.4;
+}
+
+.prediction-display:hover {
+    transform: translateY(-3px);
+    box-shadow: 
+        0 15px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(76, 175, 80, 0.3);
+}
