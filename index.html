@@ -51,7 +51,30 @@
         scrolling="no"
         style="border: none; background: #000; display: block;">
     </iframe>
-   <div class="volume-grid">
+   <div class="container">
+        <div class="header">
+            <h1>🔮 مؤشر تنبؤ البيتكوين المباشر</h1>
+            <p>تحليل حقيقي للحجم والأسعار من Binance API</p>
+        </div>
+
+        <div class="ticker-container">
+            <div class="ticker-header">
+                📊 الشريط الإخباري المباشر
+            </div>
+            <div class="ticker-content" id="ticker-content">
+                جاري تحميل البيانات المباشرة من Binance...
+            </div>
+        </div>
+
+        <div class="current-price" id="current-price">
+            السعر الحالي: جاري التحميل...
+        </div>
+
+        <div class="prediction-display" id="prediction-display">
+            جاري تحميل التنبؤات...
+        </div>
+
+        <div class="volume-grid">
             <div class="volume-card" id="period1">
                 <h3>الفترة الأولى (0-25)</h3>
                 <span class="period-label">الأحدث - آخر 25 ساعة</span>
@@ -72,6 +95,10 @@
                 <div class="volume-data" id="delta3">دلتا: --</div>
                 <div class="volume-data" id="total3">إجمالي: --</div>
             </div>
+        </div>
+
+        <div class="status" id="status">
+            جاري الاتصال بـ Binance API...
         </div>
 </div>
         <main class="cards-grid">
