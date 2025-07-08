@@ -1085,3 +1085,186 @@ html {
 #modalContent::-webkit-scrollbar-thumb:hover {
     background: #0056b3;
 }
+.bitcoin-analysis {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    direction: rtl;
+}
+
+.current-status {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.current-status h3 {
+    margin: 0 0 15px 0;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.status-item {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status-item .label {
+    font-weight: bold;
+    opacity: 0.9;
+}
+
+.status-item .value {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.volume-analysis, .future-predictions {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #e9ecef;
+}
+
+.volume-analysis h3, .future-predictions h3 {
+    margin: 0 0 20px 0;
+    color: #2c3e50;
+    text-align: center;
+    font-size: 1.4em;
+}
+
+.analysis-table, .predictions-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.analysis-table th, .predictions-table th {
+    background: #34495e;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.analysis-table td, .predictions-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    font-weight: 500;
+}
+
+.analysis-table tr:hover, .predictions-table tr:hover {
+    background: #f8f9fa;
+}
+
+.predictions-table tbody tr:nth-child(odd) {
+    background: #f8f9fa;
+}
+
+.predictions-table tbody tr:nth-child(even) {
+    background: white;
+}
+
+.last-update {
+    text-align: center;
+    color: #6c757d;
+    margin-top: 20px;
+    padding: 10px;
+    background: #e9ecef;
+    border-radius: 5px;
+}
+
+.error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 20px;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+    font-weight: bold;
+}
+
+.loading {
+    background: #d1ecf1;
+    color: #0c5460;
+    padding: 20px;
+    border: 1px solid #bee5eb;
+    border-radius: 8px;
+    text-align: center;
+    margin: 20px 0;
+}
+
+.loading::after {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #0c5460;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* تحسينات للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .bitcoin-analysis {
+        padding: 10px;
+        margin: 10px;
+    }
+    
+    .status-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .analysis-table, .predictions-table {
+        font-size: 0.9em;
+    }
+    
+    .analysis-table th, .predictions-table th,
+    .analysis-table td, .predictions-table td {
+        padding: 8px;
+    }
+}
+
+/* تأثيرات بصرية إضافية */
+.bitcoin-analysis {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.status-item {
+    transition: transform 0.2s ease;
+}
+
+.status-item:hover {
+    transform: translateY(-2px);
+}
+
