@@ -36,42 +36,6 @@
                 </div>
             </div>
         </header>
-<iframe src="bitcoin-predictor.html" style="display: none;" id="hidden-frame"></iframe>
-
-<div id="bitcoin-prediction" style="
-    background: #1a1a1a;
-    border: 2px solid #4caf50;
-    border-radius: 10px;
-    padding: 15px;
-    color: #4caf50;
-    text-align: center;
-    font-family: Arial;
-    margin: 20px 0;
-    font-size: 1.2em;
-">
-    جاري تحميل التنبؤ...
-</div>
-<!-- تأكد من وجود هذا العنصر -->
-<div class="prediction-display" id="prediction-display">
-    جاري تحميل التنبؤات...
-</div>
-
-<script>
-document.getElementById('hidden-frame').onload = function() {
-    setInterval(() => {
-        try {
-            const iframe = document.getElementById('hidden-frame');
-            const predictionElement = iframe.contentDocument.getElementById('prediction-display');
-            if (predictionElement && predictionElement.textContent) {
-                document.getElementById('bitcoin-prediction').textContent = predictionElement.textContent;
-            }
-        } catch (error) {
-            console.log('لا يمكن الوصول للإطار بسبب CORS');
-        }
-    }, 3000);
-};
-</script>
-
 <!-- مع إطار جميل -->
 <div style="width: 100%; max-width: 1200px; margin: 20px auto; background: #1a1a1a; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.0);">
     <div style="background: linear-gradient(45deg, #4caf50, #2196f3); color: white; padding: 10px; text-align: center; font-size: 14px; font-weight: bold;">
@@ -85,6 +49,11 @@ document.getElementById('hidden-frame').onload = function() {
         scrolling="no"
         style="border: none; background: #000; display: block;">
     </iframe>
+    <!-- تأكد من وجود هذا العنصر -->
+<div class="prediction-display" id="prediction-display">
+    جاري تحميل التنبؤات...
+</div>
+
 </div>
         <main class="cards-grid">
             <!-- البطاقات ستظهر هنا تلقائياً -->
