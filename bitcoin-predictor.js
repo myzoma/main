@@ -111,75 +111,40 @@ class BitcoinPredictor {
         const predictionText = `توقع مسار البيتكوين اليوم: [${this.predictions.join('-')}]`;
         document.getElementById('prediction-display').textContent = predictionText;
 
-        // تحديث الشريط المتحرك مع الأيقونات التعبيرية
+        // تحديث الشريط المتحرك (نسخة مبسطة)
 const iframe = document.getElementById('ticker-iframe');
 if (iframe && iframe.contentDocument) {
-    // إضافة أيقونات Font Awesome بين التوقعات
-    const predictionsWithIcons = this.predictions.map((prediction, index) => {
-        // اختيار الأيقونة حسب نوع التوقع
-        let icon = '';
-        if (prediction.includes('صعود') || prediction.includes('ارتفاع')) {
-            icon = '<i class="fas fa-arrow-up text-success"></i>';
-        } else if (prediction.includes('هبوط') || prediction.includes('انخفاض')) {
-            icon = '<i class="fas fa-arrow-down text-danger"></i>';
-        } else if (prediction.includes('استقرار') || prediction.includes('ثبات')) {
-            icon = '<i class="fas fa-minus text-warning"></i>';
-        } else {
-            icon = '<i class="fas fa-chart-line text-info"></i>';
-        }
-        
-        return `${icon} ${prediction}`;
-    }).join(' <i class="fas fa-circle text-muted" style="font-size: 0.5em;"></i> ');
+    // إضافة أيقونات بسيطة بين التوقعات
+    const iconsArray = [
+        '<i class="fas fa-chart-line"></i>',
+        '<i class="fas fa-trending-up"></i>',
+        '<i class="fas fa-bullseye"></i>',
+        '<i class="fas fa-target"></i>'
+    ];
     
-    // تحديث محتوى الشريط المتحرك
+    const predictionsWithIcons = this.predictions.map((prediction, index) => {
+        const icon = iconsArray[index % iconsArray.length];
+        return `${icon} ${prediction}`;
+    }).join(' • ');
+    
     const tickerContent = `
-        <i class="fab fa-bitcoin text-warning"></i> 
-        توقع مسار البيتكوين اليوم: 
-        <span class="predictions-container">${predictionsWithIcons}</span> 
-        <i class="fas fa-clock text-primary"></i> 
+        <i class="fab fa-bitcoin"></i> 
+        توقع مسار البيتكوين اليوم: ${predictionsWithIcons} 
+        <i class="fas fa-clock"></i> 
         آخر تحديث: ${new Date().toLocaleTimeString('ar-SA')}
     `;
     
     const tickerElement = iframe.contentDocument.getElementById('ticker-content');
     if (tickerElement) {
-        tickerElement.innerHTML = tickerContent; // استخدام innerHTML بدلاً من textContent
+        tickerElement.innerHTML = tickerContent;
         
-        // إضافة CSS للأيقونات داخل الـ iframe إذا لم تكن موجودة
+        // التأكد من وجود Font Awesome
         const head = iframe.contentDocument.head;
-        if (!head.querySelector('#fontawesome-css')) {
-            const fontAwesomeLink = iframe.contentDocument.createElement('link');
-            fontAwesomeLink.id = 'fontawesome-css';
-            fontAwesomeLink.rel = 'stylesheet';
-            fontAwesomeLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css';
-            head.appendChild(fontAwesomeLink);
-        }
-        
-        // إضافة CSS مخصص للتنسيق
-        if (!head.querySelector('#ticker-custom-css')) {
-            const customStyle = iframe.contentDocument.createElement('style');
-            customStyle.id = 'ticker-custom-css';
-            customStyle.textContent = `
-                .predictions-container {
-                    margin: 0 10px;
-                    font-weight: bold;
-                }
-                .text-success { color: #28a745 !important; }
-                .text-danger { color: #dc3545 !important; }
-                .text-warning { color: #ffc107 !important; }
-                .text-info { color: #17a2b8 !important; }
-                .text-primary { color: #007bff !important; }
-                .text-muted { color: #6c757d !important; }
-                .fas, .fab {
-                    margin: 0 5px;
-                    animation: pulse 2s infinite;
-                }
-                @keyframes pulse {
-                    0% { opacity: 1; }
-                    50% { opacity: 0.7; }
-                    100% { opacity: 1; }
-                }
-            `;
-            head.appendChild(customStyle);
+        if (!head.querySelector('link[href*="font-awesome"]')) {
+            const link = iframe.contentDocument.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css';
+            head.appendChild(link);
         }
     }
 }
