@@ -52,47 +52,44 @@
     </iframe>
 </div>
 
-<div id="bitcoin-prediction" style="
-    background: #1a1a1a;
-    border: 2px solid #4caf50;
-    border-radius: 10px;
-    padding: 15px;
-    color: #4caf50;
-    text-align: center;
-    font-family: Arial;
-    margin: 20px 0;
-    font-size: 1.2em;
-">
-    جاري تحميل التنبؤ...
-</div>
+  <h1 style="text-align: center; color: #4caf50;">نتائج تنبؤ البيتكوين</h1>
+    
+    <div class="prediction-box" id="prediction-display">
+        جاري تحميل التنبؤات...
+    </div>
+    
+    <div class="price-box" id="current-price">
+        السعر الحالي: جاري التحميل...
+    </div>
+    
+    <div class="update-time" id="last-update">
+        آخر تحديث: --
+    </div>
 
-<script>
-// انتظار تحميل الصفحة كاملة
-document.addEventListener('DOMContentLoaded', function() {
-    
-    function checkForPrediction() {
-        const prediction = localStorage.getItem('bitcoinPredictionText');
-        const element = document.getElementById('bitcoin-prediction');
-        
-        console.log('البحث عن التنبؤ:', prediction); // للتأكد
-        
-        if (prediction) {
-            element.textContent = prediction;
-            element.style.color = '#4caf50';
-            console.log('تم العثور على التنبؤ:', prediction);
-        } else {
-            element.textContent = 'في انتظار البيانات من الصفحة الأولى...';
-            element.style.color = '#ff9800';
+    <script>
+        function loadBitcoinData() {
+            try {
+                const savedData = localStorage.getItem('bitcoinPrediction');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    
+                    document.getElementById('prediction-display').textContent = data.predictionText;
+                    document.getElementById('current-price').textContent = `السعر الحالي: $${data.currentPrice.toFixed(2)}`;
+                    document.getElementById('last-update').textContent = `آخر تحديث: ${data.lastUpdate}`;
+                } else {
+                    document.getElementById('prediction-display').textContent = 'لا توجد بيانات متاحة';
+                }
+            } catch (error) {
+                console.error('خطأ في تحميل البيانات:', error);
+                document.getElementById('prediction-display').textContent = 'خطأ في تحميل البيانات';
+            }
         }
-    }
-    
-    // فحص فوري
-    checkForPrediction();
-    
-    // فحص كل 3 ثوان
-    setInterval(checkForPrediction, 3000);
-});
-</script>
+
+        // تحميل البيانات عند فتح الصفحة
+        document.addEventListener('DOMContentLoaded', loadBitcoinData);
+
+        // تحديث البيانات كل 30 ثانية
+        setInterval(loadBitcoinData, 30000);
 
         
         <main class="cards-grid">
