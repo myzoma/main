@@ -1095,8 +1095,8 @@ html {
     
     /* الخلفية والحدود */
     background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    border: 3px solid #4caf50;
-    border-radius: 15px;
+    border: 1px solid #4caf50;
+    border-radius: 10px;
     box-shadow: 
         0 8px 32px rgba(0, 0, 0, 0.3),
         0 0 25px rgba(76, 175, 80, 0.4),
@@ -1104,31 +1104,21 @@ html {
     
     /* النص */
     color: #4caf50;
-    font-family: 'Arial', 'Tahoma', 'Segoe UI', sans-serif;
+    font-family: 'Tajawal', 'Tahoma', 'Segoe UI', sans-serif;
     font-size: 1.4em;
     font-weight: bold;
     text-align: center;
     line-height: 1.6;
     text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
     direction: rtl;
-    .prediction-display {
-    unicode-bidi: bidi-override;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+   
         
     /* تأثيرات الانتقال */
     transition: all 0.3s ease-in-out;
     position: relative;
     overflow: hidden;
 }
-/* تحسينات إضافية للنص العربي */
-.prediction-display {
-    unicode-bidi: bidi-override;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
+
 
 /* تأثير الإضاءة المتحركة */
 .prediction-display::before {
