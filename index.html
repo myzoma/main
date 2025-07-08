@@ -51,47 +51,6 @@
         style="border: none; background: #000; display: block;">
     </iframe>
 </div>
-
-  <h1 style="text-align: center; color: #4caf50;">نتائج تنبؤ البيتكوين</h1>
-    
-    <div class="prediction-box" id="prediction-display">
-        جاري تحميل التنبؤات...
-    </div>
-    
-    <div class="price-box" id="current-price">
-        السعر الحالي: جاري التحميل...
-    </div>
-    
-    <div class="update-time" id="last-update">
-        آخر تحديث: --
-    </div>
-
-    <script>
-        function loadBitcoinData() {
-            try {
-                const savedData = localStorage.getItem('bitcoinPrediction');
-                if (savedData) {
-                    const data = JSON.parse(savedData);
-                    
-                    document.getElementById('prediction-display').textContent = data.predictionText;
-                    document.getElementById('current-price').textContent = `السعر الحالي: $${data.currentPrice.toFixed(2)}`;
-                    document.getElementById('last-update').textContent = `آخر تحديث: ${data.lastUpdate}`;
-                } else {
-                    document.getElementById('prediction-display').textContent = 'لا توجد بيانات متاحة';
-                }
-            } catch (error) {
-                console.error('خطأ في تحميل البيانات:', error);
-                document.getElementById('prediction-display').textContent = 'خطأ في تحميل البيانات';
-            }
-        }
-
-        // تحميل البيانات عند فتح الصفحة
-        document.addEventListener('DOMContentLoaded', loadBitcoinData);
-
-        // تحديث البيانات كل 30 ثانية
-        setInterval(loadBitcoinData, 30000);
-
-        
         <main class="cards-grid">
             <!-- البطاقات ستظهر هنا تلقائياً -->
         </main>
