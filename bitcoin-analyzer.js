@@ -1,8 +1,8 @@
 class BitcoinAnalyzer {
     constructor() {
         this.period = 25;
-        this.colorUp = '#00ff00';
-        this.colorDown = '#d42583';
+        this.colorUp = '#28a745';
+        this.colorDown = '#dc3545';
     }
 
     async fetchBinanceData() {
@@ -155,66 +155,109 @@ class BitcoinAnalyzer {
 
     generateHTML(analysis) {
         if (!analysis) {
-            return '<div style="color: red; padding: 20px;">فشل في التحليل</div>';
+            return '<div style="color: #dc3545; padding: 20px; text-align: center;">فشل في التحليل</div>';
         }
 
-        // إنشاء الأهداف المتتابعة
+        // جدول بيانات الحجم مع تصميم متناسق
+        const volumeTableHTML = `
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                    <thead>
+                        <tr style="background: linear-gradient(135deg, #f8f9fa, #e9ecef);">
+                            <th style="padding: 12px; border: 1px solid #dee2e6; color: #495057; font-weight: 600;">الفترة</th>
+                            <th style="padding: 12px; border: 1px solid #dee2e6; color: #495057; font-weight: 600;">Delta Volume</th>
+                            <th style="padding: 12px; border: 1px solid #dee2e6; color: #495057; font-weight: 600;">Total Volume</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: #fff;">
+                            <td style="padding: 12px; border: 1px solid #dee2e6; color: #6c757d;">${this.period * 2} - ${this.period}</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6; color: ${analysis.volumeData.color1}; font-weight: 500;">${this.formatVolume(analysis.volumeData.delta1)}</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6; color: #495057;">${this.formatVolume(analysis.volumeData.total1)}</td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 12px; border: 1px solid #dee2e6; color: #6c757d;">${this.period * 3} - ${this.period * 2}</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6; color: ${analysis.volumeData.color2}; font-weight: 500;">${this.formatVolume(analysis.volumeData.delta2)}</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6; color: #495057;">${this.formatVolume(analysis.volumeData.total2)}</td>
+                        </tr>
+                        <tr style="background: #fff;">
+                            <td style="padding: 12px; border: 1px solid #dee2e6; color: #6c757d;">${this.period * 4} - ${this.period * 3}</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6; color: ${analysis.volumeData.color3}; font-weight: 500;">${this.formatVolume(analysis.volumeData.delta3)}</td>
+                            <td style="padding: 12px; border: 1px solid #dee2e6; color: #495057;">${this.formatVolume(analysis.volumeData.total3)}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        `;
+
+        // الأهداف المستقبلية بشكل أفقي
         const targetsHTML = analysis.futureTrend.slice(0, 10).map(target => 
-            `<div style="padding: 8px; border-bottom: 1px solid #eee; color: ${analysis.trendColor};">
-                الهدف ${target.index + 1}: $${this.formatPrice(target.price)}
+            `<div style="
+                display: inline-block; 
+                margin: 8px; 
+                padding: 12px 16px; 
+                background: linear-gradient(135deg, #fff, #f8f9fa); 
+                border: 2px solid ${analysis.trendColor}; 
+                border-radius: 8px; 
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                transition: transform 0.2s ease;
+                min-width: 120px;
+                text-align: center;
+            " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div style="font-size: 12px; color: #6c757d; margin-bottom: 4px;">الهدف ${target.index + 1}</div>
+                <div style="font-size: 16px; font-weight: 600; color: ${analysis.trendColor};">$${this.formatPrice(target.price)}</div>
             </div>`
         ).join('');
 
-        // جدول بيانات الحجم حرفياً من المؤشر
-        const volumeTableHTML = `
-            <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
-                <tr style="background: #f0f0f0;">
-                    <th style="padding: 8px; border: 1px solid #ddd;">الفترة</th>
-                    <th style="padding: 8px; border: 1px solid #ddd;">Delta</th>
-                    <th style="padding: 8px; border: 1px solid #ddd;">Total</th>
-                </tr>
-                <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${this.period * 2} - ${this.period}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd; color: ${analysis.volumeData.color1};">${this.formatVolume(analysis.volumeData.delta1)}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${this.formatVolume(analysis.volumeData.total1)}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${this.period * 3} - ${this.period * 2}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd; color: ${analysis.volumeData.color2};">${this.formatVolume(analysis.volumeData.delta2)}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${this.formatVolume(analysis.volumeData.total2)}</td>
-                </tr>
-                <tr>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${this.period * 4} - ${this.period * 3}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd; color: ${analysis.volumeData.color3};">${this.formatVolume(analysis.volumeData.delta3)}</td>
-                    <td style="padding: 8px; border: 1px solid #ddd;">${this.formatVolume(analysis.volumeData.total3)}</td>
-                </tr>
-            </table>
-        `;
-
         return `
-            <div style="max-width: 800px; margin: 20px auto; padding: 20px; border: 2px solid ${analysis.trendColor}; border-radius: 10px; background: #f9f9f9;">
+            <div style="max-width: 1000px; margin: 20px auto; padding: 25px; background: #fff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
                 
-                <h3 style="text-align: center; color: #333;">Three Step Future-Trend [BigBeluga] - Bitcoin Analysis</h3>
+                <div style="text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #e9ecef;">
+                    <h2 style="color: #343a40; margin: 0; font-size: 24px; font-weight: 700;">Three Step Future-Trend</h2>
+                    <p style="color: #6c757d; margin: 8px 0 0 0; font-size: 14px;">Bitcoin Analysis - BigBeluga Indicator</p>
+                </div>
                 
-                <div style="background: white; padding: 15px; margin: 15px 0; border-radius: 8px;">
-                    <div><strong>السعر الحالي:</strong> $${this.formatPrice(analysis.currentPrice)}</div>
-                    <div><strong>الاتجاه:</strong> <span style="color: ${analysis.trendColor};">${analysis.trend}</span></div>
-                    <div><strong>Volume Delta:</strong> <span style="color: ${analysis.trendColor};">${this.formatVolume(analysis.volDelta)}</span></div>
-                    <div><strong>Price Diff:</strong> ${this.formatPrice(analysis.diff)}</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
+                    <div style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); padding: 20px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 14px; color: #6c757d; margin-bottom: 8px;">السعر الحالي</div>
+                        <div style="font-size: 24px; font-weight: 700; color: #343a40;">$${this.formatPrice(analysis.currentPrice)}</div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, ${analysis.trendColor}15, ${analysis.trendColor}25); padding: 20px; border-radius: 10px; text-align: center; border: 2px solid ${analysis.trendColor};">
+                        <div style="font-size: 14px; color: #6c757d; margin-bottom: 8px;">الاتجاه</div>
+                        <div style="font-size: 20px; font-weight: 600; color: ${analysis.trendColor};">${analysis.trend}</div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); padding: 20px; border-radius: 10px; text-align: center;">
+                        <div style="font-size: 14px; color: #6c757d; margin-bottom: 8px;">Volume Delta</div>
+                        <div style="font-size: 18px; font-weight: 600; color: ${analysis.trendColor};">${this.formatVolume(analysis.volDelta)}</div>
+                    </div>
                 </div>
 
-                <h4 style="color: #333;">الأهداف المستقبلية المتتابعة:</h4>
-                <div style="background: white; border-radius: 8px; margin: 15px 0;">
-                    ${targetsHTML}
-                </div>
-
-                <h4 style="color: #333;">بيانات الحجم (Volume Data):</h4>
-                <div style="background: white; padding: 15px; border-radius: 8px;">
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: #343a40; margin-bottom: 20px; font-size: 20px; font-weight: 600; border-bottom: 2px solid #e9ecef; padding-bottom: 10px;">
+                        📊 بيانات الحجم (Volume Data)
+                    </h3>
                     ${volumeTableHTML}
                 </div>
 
-                <div style="text-align: center; margin-top: 15px; color: #666; font-size: 12px;">
-                    Period: ${this.period} | آخر تحديث: ${new Date().toLocaleString('ar-SA')}
+                              <div style="margin-bottom: 20px;">
+                    <h3 style="color: #343a40; margin-bottom: 20px; font-size: 20px; font-weight: 600; border-bottom: 2px solid #e9ecef; padding-bottom: 10px;">
+                        🎯 الأهداف المستقبلية المتتابعة
+                    </h3>
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #f8f9fa, #ffffff); border-radius: 10px; border: 1px solid #dee2e6;">
+                        ${targetsHTML}
+                    </div>
+                </div>
+
+                <div style="text-align: center; margin-top: 25px; padding-top: 20px; border-top: 1px solid #e9ecef;">
+                    <div style="display: inline-flex; align-items: center; gap: 15px; color: #6c757d; font-size: 13px;">
+                        <span>📈 Period: ${this.period}</span>
+                        <span>•</span>
+                        <span>🕐 آخر تحديث: ${new Date().toLocaleString('ar-SA')}</span>
+                        <span>•</span>
+                        <span>💹 Price Diff: ${this.formatPrice(analysis.diff)}</span>
+                    </div>
                 </div>
             </div>
         `;
@@ -223,7 +266,7 @@ class BitcoinAnalyzer {
     async run() {
         const data = await this.fetchBinanceData();
         if (!data) {
-            return '<div style="color: red; padding: 20px;">فشل في جلب البيانات</div>';
+            return '<div style="color: #dc3545; padding: 20px; text-align: center; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; margin: 20px;">فشل في جلب البيانات من Binance API</div>';
         }
 
         const analysis = this.futureTrend(data);
@@ -234,14 +277,40 @@ class BitcoinAnalyzer {
 // تشغيل التحليل
 async function showAnalysis() {
     const container = document.getElementById('analysis-results');
-    if (!container) return;
+    if (!container) {
+        console.error('العنصر analysis-results غير موجود');
+        return;
+    }
 
-    container.innerHTML = '<div style="text-align: center; padding: 40px;">جاري التحليل...</div>';
+    container.innerHTML = `
+        <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 10px; margin: 20px auto; max-width: 400px;">
+            <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid #e9ecef; border-top: 4px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <div style="margin-top: 15px; color: #6c757d; font-size: 16px;">جاري تحليل البيانات...</div>
+        </div>
+        <style>
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
+    `;
 
-    const analyzer = new BitcoinAnalyzer();
-    const result = await analyzer.run();
-    container.innerHTML = result;
+    try {
+        const analyzer = new BitcoinAnalyzer();
+        const result = await analyzer.run();
+        container.innerHTML = result;
+    } catch (error) {
+        console.error('خطأ في التحليل:', error);
+        container.innerHTML = `
+            <div style="color: #dc3545; padding: 20px; text-align: center; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; margin: 20px;">
+                ❌ حدث خطأ في التحليل: ${error.message}
+            </div>
+        `;
+    }
 }
 
+// تشغيل فوري
 showAnalysis();
+
+// تحديث كل 5 دقائق
 setInterval(showAnalysis, 5 * 60 * 1000);
