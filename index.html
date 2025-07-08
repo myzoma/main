@@ -54,50 +54,161 @@
     <div class="prediction-text">جاري تحميل التنبؤات...</div>
 </div>
 
+<div class="prediction-display" id="prediction-display">
+    <div class="prediction-icon">₿</div>
+    <div class="prediction-text" id="prediction-text">جاري تحميل التنبؤات...</div>
+</div>
+
 <style>
 .prediction-display {
-    max-width: 600px;
+    max-width: 700px;
     margin: 30px auto;
-    padding: 25px;
+    padding: 30px 25px;
     background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
-    border: 2px solid #4caf50;
+    border: 3px solid #4caf50;
     border-radius: 20px;
     box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.3),
+        0 10px 30px rgba(0, 0, 0, 0.4),
+        0 0 25px rgba(76, 175, 80, 0.3),
         inset 0 1px 0 rgba(255, 255, 255, 0.1);
     text-align: center;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.prediction-display::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #4caf50, #00ff00, #4caf50, #00ff00);
+    border-radius: 20px;
+    z-index: -1;
+    animation: borderGlow 3s linear infinite;
+}
+
+@keyframes borderGlow {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
 }
 
 .prediction-icon {
-    font-size: 2.5em;
+    font-size: 3em;
     color: #ffa500;
-    margin-bottom: 15px;
-    text-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+    margin-bottom: 20px;
+    text-shadow: 
+        0 0 20px rgba(255, 165, 0, 0.8),
+        0 0 40px rgba(255, 165, 0, 0.4);
+    animation: iconPulse 2s ease-in-out infinite;
+    display: block;
+}
+
+@keyframes iconPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 .prediction-text {
     color: #4caf50;
-    font-family: 'Arial', sans-serif;
-    font-size: 1.2em;
+    font-family: 'Arial', 'Tahoma', sans-serif;
+    font-size: 1.3em;
     font-weight: bold;
-    line-height: 1.4;
+    line-height: 1.5;
+    text-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+    word-wrap: break-word;
+    direction: rtl;
 }
 
 .prediction-display:hover {
-    transform: translateY(-3px);
+    transform: translateY(-5px);
     box-shadow: 
-        0 15px 40px rgba(0, 0, 0, 0.4),
-        0 0 30px rgba(76, 175, 80, 0.3);
+        0 20px 50px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(76, 175, 80, 0.5);
+    border-color: #00ff00;
+}
+
+.prediction-display:hover .prediction-icon {
+    color: #ffff00;
+    transform: scale(1.2) rotate(10deg);
+}
+
+.prediction-display:hover .prediction-text {
+    color: #00ff00;
+}
+
+/* للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .prediction-display {
+        max-width: 95%;
+        padding: 20px 15px;
+        margin: 20px auto;
+    }
+    
+    .prediction-icon {
+        font-size: 2.2em;
+        margin-bottom: 15px;
+    }
+    
+    .prediction-text {
+        font-size: 1.1em;
+    }
+}
+
+/* للشاشات الكبيرة */
+@media (min-width: 1200px) {
+    .prediction-display {
+        max-width: 800px;
+        padding: 40px 30px;
+    }
+    
+    .prediction-icon {
+        font-size: 3.5em;
+    }
+    
+    .prediction-text {
+        font-size: 1.5em;
+    }
+}
+
+/* تأثير التحميل */
+.prediction-display.loading .prediction-text {
+    animation: textPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* تأثير النجاح */
+.prediction-display.success {
+    border-color: #00ff00;
+    animation: successGlow 0.5s ease-in-out;
+}
+
+@keyframes successGlow {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+    100% { transform: scale(1); }
+}
+
+/* تأثير الخطأ */
+.prediction-display.error {
+    border-color: #ff4444;
+    background: linear-gradient(145deg, #2d1a1a, #3d2a2a);
+}
+
+.prediction-display.error .prediction-text {
+    color: #ff4444;
+}
+
+.prediction-display.error .prediction-icon {
+    color: #ff6666;
 }
 </style>
-
-<script>
-// تحديث النص فقط
-function updatePredictionText(newText) {
-    document.querySelector('.prediction-text').textContent = newText;
-}
-</script>
 
 
 </div>
