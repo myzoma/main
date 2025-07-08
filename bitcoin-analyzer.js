@@ -10,7 +10,7 @@ class BitcoinAnalyzer {
     // جلب البيانات من Binance API
     async fetchBinanceData() {
         try {
-            const response = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=200');
+            const response = await fetch('https://api1.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=200');
             const klines = await response.json();
             
             this.data = klines.map(kline => ({
