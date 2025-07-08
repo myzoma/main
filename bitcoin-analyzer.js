@@ -1,6 +1,8 @@
 class BitcoinAnalyzer {
     constructor() {
         this.period = 25;
+        this.colorUp = '#00ff00';
+        this.colorDown = '#d42583';
     }
 
     async fetchBinanceData() {
@@ -16,171 +18,215 @@ class BitcoinAnalyzer {
                 volume: parseFloat(kline[5])
             }));
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error:', error);
             return null;
         }
     }
 
-    sum(array, length) {
-        if (!array || array.length < length) return 0;
-        return array.slice(-length).reduce((sum, val) => sum + val, 0);
+    // ta.highest(50) - أعلى قيمة في 50 فترة
+    highest(data, period) {
+        return Math.max(...data.slice(-period).map(d => d.high));
     }
 
-    analyzeFutureTrend(data) {
-        if (!data || data.length < this.period * 3) {
-            return null;
-        }
+    // ta.lowest(50) - أقل قيمة في 50 فترة  
+    lowest(data, period) {
+        return Math.min(...data.slice(-period).map(d => d.low));
+    }
 
-        // حساب delta volume حسب المؤشر الأصلي
-        const deltaVolume = data.map(candle => 
-            candle.close > candle.open ? candle.volume : -candle.volume
-        );
+    // math.sum - مجموع القيم
+    mathSum(array, period) {
+        if (array.length < period) return 0;
+        return array.slice(-period).reduce((sum, val) => sum + val, 0);
+    }
+
+    // math.avg - متوسط القيم
+    mathAvg(...values) {
+        return values.reduce((sum, val) => sum + val, 0) / values.length;
+    }
+
+    // تطبيق المؤشر حرفياً
+    futureTrend(data) {
+        if (data.length < this.period * 3) return null;
 
         const closes = data.map(d => d.close);
         const volumes = data.map(d => d.volume);
+        const opens = data.map(d => d.open);
 
-        // حساب delta لكل فترة (حرفياً من المؤشر)
-        const delta1 = this.sum(deltaVolume, this.period);
-        const delta2 = this.sum(deltaVolume, this.period * 2) - delta1;
-        const delta3 = this.sum(deltaVolume, this.period * 3) - delta1 - delta2;
+        // حساب delta_vol حرفياً من الكود
+        const deltaVol = [];
+        for (let i = 0; i < data.length; i++) {
+            deltaVol[i] = closes[i] > opens[i] ? volumes[i] : -volumes[i];
+        }
 
-        // حساب total volume لكل فترة
-        const total1 = this.sum(volumes, this.period);
-        const total2 = this.sum(volumes, this.period * 2) - total1;
-        const total3 = this.sum(volumes, this.period * 3) - total1 - total2;
+        // حساب delta1, delta2, delta3 حرفياً
+        const delta1 = this.mathSum(deltaVol, this.period);
+        const delta2 = this.mathSum(deltaVol, this.period * 2) - delta1;
+        const delta3 = this.mathSum(deltaVol, this.period * 3) - delta1 - delta2;
 
-        // حساب القيم المستقبلية
+        // حساب total1, total2, total3 حرفياً
+        const total1 = this.mathSum(volumes, this.period);
+        const total2 = this.mathSum(volumes, this.period * 2) - total1;
+        const total3 = this.mathSum(volumes, this.period * 3) - total1 - total2;
+
+        // تحديد الألوان حرفياً
+        const color1 = delta1 > 0 ? this.colorUp : this.colorDown;
+        const color2 = delta2 > 0 ? this.colorUp : this.colorDown;
+        const color3 = delta3 > 0 ? this.colorUp : this.colorDown;
+
+        // حساب values array حرفياً
         const values = [];
-        const deltaValues = [];
-
-        for (let i = 0; i < this.period; i++) {
+        const delta = [];
+        
+        for (let i = 0; i < this.period + 1; i++) {
+            // math.avg(src[i], src[i + period], src[i + period * 2])
             const idx1 = closes.length - 1 - i;
             const idx2 = closes.length - 1 - i - this.period;
             const idx3 = closes.length - 1 - i - this.period * 2;
-
-            const avgPrice = (
-                (closes[idx1] || closes[closes.length - 1]) +
-                (closes[idx2] || closes[closes.length - 1]) +
-                (closes[idx3] || closes[closes.length - 1])
-            ) / 3;
-
-            const avgDelta = (
-                (deltaVolume[idx1] || 0) +
-                (deltaVolume[idx2] || 0) +
-                (deltaVolume[idx3] || 0)
-            ) / 3;
-
-            values.push(avgPrice);
-            deltaValues.push(avgDelta);
+            
+            const val1 = closes[idx1] || closes[closes.length - 1];
+            const val2 = closes[idx2] || closes[closes.length - 1];
+            const val3 = closes[idx3] || closes[closes.length - 1];
+            
+            values[i] = this.mathAvg(val1, val2, val3);
+            
+            // math.avg(delta_vol[i], delta_vol[i + period], delta_vol[i + period * 2])
+            const dval1 = deltaVol[idx1] || 0;
+            const dval2 = deltaVol[idx2] || 0;
+            const dval3 = deltaVol[idx3] || 0;
+            
+            delta[i] = this.mathAvg(dval1, dval2, dval3);
         }
 
-        const currentPrice = closes[closes.length - 1];
-        const diff = currentPrice - values[0];
-        const avgVolDelta = deltaValues.reduce((sum, val) => sum + val, 0) / deltaValues.length;
+        // عكس المصفوفة حرفياً - values.reverse()
+        values.reverse();
 
-        // إنشاء الأهداف المستقبلية
-        const targets = [];
-        for (let i = 0; i < 10; i++) {
-            if (values[i]) {
-                targets.push({
-                    target: i + 1,
-                    price: diff + values[i],
-                    trend: avgVolDelta > 0 ? 'صاعد' : 'هابط'
-                });
-            }
+        // حساب diff حرفياً - series float diff = src - values.first()
+        const currentClose = closes[closes.length - 1];
+        const diff = currentClose - values[0];
+
+        // حساب vol_delta حرفياً - series float vol_delta = delta.avg()
+        const volDelta = delta.reduce((sum, val) => sum + val, 0) / delta.length;
+
+        // إنشاء future_trend حرفياً
+        const futureTrend = [];
+        for (let i = 0; i < this.period; i++) {
+            // chart.point.from_index(bar_index + i, diff + values.get(i))
+            const futurePrice = diff + values[i];
+            futureTrend.push({
+                index: i,
+                price: futurePrice
+            });
         }
+
+        // تحديد اللون النهائي حرفياً - color := vol_delta > 0 ? color_up : color_dn
+        const finalColor = volDelta > 0 ? this.colorUp : this.colorDown;
 
         return {
-            currentPrice,
-            trend: avgVolDelta > 0 ? 'صاعد' : 'هابط',
-            trendColor: avgVolDelta > 0 ? '#00ff00' : '#d42583',
-            targets,
+            currentPrice: currentClose,
+            trend: volDelta > 0 ? 'صاعد' : 'هابط',
+            trendColor: finalColor,
+            futureTrend: futureTrend,
             volumeData: {
                 delta1: delta1,
-                delta2: delta2,
+                delta2: delta2, 
                 delta3: delta3,
                 total1: total1,
                 total2: total2,
-                total3: total3
+                total3: total3,
+                color1: color1,
+                color2: color2,
+                color3: color3
             },
-            avgVolumeDelta: avgVolDelta
+            volDelta: volDelta,
+            diff: diff
         };
     }
 
-    formatNumber(num) {
-        return new Intl.NumberFormat('en-US', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        }).format(num);
+    formatVolume(vol) {
+        if (Math.abs(vol) >= 1e9) return (vol / 1e9).toFixed(2) + 'B';
+        if (Math.abs(vol) >= 1e6) return (vol / 1e6).toFixed(2) + 'M';
+        if (Math.abs(vol) >= 1e3) return (vol / 1e3).toFixed(2) + 'K';
+        return vol.toFixed(2);
+    }
+
+    formatPrice(price) {
+        return price.toFixed(2);
     }
 
     generateHTML(analysis) {
         if (!analysis) {
-            return '<div style="color: red; padding: 20px;">فشل في التحليل - بيانات غير كافية</div>';
+            return '<div style="color: red; padding: 20px;">فشل في التحليل</div>';
         }
 
-        const targetsHTML = analysis.targets.map(target => 
+        // إنشاء الأهداف المتتابعة
+        const targetsHTML = analysis.futureTrend.slice(0, 10).map(target => 
             `<div style="padding: 8px; border-bottom: 1px solid #eee; color: ${analysis.trendColor};">
-                الهدف ${target.target}: $${this.formatNumber(target.price)}
+                الهدف ${target.index + 1}: $${this.formatPrice(target.price)}
             </div>`
         ).join('');
 
+        // جدول بيانات الحجم حرفياً من المؤشر
+        const volumeTableHTML = `
+            <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                <tr style="background: #f0f0f0;">
+                    <th style="padding: 8px; border: 1px solid #ddd;">الفترة</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Delta</th>
+                    <th style="padding: 8px; border: 1px solid #ddd;">Total</th>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${this.period * 2} - ${this.period}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; color: ${analysis.volumeData.color1};">${this.formatVolume(analysis.volumeData.delta1)}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${this.formatVolume(analysis.volumeData.total1)}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${this.period * 3} - ${this.period * 2}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; color: ${analysis.volumeData.color2};">${this.formatVolume(analysis.volumeData.delta2)}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${this.formatVolume(analysis.volumeData.total2)}</td>
+                </tr>
+                <tr>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${this.period * 4} - ${this.period * 3}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd; color: ${analysis.volumeData.color3};">${this.formatVolume(analysis.volumeData.delta3)}</td>
+                    <td style="padding: 8px; border: 1px solid #ddd;">${this.formatVolume(analysis.volumeData.total3)}</td>
+                </tr>
+            </table>
+        `;
+
         return `
-            <div style="max-width: 800px; margin: 20px auto; padding: 20px; border: 2px solid ${analysis.trendColor}; border-radius: 10px; background: #f9f9f9; font-family: Arial;">
+            <div style="max-width: 800px; margin: 20px auto; padding: 20px; border: 2px solid ${analysis.trendColor}; border-radius: 10px; background: #f9f9f9;">
                 
-                <h3 style="text-align: center; color: #333; margin-bottom: 20px;">
-                    تحليل البيتكوين - Three Step Future Trend
-                </h3>
+                <h3 style="text-align: center; color: #333;">Three Step Future-Trend [BigBeluga] - Bitcoin Analysis</h3>
                 
-                <div style="background: white; padding: 15px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                        <span><strong>السعر الحالي:</strong></span>
-                        <span>$${this.formatNumber(analysis.currentPrice)}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
-                        <span><strong>الاتجاه:</strong></span>
-                        <span style="color: ${analysis.trendColor}; font-weight: bold;">${analysis.trend}</span>
-                    </div>
-                    <div style="display: flex; justify-content: space-between;">
-                        <span><strong>متوسط دلتا الحجم:</strong></span>
-                        <span style="color: ${analysis.trendColor};">${this.formatNumber(analysis.avgVolumeDelta)}</span>
-                    </div>
+                <div style="background: white; padding: 15px; margin: 15px 0; border-radius: 8px;">
+                    <div><strong>السعر الحالي:</strong> $${this.formatPrice(analysis.currentPrice)}</div>
+                    <div><strong>الاتجاه:</strong> <span style="color: ${analysis.trendColor};">${analysis.trend}</span></div>
+                    <div><strong>Volume Delta:</strong> <span style="color: ${analysis.trendColor};">${this.formatVolume(analysis.volDelta)}</span></div>
+                    <div><strong>Price Diff:</strong> ${this.formatPrice(analysis.diff)}</div>
                 </div>
 
-                <h4 style="color: #333; margin-bottom: 15px;">الأهداف المستقبلية:</h4>
-                <div style="background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                <h4 style="color: #333;">الأهداف المستقبلية المتتابعة:</h4>
+                <div style="background: white; border-radius: 8px; margin: 15px 0;">
                     ${targetsHTML}
                 </div>
 
-                <div style="background: white; padding: 15px; margin-top: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    <h4 style="color: #333; margin-bottom: 10px;">بيانات الحجم:</h4>
-                    <div style="font-size: 14px;">
-                        <div>الفترة 1: Delta = ${this.formatNumber(analysis.volumeData.delta1)} | Total = ${this.formatNumber(analysis.volumeData.total1)}</div>
-                        <div>الفترة 2: Delta = ${this.formatNumber(analysis.volumeData.delta2)} | Total = ${this.formatNumber(analysis.volumeData.total2)}</div>
-                        <div>الفترة 3: Delta = ${this.formatNumber(analysis.volumeData.delta3)} | Total = ${this.formatNumber(analysis.volumeData.total3)}</div>
-                    </div>
+                <h4 style="color: #333;">بيانات الحجم (Volume Data):</h4>
+                <div style="background: white; padding: 15px; border-radius: 8px;">
+                    ${volumeTableHTML}
                 </div>
 
                 <div style="text-align: center; margin-top: 15px; color: #666; font-size: 12px;">
-                    آخر تحديث: ${new Date().toLocaleString('ar-SA')}
+                    Period: ${this.period} | آخر تحديث: ${new Date().toLocaleString('ar-SA')}
                 </div>
             </div>
         `;
     }
 
     async run() {
-        console.log('بدء التحليل...');
-        
         const data = await this.fetchBinanceData();
         if (!data) {
-            return '<div style="color: red; padding: 20px;">فشل في جلب البيانات من Binance</div>';
+            return '<div style="color: red; padding: 20px;">فشل في جلب البيانات</div>';
         }
 
-        console.log(`تم جلب ${data.length} شمعة`);
-        
-        const analysis = this.analyzeFutureTrend(data);
-        console.log('نتيجة التحليل:', analysis);
-        
+        const analysis = this.futureTrend(data);
         return this.generateHTML(analysis);
     }
 }
@@ -188,25 +234,14 @@ class BitcoinAnalyzer {
 // تشغيل التحليل
 async function showAnalysis() {
     const container = document.getElementById('analysis-results');
-    if (!container) {
-        console.error('العنصر analysis-results غير موجود');
-        return;
-    }
+    if (!container) return;
 
     container.innerHTML = '<div style="text-align: center; padding: 40px;">جاري التحليل...</div>';
 
-    try {
-        const analyzer = new BitcoinAnalyzer();
-        const result = await analyzer.run();
-        container.innerHTML = result;
-    } catch (error) {
-        console.error('خطأ:', error);
-        container.innerHTML = '<div style="color: red; padding: 20px;">حدث خطأ في التحليل</div>';
-    }
+    const analyzer = new BitcoinAnalyzer();
+    const result = await analyzer.run();
+    container.innerHTML = result;
 }
 
-// تشغيل فوري
 showAnalysis();
-
-// تحديث كل 5 دقائق
 setInterval(showAnalysis, 5 * 60 * 1000);
