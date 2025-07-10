@@ -53,24 +53,25 @@
         scrolling="no"
         style="border: none; background: #000; display: block;">
     </iframe>
-
+  // الأهداف المستقبلية بشكل أفقي
+        const targetsHTML = analysis.futureTrend.slice(0, 10).map(target => 
+            `<div style="
+                display: inline-block; 
+                margin: 8px; 
+                padding: 12px 16px; 
+                background: linear-gradient(135deg, #fff, #f8f9fa); 
+                border: 2px solid ${analysis.trendColor}; 
+                border-radius: 8px; 
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                transition: transform 0.2s ease;
+                min-width: 120px;
+                text-align: center;
+            " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                <div style="font-size: 12px; color: #6c757d; margin-bottom: 4px;">الهدف ${target.index + 1}</div>
+                <div style="font-size: 16px; font-weight: 600; color: ${analysis.trendColor};">$${this.formatPrice(target.price)}</div>
+            </div>`
 </div>
-<div class="prediction-display" id="prediction-display">
-    جاري تحميل التنبؤات...
-</div>
-<div id="controls"></div>
-<div id="analysis-results"></div>  <!-- ← هنا العنصر -->
-
- <div style="margin-bottom: 20px;">
-                    <h3 style="color: #343a40; margin-bottom: 20px; font-size: 20px; font-weight: 600; border-bottom: 2px solid #e9ecef; padding-bottom: 10px;">
-                        🎯 الأهداف المستقبلية المتتابعة
-                    </h3>
-                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #f8f9fa, #ffffff); border-radius: 10px; border: 1px solid #dee2e6;">
-                        ${targetsHTML}
-                    </div>
-                </div>
-
-
+  
 
         
         <main class="cards-grid">
