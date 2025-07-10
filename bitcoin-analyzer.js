@@ -7,8 +7,26 @@ class BitcoinAnalyzer {
 
     async fetchBinanceData() {
         try {
-            const response = await fetch('https://api1.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=200');
+            // إضافة headers للتأكد من قبول الطلب
+            const response = await fetch('https://api1.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1h&limit=200', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            // التحقق من حالة الاستجابة
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
             const klines = await response.json();
+            
+            // التحقق من وجود البيانات
+            if (!klines || !Array.isArray(klines) || klines.length === 0) {
+                throw new Error('لا توجد بيانات متاحة من API');
+            }
             
             return klines.map(kline => ({
                 open: parseFloat(kline[1]),
@@ -18,35 +36,45 @@ class BitcoinAnalyzer {
                 volume: parseFloat(kline[5])
             }));
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error fetching data:', error);
+            // إرجاع null بدلاً من throw للتعامل مع الخطأ بشكل أفضل
             return null;
         }
     }
 
     // ta.highest(50) - أعلى قيمة في 50 فترة
     highest(data, period) {
-        return Math.max(...data.slice(-period).map(d => d.high));
+        if (!data || data.length === 0) return 0;
+        const slice = data.slice(-period);
+        return Math.max(...slice.map(d => d.high));
     }
 
     // ta.lowest(50) - أقل قيمة في 50 فترة  
     lowest(data, period) {
-        return Math.min(...data.slice(-period).map(d => d.low));
+        if (!data || data.length === 0) return 0;
+        const slice = data.slice(-period);
+        return Math.min(...slice.map(d => d.low));
     }
 
     // math.sum - مجموع القيم
     mathSum(array, period) {
-        if (array.length < period) return 0;
-        return array.slice(-period).reduce((sum, val) => sum + val, 0);
+        if (!array || array.length < period) return 0;
+        return array.slice(-period).reduce((sum, val) => sum + (val || 0), 0);
     }
 
     // math.avg - متوسط القيم
     mathAvg(...values) {
-        return values.reduce((sum, val) => sum + val, 0) / values.length;
+        const validValues = values.filter(v => v !== null && v !== undefined && !isNaN(v));
+        if (validValues.length === 0) return 0;
+        return validValues.reduce((sum, val) => sum + val, 0) / validValues.length;
     }
 
     // تطبيق المؤشر حرفياً
     futureTrend(data) {
-        if (data.length < this.period * 3) return null;
+        if (!data || data.length < this.period * 3) {
+            console.error('البيانات غير كافية للتحليل');
+            return null;
+        }
 
         const closes = data.map(d => d.close);
         const volumes = data.map(d => d.volume);
@@ -143,6 +171,7 @@ class BitcoinAnalyzer {
     }
 
     formatVolume(vol) {
+        if (isNaN(vol) || vol === null || vol === undefined) return '0';
         if (Math.abs(vol) >= 1e9) return (vol / 1e9).toFixed(2) + 'B';
         if (Math.abs(vol) >= 1e6) return (vol / 1e6).toFixed(2) + 'M';
         if (Math.abs(vol) >= 1e3) return (vol / 1e3).toFixed(2) + 'K';
@@ -150,6 +179,7 @@ class BitcoinAnalyzer {
     }
 
     formatPrice(price) {
+        if (isNaN(price) || price === null || price === undefined) return '0.00';
         return price.toFixed(2);
     }
 
@@ -158,7 +188,7 @@ class BitcoinAnalyzer {
             return '<div style="color: #dc3545; padding: 20px; text-align: center;">فشل في التحليل</div>';
         }
 
-        // جدول بيانات الحجم مع تصميم متناسق
+        // جدول بيانات الحجم مع تصميق متناسق
         const volumeTableHTML = `
             <div style="overflow-x: auto;">
                 <table style="width: 100%; border-collapse: collapse; margin: 15px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
@@ -220,7 +250,7 @@ class BitcoinAnalyzer {
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px;">
                     <div style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); padding: 20px; border-radius: 10px; text-align: center;">
                         <div style="font-size: 14px; color: #6c757d; margin-bottom: 8px;">السعر الحالي</div>
-                        <div style="font-size: 24px; font-weight: 700; color: #343a40;">$${this.formatPrice(analysis.currentPrice)}</div>
+                                               <div style="font-size: 24px; font-weight: 700; color: #343a40;">$${this.formatPrice(analysis.currentPrice)}</div>
                     </div>
                     
                     <div style="background: linear-gradient(135deg, ${analysis.trendColor}15, ${analysis.trendColor}25); padding: 20px; border-radius: 10px; text-align: center; border: 2px solid ${analysis.trendColor};">
@@ -240,8 +270,8 @@ class BitcoinAnalyzer {
                     </h3>
                     ${volumeTableHTML}
                 </div>
-
-                              <div style="margin-bottom: 20px;">
+                
+                <div style="margin-bottom: 20px;">
                     <h3 style="color: #343a40; margin-bottom: 20px; font-size: 20px; font-weight: 600; border-bottom: 2px solid #e9ecef; padding-bottom: 10px;">
                         🎯 الأهداف المستقبلية المتتابعة
                     </h3>
@@ -264,12 +294,23 @@ class BitcoinAnalyzer {
     }
 
     async run() {
+        console.log('بدء جلب البيانات من Binance...');
+        
         const data = await this.fetchBinanceData();
         if (!data) {
+            console.error('فشل في جلب البيانات');
             return '<div style="color: #dc3545; padding: 20px; text-align: center; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; margin: 20px;">فشل في جلب البيانات من Binance API</div>';
         }
 
+        console.log(`تم جلب ${data.length} عنصر من البيانات`);
+        
         const analysis = this.futureTrend(data);
+        if (!analysis) {
+            console.error('فشل في تحليل البيانات');
+            return '<div style="color: #dc3545; padding: 20px; text-align: center; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; margin: 20px;">فشل في تحليل البيانات</div>';
+        }
+
+        console.log('تم التحليل بنجاح');
         return this.generateHTML(analysis);
     }
 }
@@ -278,10 +319,11 @@ class BitcoinAnalyzer {
 async function showAnalysis() {
     const container = document.getElementById('analysis-results');
     if (!container) {
-        console.error('العنصر analysis-results غير موجود');
+        console.error('العنصر analysis-results غير موجود في HTML');
         return;
     }
 
+    // إظهار شاشة التحميل
     container.innerHTML = `
         <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 10px; margin: 20px auto; max-width: 400px;">
             <div style="display: inline-block; width: 40px; height: 40px; border: 4px solid #e9ecef; border-top: 4px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite;"></div>
@@ -296,21 +338,36 @@ async function showAnalysis() {
     `;
 
     try {
+        console.log('إنشاء محلل جديد...');
         const analyzer = new BitcoinAnalyzer();
+        
+        console.log('بدء التحليل...');
         const result = await analyzer.run();
+        
+        console.log('عرض النتائج...');
         container.innerHTML = result;
+        
+        console.log('تم عرض النتائج بنجاح');
+        
     } catch (error) {
         console.error('خطأ في التحليل:', error);
         container.innerHTML = `
             <div style="color: #dc3545; padding: 20px; text-align: center; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 8px; margin: 20px;">
                 ❌ حدث خطأ في التحليل: ${error.message}
+                <br><small>تحقق من وحدة التحكم للمزيد من التفاصيل</small>
             </div>
         `;
     }
 }
 
-// تشغيل فوري
-showAnalysis();
+// التحقق من تحميل DOM قبل التشغيل
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', showAnalysis);
+} else {
+    // تشغيل فوري إذا كان DOM محمل بالفعل
+    showAnalysis();
+}
 
 // تحديث كل 5 دقائق
 setInterval(showAnalysis, 5 * 60 * 1000);
+
