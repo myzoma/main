@@ -55,7 +55,78 @@
     </iframe>
 
 </div>
-          
+          <!-- الأهداف المستقبلية -->
+<div id="future-targets-section" style="
+    width: 100%; 
+    max-width: 1200px; 
+    margin: 20px auto; 
+    background: #1a1a1a; 
+    border: 2px solid #4caf50;
+    border-radius: 10px; 
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+">
+    <div style="
+        text-align: center; 
+        margin-bottom: 15px; 
+        color: #4caf50; 
+        font-size: 18px; 
+        font-weight: bold;
+    ">
+        🎯 الأهداف المستقبلية المتتابعة
+    </div>
+    <div id="targets-container" style="text-align: center;">
+        جاري تحميل الأهداف...
+    </div>
+</div>
+
+<script>
+// دالة عرض الأهداف المستقبلية
+function displayFutureTargets() {
+    const targetsContainer = document.getElementById('targets-container');
+    if (!targetsContainer) return;
+
+    // محاولة الحصول على البيانات من bitcoin-analyzer.js
+    if (typeof window.predictor !== 'undefined' && window.predictor.lastAnalysis) {
+        const analysis = window.predictor.lastAnalysis;
+        if (analysis.futureTrend && analysis.futureTrend.length > 0) {
+            const targetsHTML = analysis.futureTrend.slice(0, 10).map(target =>
+                `<div style="
+                    display: inline-block; 
+                    margin: 8px; 
+                    padding: 12px 16px; 
+                    background: linear-gradient(135deg, #fff, #f8f9fa); 
+                    border: 2px solid ${analysis.trendColor || '#4caf50'}; 
+                    border-radius: 8px; 
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                    transition: transform 0.2s ease;
+                    min-width: 120px;
+                    text-align: center;
+                " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <div style="font-size: 12px; color: #6c757d; margin-bottom: 4px;">الهدف ${(target.index || 0) + 1}</div>
+                    <div style="font-size: 16px; font-weight: 600; color: ${analysis.trendColor || '#4caf50'};">$${target.price ? target.price.toFixed(2) : '0.00'}</div>
+                </div>`
+            ).join('');
+            
+            targetsContainer.innerHTML = targetsHTML;
+        } else {
+            targetsContainer.innerHTML = '<div style="color: #888;">لا توجد أهداف متاحة حالياً</div>';
+        }
+    } else {
+        targetsContainer.innerHTML = '<div style="color: #888;">جاري تحميل البيانات من المحلل...</div>';
+    }
+}
+
+// تشغيل الدالة عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    // انتظار تحميل bitcoin-analyzer.js
+    setTimeout(displayFutureTargets, 2000);
+    
+    // تحديث كل 30 ثانية
+    setInterval(displayFutureTargets, 30000);
+});
+</script>
+
         <main class="cards-grid">
             <!-- البطاقات ستظهر هنا تلقائياً -->
         </main>
