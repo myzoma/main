@@ -8,6 +8,23 @@
       <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     
+<script>
+  fetch("https://api.cryptometer.io/tickerlist/?e=binance&api_key=DL72n2xlIZtm695j125WF8WIQa71G40vd9tG2rJ3")
+    .then(response => response.json())
+    .then(data => {
+      console.log(data); // ✅ بيانات العملات
+      // مثال: عرض أول 5 رموز
+      const container = document.getElementById("tickers");
+      data.slice(0, 5).forEach(ticker => {
+        const div = document.createElement("div");
+        div.textContent = `${ticker.symbol}: ${ticker.price}`;
+        container.appendChild(div);
+      });
+    })
+    .catch(err => console.error("حدث خطأ:", err));
+</script>
+
+<div id="tickers" style="color:white;"></div>
 
 </head>
     
