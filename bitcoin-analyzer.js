@@ -281,7 +281,7 @@ generateHTML(analysis) {
     }
 
     // الأهداف المستقبلية بشكل أفقي
-    const targetsHTML = analysis.futureTrend.slice(0, 10).map(target =>
+    const targetsHTML = analysis.futureTrend.slice(0, 9).map(target =>
         `<div style="
             display: inline-block;
             margin: 8px;
@@ -317,8 +317,7 @@ generateHTML(analysis) {
                 font-size: 14px;
                 font-weight: 500;
             ">
-                :<i class="fa-brands fa-btc" style="color: #FFD43B;"></i>تحليل البيتكوين اليوم
-            </div>
+مسار البيتكوين اليوم :<i class="fa-brands fa-btc" style="color: #FFD43B;"></i>            </div>
             <div style="margin-top: 25px;">
                 ${targetsHTML}
             </div>
