@@ -281,27 +281,47 @@ generateHTML(analysis) {
     }
 
     // الأهداف المستقبلية بشكل أفقي
-    const targetsHTML = analysis.futureTrend.slice(0, 9).map(target =>
+    const targetsHTML = analysis.futureTrend.slice(0, 10).map(target =>
         `<div style="
             display: inline-block;
             margin: 8px;
             padding: 12px 16px;
             background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-            border: 1px solid #4caf50;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
+            box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
             transition: transform 0.2s ease;
             min-width: 120px;
             text-align: center;
         " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
             <div style="font-size: 12px; color: #888; margin-bottom: 4px;">الهدف ${target.index + 1}</div>
-            <div style="font-size: 16px; font-weight: 600; color: #4caf50;">$${this.formatPrice(target.price)}</div>
+            <div style="font-size: 16px; font-weight: 600; color: rgba(255, 255, 255, 0.9);">$${this.formatPrice(target.price)}</div>
         </div>`
     ).join('');
 
     return `
-        <div style="text-align: center; padding: 20px; background: #1a1a1a; border-radius: 10px; border: 2px solid #4caf50; box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);">
-            ${targetsHTML}
+        <div style="
+            text-align: center; 
+            padding: 20px; 
+            background: #1a1a1a; 
+            border-radius: 10px; 
+            border: 2px solid rgba(255, 255, 255, 0.3); 
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            position: relative;
+        ">
+            <div style="
+                position: absolute;
+                top: 15px;
+                right: 20px;
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 14px;
+                font-weight: 500;
+            ">
+                :<i class="fa-brands fa-btc" style="color: #FFD43B;"></i>تحليل البيتكوين اليوم
+            </div>
+            <div style="margin-top: 25px;">
+                ${targetsHTML}
+            </div>
         </div>
     `;
 }
