@@ -281,13 +281,13 @@ generateHTML(analysis) {
     }
 
     // الأهداف المستقبلية بشكل أفقي
-    const targetsHTML = analysis.futureTrend.slice(0, 10).map(target =>
+    const targetsHTML = analysis.futureTrend.slice(0, 9).map(target =>
         `<div style="
             display: inline-block;
             margin: 8px;
             padding: 12px 16px;
             background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
-            border: 2px solid #4caf50;
+            border: 1px solid #4caf50;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
             transition: transform 0.2s ease;
