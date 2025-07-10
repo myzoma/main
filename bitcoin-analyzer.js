@@ -277,7 +277,7 @@ class BitcoinAnalyzer {
 
 generateHTML(analysis) {
     if (!analysis) {
-        return '<div style="color: #dc3545; padding: 20px; text-align: center;">فشل في التحليل</div>';
+        return '';
     }
 
     // الأهداف المستقبلية بشكل أفقي
@@ -286,30 +286,26 @@ generateHTML(analysis) {
             display: inline-block;
             margin: 8px;
             padding: 12px 16px;
-            background: linear-gradient(135deg, #fff, #f8f9fa);
-            border: 2px solid ${analysis.trendColor};
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            border: 2px solid #4caf50;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(76, 175, 80, 0.3);
             transition: transform 0.2s ease;
             min-width: 120px;
             text-align: center;
         " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
-            <div style="font-size: 12px; color: #6c757d; margin-bottom: 4px;">الهدف ${target.index + 1}</div>
-            <div style="font-size: 16px; font-weight: 600; color: ${analysis.trendColor};">$${this.formatPrice(target.price)}</div>
+            <div style="font-size: 12px; color: #888; margin-bottom: 4px;">الهدف ${target.index + 1}</div>
+            <div style="font-size: 16px; font-weight: 600; color: #4caf50;">$${this.formatPrice(target.price)}</div>
         </div>`
     ).join('');
 
     return `
-        <div style="margin-bottom: 20px;">
-            <h3 style="color: #343a40; margin-bottom: 20px; font-size: 20px; font-weight: 600; border-bottom: 2px solid #e9ecef; padding-bottom: 10px;">
-                🎯 الأهداف المستقبلية المتتابعة
-            </h3>
-            <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #f8f9fa, #ffffff); border-radius: 10px; border: 1px solid #dee2e6;">
-                ${targetsHTML}
-            </div>
+        <div style="text-align: center; padding: 20px; background: #1a1a1a; border-radius: 10px; border: 2px solid #4caf50; box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);">
+            ${targetsHTML}
         </div>
     `;
 }
+
 
     // إنشاء رسم بياني بسيط للأهداف المستقبلية
     generateChart(analysis) {
