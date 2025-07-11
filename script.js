@@ -101,27 +101,6 @@ const pages = [
         ]
     },
      {
-        id: 9,
-        title: "مؤشر الخوف و الطمع",
-        description: "مؤشر يحلل مشاعر المتداولين",
-        icon: "fa-solid fa-chart-line",
-        url: "https://cfgi.io/bitcoin-fear-greed-index/",
-        features: [
-          " Historical Values"
-
-"Extreme greed"
-80+
-"Yesterday"
-"Greed"
-70+
-"Neutral"
-58-
-
-"Greed"
-67
-        ]
-    },
-    {
         id: 7,
         title: "اخبار السوق",
         description: "اقرأ أحدث المقالات والأخبار",
