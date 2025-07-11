@@ -1267,4 +1267,13 @@ html {
 .status-item:hover {
     transform: translateY(-2px);
 }
-
+ /* دمج مع لون الهيدر */
+    mix-blend-mode: overlay;
+    opacity: 0.3;
+    
+    /* تذويب الحواف */
+    mask: radial-gradient(circle, black 30%, rgba(0,0,0,0.5) 60%, transparent 100%);
+    -webkit-mask: radial-gradient(circle, black 30%, rgba(0,0,0,0.5) 60%, transparent 100%);
+    
+    filter: blur(0.5px) brightness(0.8);
+}
