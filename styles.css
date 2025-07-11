@@ -1271,9 +1271,12 @@ html {
     mix-blend-mode: overlay;
     opacity: 0.3;
     
-    /* تذويب الحواف */
-    mask: radial-gradient(circle, black 30%, rgba(0,0,0,0.5) 60%, transparent 100%);
-    -webkit-mask: radial-gradient(circle, black 30%, rgba(0,0,0,0.5) 60%, transparent 100%);
+   /* تذويب متدرج من جميع الجهات */
+    mask: 
+        radial-gradient(ellipse 80% 90% at center, black 40%, rgba(0,0,0,0.7) 70%, transparent 100%);
+    -webkit-mask: 
+        radial-gradient(ellipse 80% 90% at center, black 40%, rgba(0,0,0,0.7) 70%, transparent 100%);
     
-    filter: blur(0.5px) brightness(0.8);
+    filter: blur(1px) brightness(0.6) contrast(1.2);
+    border-radius: 20px;
 }
