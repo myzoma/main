@@ -74,7 +74,23 @@
         <span class="crypto-symbol">⬟</span>
         <span class="crypto-symbol">◊</span>
     </div>
-    
+     <!-- جدول أسعار البيتكوين المخفي -->
+        <div class="price-table-container" id="priceTable">
+            <table class="price-table">
+                <thead>
+                    <tr>
+                        <th>المنصة</th>
+                        <th>السعر (USD)</th>
+                        <th>التغيير 24س</th>
+                        <th>آخر تحديث</th>
+                    </tr>
+                </thead>
+                <tbody id="priceTableBody">
+                    <!-- سيتم ملء البيانات بواسطة JavaScript -->
+                </tbody>
+            </table>
+            <div class="loading" id="loading">جاري تحميل الأسعار...</div>
+        </div>
             <div class="header-content">
                 <div class="logo-section">
                     <div class="logo">
@@ -227,5 +243,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     <script src="script.js"></script>
      <script src="bitcoin-analyzer.js"></script>
+    <script src="exchanges.js"></script>
 </body>
 </html>
