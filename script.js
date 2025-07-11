@@ -100,6 +100,27 @@ const pages = [
             "تحديد شروط الانعكاس",
         ]
     },
+     {
+        id: 9,
+        title: "مؤشر الخوف و الطمع",
+        description: "مؤشر يحلل مشاعر المتداولين",
+        icon: "fa-solid fa-chart-line",
+        url: "<a href="https://cfgi.io"><img src="https://cfgi.io/images/cfgi/dark/BTC-CFGI-1d.png" alt="CFGI Score BTC /></a>",
+        features: [
+          " Historical Values"
+
+"Extreme greed"
+80+
+"Yesterday"
+"Greed"
+70+
+"Neutral"
+58-
+
+"Greed"
+67
+        ]
+    },
     {
         id: 7,
         title: "اخبار السوق",
