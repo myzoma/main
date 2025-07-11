@@ -10,7 +10,21 @@
 </head>
                      <div id="my-fear-greed-index"></div>
     <script src="fear-greed-widget.js"></script>
-
+ <!-- تشغيل المؤشر -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // إنشاء مؤشر جديد
+            const fearGreedWidget = new FearGreedWidget('my-fear-greed-index', {
+                width: '100%',
+                autoUpdate: true,
+                updateInterval: 5 * 60 * 1000 // تحديث كل 5 دقائق
+            });
+            
+            // يمكنك التحكم في المؤشر
+            // fearGreedWidget.refresh(); // تحديث يدوي
+            // fearGreedWidget.destroy(); // إزالة المؤشر
+        });
+    </script>
 <body>
     <div class="container">
         <header class="header">
