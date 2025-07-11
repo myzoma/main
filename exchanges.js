@@ -1,10 +1,12 @@
-// بيانات المنصات مع APIs الحقيقية
+// استخدام APIs تدعم CORS أو طرق بديلة
 const exchanges = {
     binance: {
         name: 'Binance',
-        logo: 'https://bin.bnbstatic.com/static/images/common/favicon.ico',
+        logo: 'https://cryptologos.cc/logos/binance-coin-bnb-logo.png',
         fetchPrice: async () => {
+            // استخدام WebSocket أو API يدعم CORS
             const response = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT');
+            if (!response.ok) throw new Error('Network error');
             const data = await response.json();
             return {
                 price: parseFloat(data.lastPrice),
@@ -12,84 +14,82 @@ const exchanges = {
             };
         }
     },
-    okx: {
-        name: 'OKX',
-        logo: 'https://static.okx.com/cdn/assets/imgs/MjAyMTA0/6EABC5C8E2E5C5A6E5A6E5A6E5A6E5A6.png',
+    coingecko: {
+        name: 'CoinGecko',
+        logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
         fetchPrice: async () => {
-            const response = await fetch('https://www.okx.com/api/v5/market/ticker?instId=BTC-USDT');
+            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true');
+            if (!response.ok) throw new Error('Network error');
             const data = await response.json();
             return {
-                price: parseFloat(data.data[0].last),
-                change: parseFloat(data.data[0].changePercent) * 100
+                price: data.bitcoin.usd,
+                change: data.bitcoin.usd_24h_change || 0
             };
         }
     },
-    kucoin: {
-        name: 'KuCoin',
-        logo: 'https://assets.staticimg.com/cms/media/6EhbDBAOLTiWJIaBP6sLrJ/b4c7378b5b4c4e78b8e4c8c5c5c5c5c5/kucoin-logo.png',
+    coincap: {
+        name: 'CoinCap',
+        logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
         fetchPrice: async () => {
-            const response = await fetch('https://api.kucoin.com/api/v1/market/orderbook/level1?symbol=BTC-USDT');
+            const response = await fetch('https://api.coincap.io/v2/assets/bitcoin');
+            if (!response.ok) throw new Error('Network error');
             const data = await response.json();
-            const statsResponse = await fetch('https://api.kucoin.com/api/v1/market/stats?symbol=BTC-USDT');
-            const statsData = await statsResponse.json();
             return {
-                price: parseFloat(data.data.price),
-                change: parseFloat(statsData.data.changeRate) * 100
+                price: parseFloat(data.data.priceUsd),
+                change: parseFloat(data.data.changePercent24Hr) || 0
             };
         }
     },
-    bitget: {
-        name: 'Bitget',
-        logo: 'https://img.bitgetimg.com/multiplatform/web/favicon.ico',
+    coinlore: {
+        name: 'CoinLore',
+        logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
         fetchPrice: async () => {
-            const response = await fetch('https://api.bitget.com/api/spot/v1/market/ticker?symbol=BTCUSDT');
+            const response = await fetch('https://api.coinlore.net/api/ticker/?id=90');
+            if (!response.ok) throw new Error('Network error');
             const data = await response.json();
             return {
-                price: parseFloat(data.data.close),
-                change: parseFloat(data.data.change)
+                price: parseFloat(data[0].price_usd),
+                change: parseFloat(data[0].percent_change_24h) || 0
             };
         }
     },
-    bybit: {
-        name: 'Bybit',
-        logo: 'https://static.bybit.com/web/favicon.ico',
+    cryptocompare: {
+        name: 'CryptoCompare',
+        logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
         fetchPrice: async () => {
-            const response = await fetch('https://api.bybit.com/v5/market/tickers?category=spot&symbol=BTCUSDT');
+            const response = await fetch('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC&tsyms=USD');
+            if (!response.ok) throw new Error('Network error');
             const data = await response.json();
             return {
-                price: parseFloat(data.result.list[0].lastPrice),
-                change: parseFloat(data.result.list[0].price24hPcnt) * 100
+                price: parseFloat(data.RAW.BTC.USD.PRICE),
+                change: parseFloat(data.RAW.BTC.USD.CHANGEPCT24HOUR) || 0
             };
         }
     },
-    bingx: {
-        name: 'BingX',
-        logo: 'https://img.bingx.com/web/favicon.ico',
+    messari: {
+        name: 'Messari',
+        logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
         fetchPrice: async () => {
-            const response = await fetch('https://open-api.bingx.com/openApi/spot/v1/ticker/24hr?symbol=BTC-USDT');
+            const response = await fetch('https://data.messari.io/api/v1/assets/bitcoin/metrics');
+            if (!response.ok) throw new Error('Network error');
             const data = await response.json();
             return {
-                price: parseFloat(data.data.lastPrice),
-                change: parseFloat(data.data.priceChangePercent)
+                price: parseFloat(data.data.market_data.price_usd),
+                change: parseFloat(data.data.market_data.percent_change_usd_last_24_hours) || 0
             };
         }
     },
-    coinbase: {
-        name: 'Coinbase',
-        logo: 'https://dynamic-assets.coinbase.com/dbb4b4983bde81309ddab83eb598358eb44375b930b94687ebe38bc22e52c3b2125258ffb8477a5ef22e33d594e79dc7d1977a3a40c66963e6aca4a5a344d9a/asset_icons/80782fe2e8c53b0323c09b3b8c0b23e8b2b5b444b41989e8b4b7b7b7b7b7b7b7.png',
+    nomics: {
+        name: 'Nomics',
+        logo: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png',
         fetchPrice: async () => {
-            const response = await fetch('https://api.pro.coinbase.com/products/BTC-USD/ticker');
+            // Nomics API يحتاج مفتاح، لذا سنستخدم بديل
+            const response = await fetch('https://api.coinbase.com/v2/exchange-rates?currency=BTC');
+            if (!response.ok) throw new Error('Network error');
             const data = await response.json();
-            const statsResponse = await fetch('https://api.pro.coinbase.com/products/BTC-USD/stats');
-            const statsData = await statsResponse.json();
-            
-            const currentPrice = parseFloat(data.price);
-            const openPrice = parseFloat(statsData.open);
-            const change = ((currentPrice - openPrice) / openPrice) * 100;
-            
             return {
-                price: currentPrice,
-                change: change
+                price: parseFloat(data.data.rates.USD),
+                change: 0 // لا يوفر تغيير 24 ساعة
             };
         }
     }
@@ -110,7 +110,7 @@ function togglePriceTable() {
     }
 }
 
-// دالة جلب جميع الأسعار
+// دالة جلب جميع الأسعار مع timeout
 async function fetchAllPrices() {
     const tableBody = document.getElementById('priceTableBody');
     const loading = document.getElementById('loading');
@@ -118,31 +118,47 @@ async function fetchAllPrices() {
     loading.style.display = 'block';
     tableBody.innerHTML = '';
     
-    // جلب الأسعار بشكل متوازي
+    // إضافة timeout لكل طلب
+    const fetchWithTimeout = async (fetchFunction, timeout = 5000) => {
+        return Promise.race([
+            fetchFunction(),
+            new Promise((_, reject) => 
+                setTimeout(() => reject(new Error('Timeout')), timeout)
+            )
+        ]);
+    };
+    
+    // جلب الأسعار بشكل متوازي مع timeout
     const promises = Object.entries(exchanges).map(async ([key, exchange]) => {
         try {
-            const priceData = await exchange.fetchPrice();
+            const priceData = await fetchWithTimeout(exchange.fetchPrice, 5000);
             return { exchange, priceData, error: false };
         } catch (error) {
-            console.error(`خطأ في جلب سعر ${exchange.name}:`, error);
-            return { exchange, priceData: null, error: true };
+            console.error(`خطأ في جلب سعر ${exchange.name}:`, error.message);
+            return { exchange, priceData: null, error: true, errorMessage: error.message };
         }
     });
     
-    const results = await Promise.allSettled(promises);
-    
-    results.forEach(result => {
-        if (result.status === 'fulfilled') {
-            const { exchange, priceData, error } = result.value;
-            addPriceRow(exchange, priceData, error);
-        }
-    });
+    try {
+        const results = await Promise.allSettled(promises);
+        
+        results.forEach(result => {
+            if (result.status === 'fulfilled') {
+                const { exchange, priceData, error, errorMessage } = result.value;
+                addPriceRow(exchange, priceData, error, errorMessage);
+            } else {
+                console.error('Promise rejected:', result.reason);
+            }
+        });
+    } catch (error) {
+        console.error('خطأ عام في جلب الأسعار:', error);
+    }
     
     loading.style.display = 'none';
 }
 
 // دالة إضافة صف السعر للجدول
-function addPriceRow(exchange, priceData, hasError) {
+function addPriceRow(exchange, priceData, hasError, errorMessage = '') {
     const tableBody = document.getElementById('priceTableBody');
     const row = document.createElement('tr');
     
@@ -157,7 +173,7 @@ function addPriceRow(exchange, priceData, hasError) {
             </td>
             <td><span class="error">غير متاح</span></td>
             <td><span class="error">-</span></td>
-            <td><span class="error">خطأ في التحميل</span></td>
+            <td><span class="error">${errorMessage || 'خطأ في التحميل'}</span></td>
         `;
     } else {
         const changeClass = priceData.change >= 0 ? 'change-positive' : 'change-negative';
@@ -194,11 +210,41 @@ function addPriceRow(exchange, priceData, hasError) {
 }
 
 // تحديث الأسعار كل 30 ثانية إذا كان الجدول مرئياً
-setInterval(() => {
-    if (isTableVisible) {
-        fetchAllPrices();
+let updateInterval;
+
+function startAutoUpdate() {
+    if (updateInterval) clearInterval(updateInterval);
+    
+    updateInterval = setInterval(() => {
+        if (isTableVisible) {
+            console.log('تحديث تلقائي للأسعار...');
+            fetchAllPrices();
+        }
+    }, 30000);
+}
+
+// إيقاف التحديث التلقائي
+function stopAutoUpdate() {
+    if (updateInterval) {
+        clearInterval(updateInterval);
+        updateInterval = null;
     }
-}, 30000);
+}
+
+// تعديل دالة إظهار/إخفاء الجدول لتشمل التحديث التلقائي
+function togglePriceTable() {
+    const table = document.getElementById('priceTable');
+    isTableVisible = !isTableVisible;
+    
+    if (isTableVisible) {
+        table.classList.add('show');
+        fetchAllPrices();
+        startAutoUpdate();
+    } else {
+        table.classList.remove('show');
+        stopAutoUpdate();
+    }
+}
 
 // إضافة تأثيرات إضافية عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', function() {
@@ -214,119 +260,27 @@ document.addEventListener('DOMContentLoaded', function() {
             e.target.style.transform = 'scale(1) rotate(0deg)';
         }
     });
+    
+    // تنظيف عند إغلاق الصفحة
+    window.addEventListener('beforeunload', function() {
+        stopAutoUpdate();
+    });
 });
 
-// دالة للتعامل مع أخطاء CORS (حل بديل)
-async function fetchWithProxy(url) {
+// دالة اختبار الاتصال
+async function testConnection() {
     try {
-        // محاولة الوصول المباشر أولاً
-        const response = await fetch(url);
-        return await response.json();
-    } catch (error) {
-        // في حالة فشل CORS، يمكن استخدام proxy
-        console.warn('CORS error, trying alternative method:', error);
-        
-        // يمكنك استخدام خدمات proxy مثل:
-        // const proxyUrl = `https://cors-anywhere.herokuapp.com/${url}`;
-        // const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-        
-        throw error;
-    }
-}
-
-// دالة بديلة لجلب الأسعار باستخدام CoinGecko API (لا يحتاج CORS)
-async function fetchPricesFromCoinGecko() {
-    try {
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_24hr_change=true');
+        const response = await fetch('https://api.coingecko.com/api/v3/ping');
         const data = await response.json();
-        
-        return {
-            price: data.bitcoin.usd,
-            change: data.bitcoin.usd_24h_change
-        };
+        console.log('اختبار الاتصال نجح:', data);
+        return true;
     } catch (error) {
-        console.error('خطأ في جلب البيانات من CoinGecko:', error);
-        throw error;
+        console.error('فشل اختبار الاتصال:', error);
+        return false;
     }
 }
 
-// دالة بديلة لجلب الأسعار من CoinCap API
-async function fetchPricesFromCoinCap() {
-    try {
-        const response = await fetch('https://api.coincap.io/v2/assets/bitcoin');
-        const data = await response.json();
-        
-        return {
-            price: parseFloat(data.data.priceUsd),
-            change: parseFloat(data.data.changePercent24Hr)
-        };
-    } catch (error) {
-        console.error('خطأ في جلب البيانات من CoinCap:', error);
-        throw error;
-    }
-}
-
-// إضافة APIs بديلة للمنصات التي قد تواجه مشاكل CORS
-const fallbackAPIs = {
-    coingecko: {
-        name: 'CoinGecko',
-        logo: 'https://static.coingecko.com/s/thumbnail-007177f3eca19695592f0b8b0eabbdae282b54154e1be912285c9034ea6cbaf2.png',
-        fetchPrice: fetchPricesFromCoinGecko
-    },
-    coincap: {
-        name: 'CoinCap',
-        logo: 'https://coincap.io/static/logos/black.svg',
-        fetchPrice: fetchPricesFromCoinCap
-    }
-};
-
-// دالة محسنة لجلب الأسعار مع fallback
-async function fetchAllPricesWithFallback() {
-    const tableBody = document.getElementById('priceTableBody');
-    const loading = document.getElementById('loading');
-    
-    loading.style.display = 'block';
-    tableBody.innerHTML = '';
-    
-    // محاولة جلب الأسعار من المنصات الأصلية
-    const promises = Object.entries(exchanges).map(async ([key, exchange]) => {
-        try {
-            const priceData = await exchange.fetchPrice();
-            return { exchange, priceData, error: false };
-        } catch (error) {
-            console.error(`خطأ في جلب سعر ${exchange.name}:`, error);
-            return { exchange, priceData: null, error: true };
-        }
-    });
-    
-    const results = await Promise.allSettled(promises);
-    let successCount = 0;
-    
-    results.forEach(result => {
-        if (result.status === 'fulfilled') {
-            const { exchange, priceData, error } = result.value;
-            if (!error) successCount++;
-            addPriceRow(exchange, priceData, error);
-        }
-    });
-    
-    // إذا فشلت معظم المنصات، استخدم APIs البديلة
-    if (successCount < 2) {
-        console.log('استخدام APIs بديلة...');
-        
-        for (const [key, fallbackAPI] of Object.entries(fallbackAPIs)) {
-            try {
-                const priceData = await fallbackAPI.fetchPrice();
-                addPriceRow(fallbackAPI, priceData, false);
-            } catch (error) {
-                console.error(`خطأ في API البديل ${fallbackAPI.name}:`, error);
-                addPriceRow(fallbackAPI, null, true);
-            }
-        }
-    }
-    
-    loading.style.display = 'none';
-}
-
-// استبدال الدالة الأصلية بالدالة المحسنة
-// fetchAllPrices = fetchAllPricesWithFallback;
+// تشغيل اختبار الاتصال عند تحميل الصفحة
+document.addEventListener('DOMContentLoaded', function() {
+    testConnection();
+});
