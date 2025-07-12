@@ -10,31 +10,164 @@
 </head>
 <body>
     <div class="container">
-    <header class="header">
-            <div class="header-content">
-                <div class="logo-section">
-                    <div class="logo">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <div class="site-info">
-                        <h1 class="site-name">
-                            <span class="blue-part">CRYPTO</span>
-                            <span class="gold-part">YASER</span>
-                        </h1>
-                        <p class="site-tagline">بوابتك الى التداول المحترف والمسؤل</p>
-                    </div>
-                </div>
-                <div class="support-section">
-                    <div class="capital-strategy-item" style="display: flex; flex-direction: column; align-items: center;">
-                        <span class="strategy-medal">💳</span>
-                        <span class="strategy-score-range">الدعم اختياري من 5-10$</span>
-                        <a href="https://buy.stripe.com/test_aFa00j9CSfHn3NV4an97G03" target="_blank" class="donate-btn">
-                            إرســال دعــم ♥️
-                        </a>
-                    </div>
-                </div>
+  <header class="header">
+    <div class="header-content">
+        <div class="logo-section">
+            <div class="logo">
+                <i class="fas fa-rocket"></i>
             </div>
-        </header>
+            <div class="site-info">
+                <h1 class="site-name">
+                    <span class="blue-part">CRYPTO</span>
+                    <span class="gold-part">YASER</span>
+                </h1>
+                <p class="site-tagline">بوابتك الى التداول المحترف والمسؤل</p>
+            </div>
+        </div>
+        
+        <!-- جدول منصات التداول -->
+        <div class="trading-platforms-table">
+            <div class="platforms-container">
+                <!-- سيتم ملء شعارات المنصات هنا جافاسكريبت -->
+            </div>
+            <div class="register-promo">
+                <span>سجل الان وفعل حسابك لتحصل على مكافأة 50 دولار</span>
+            </div>
+        </div>
+        
+        <div class="support-section">
+            <div class="capital-strategy-item" style="display: flex; flex-direction: column; align-items: center;">
+                <span class="strategy-medal">💳</span>
+                <span class="strategy-score-range">الدعم اختياري من 5-10$</span>
+                <a href="https://buy.stripe.com/test_aFa00j9CSfHn3NV4an97G03" target="_blank" class="donate-btn">
+                    إرســال دعــم ♥️
+                </a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<style>
+    .trading-platforms-table {
+        position: relative;
+        margin: 0 20px;
+        padding: 8px 12px;
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        transition: all 0.3s ease;
+        overflow: hidden;
+        min-width: 280px;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    .trading-platforms-table:hover {
+        background: rgba(15, 23, 42, 0.95);
+        border-color: rgba(255, 215, 0, 0.4);
+    }
+    
+    .platforms-container {
+        display: flex;
+        gap: 15px;
+        padding: 5px;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .platform-logo {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+        cursor: pointer;
+        transition: all 0.3s;
+        filter: grayscale(10%);
+        opacity: 0.9;
+    }
+    
+    .platform-logo:hover {
+        transform: scale(1.2);
+        filter: grayscale(0%) brightness(1.1);
+        opacity: 1;
+    }
+    
+    .register-promo {
+        position: absolute;
+        bottom: 4px;
+        right: 10px;
+        font-size: 10px;
+        color: #FFD700;
+        text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+        white-space: nowrap;
+        font-weight: bold;
+        background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.5));
+        padding: 2px 8px 2px 15px;
+        border-radius: 0 10px 10px 0;
+    }
+</style>
+
+<script>
+    // قائمة منصات التداول وروابط التسجيل - يمكنك تعديلها
+    const tradingPlatforms = [
+        { 
+            name: "Binance", 
+            logo: "myzoma/main/images/binance.png", 
+            link: "https://accounts.binance.com/register?ref=YOUR_REF_CODE" 
+        },
+        { 
+            name: "Bybit", 
+            logo: "myzoma/main/images/bybit.png", 
+            link: "https://www.bybit.com/register?ref=YOUR_REF_CODE" 
+        },
+        { 
+            name: "OKX", 
+            logo: "myzoma/main/images/okx.png", 
+            link: "https://www.okx.com/join/YOUR_REF_CODE" 
+        },
+        { 
+            name: "KuCoin", 
+            logo: "myzoma/main/images/kucoin.png", 
+            link: "https://www.kucoin.com/r/YOUR_REF_CODE" 
+        },
+        { 
+            name: "Gate.io", 
+            logo: "myzoma/main/images/gateio.png", 
+            link: "https://www.gate.io/signup/YOUR_REF_CODE" 
+        },
+        { 
+            name: "HTX (Huobi)", 
+            logo: "myzoma/main/images/htx.png", 
+            link: "https://www.htx.com/invite/YOUR_REF_CODE" 
+        }
+    ];
+    
+    // إنشاء شعارات المنصات
+    const container = document.querySelector('.platforms-container');
+    
+    tradingPlatforms.forEach(platform => {
+        const link = document.createElement('a');
+        link.href = platform.link;
+        link.target = '_blank';
+        link.title = `سجل في ${platform.name} واحصل على مكافأة`;
+        link.className = 'platform-link';
+        
+        const img = document.createElement('img');
+        img.src = platform.logo;
+        img.className = 'platform-logo';
+        img.alt = platform.name;
+        img.loading = "lazy";
+        
+        // إذا فشل تحميل الصورة
+        img.onerror = function() {
+            this.src = 'myzoma/main/images/exchange-placeholder.png';
+            this.style.opacity = '0.7';
+        };
+        
+        link.appendChild(img);
+        container.appendChild(link);
+    });
+</script>
 <div style="height:62px; background-color: #0f171c; overflow:hidden; box-sizing: border-box; border: 1px solid #0f171c; border-radius: 4px; text-align: right; line-height:14px; block-size:62px; font-size: 12px; font-feature-settings: normal; text-size-adjust: 100%; box-shadow: inset 0 -20px 0 0 #262B38;padding:1px;padding: 0px; margin: 0px; width: 100%;"><div style="height:40px; padding:0px; margin:0px; width: 100%;"><iframe src="https://widget.coinlib.io/widget?type=horizontal_v2&theme=dark&pref_coin_id=1505&invert_hover=no" width="100%" height="36px" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" border="0" style="border:0;margin:0;padding:0;"></iframe></div><div style="color: #0f171c; line-height: 14px; font-weight: 400; font-size: 11px; box-sizing: border-box; padding: 2px 6px; width: 100%; font-family: Verdana, Tahoma, Arial, sans-serif;"><a href="https://coinlib.io" target="_blank" style="font-weight: 500; color: #0f171c; text-decoration:none; font-size:11px">Cryptocurrency Prices</a>&nbsp;by Coinlib</div></div>
 <script>
 // دالة عرض الأهداف المستقبلية
