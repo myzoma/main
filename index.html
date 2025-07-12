@@ -25,7 +25,7 @@
             </div>
         </div>
         
-       <div class="trading-platforms-table">
+     <div class="trading-platforms-table">
     <div class="platforms-container" id="platforms-container">
         <!-- سيتم إضافة المنصات هنا عبر JavaScript -->
     </div>
@@ -46,33 +46,69 @@
 </header>
 
 <style>
-     .platform-logo {
-        width: 32px;
-        height: 32px;
-        object-fit: contain;
-        transition: all 0.3s ease;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.1);
-        padding: 2px;
+    .trading-platforms-table {
+        background: rgba(25, 35, 60, 0.9);
+        border-radius: 12px;
+        padding: 12px;
+        margin: 0 15px;
+        min-width: 320px;
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(255, 215, 0, 0.15);
     }
     
-    .platform-logo:hover {
+    .platforms-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .platform-link {
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+    
+    .platform-logo {
+        width: 36px;
+        height: 36px;
+        object-fit: contain;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .platform-link:hover .platform-logo {
         transform: scale(1.15);
         background: rgba(255, 215, 0, 0.2);
+        box-shadow: 0 4px 8px rgba(255, 215, 0, 0.1);
     }
     
     .platform-name-fallback {
         color: #FFD700;
-        font-weight: bold;
-        font-size: 12px;
-        min-width: 32px;
+        font-weight: 700;
+        font-size: 11px;
+        min-width: 36px;
         text-align: center;
         display: inline-block;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 6px 4px;
+        border-radius: 6px;
+    }
+    
+    .register-promo {
+        margin-top: 10px;
+        text-align: center;
+        font-size: 11px;
+        color: #FFD700;
+        font-weight: bold;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
     }
 </style>
-
 <script>
-   // منصات التداول مع مصادر متعددة للصور
+    // جميع منصات التداول الرئيسية مع مصادر متعددة للصور
     const tradingPlatforms = [
         {
             name: "Binance",
@@ -91,51 +127,136 @@
                 "https://www.bybit.com/favicon.ico"
             ],
             link: "https://www.bybit.com/register?ref=YOUR_REF_CODE"
+        },
+        {
+            name: "OKX",
+            logoSources: [
+                "myzoma/main/images/okx.png",
+                "https://cryptologos.cc/logos/okx-okx-logo.png",
+                "https://www.okx.com/favicon.ico"
+            ],
+            link: "https://www.okx.com/join/YOUR_REF_CODE"
+        },
+        {
+            name: "KuCoin",
+            logoSources: [
+                "myzoma/main/images/kucoin.png",
+                "https://cryptologos.cc/logos/kucoin-coin-kcs-logo.png",
+                "https://www.kucoin.com/favicon.ico"
+            ],
+            link: "https://www.kucoin.com/r/YOUR_REF_CODE"
+        },
+        {
+            name: "HTX",
+            logoSources: [
+                "myzoma/main/images/htx.png",
+                "https://cryptologos.cc/logos/htx-token-htx-logo.png",
+                "https://www.htx.com/favicon.ico"
+            ],
+            link: "https://www.htx.com/invite/YOUR_REF_CODE"
+        },
+        {
+            name: "Gate.io",
+            logoSources: [
+                "myzoma/main/images/gateio.png",
+                "https://cryptologos.cc/logos/gate-io-gt-logo.png",
+                "https://www.gate.io/favicon.ico"
+            ],
+            link: "https://www.gate.io/signup/YOUR_REF_CODE"
+        },
+        {
+            name: "Bitget",
+            logoSources: [
+                "myzoma/main/images/bitget.png",
+                "https://cryptologos.cc/logos/bitget-exchange-bitget-logo.png",
+                "https://www.bitget.com/favicon.ico"
+            ],
+            link: "https://www.bitget.com/register?ref=YOUR_REF_CODE"
+        },
+        {
+            name: "MEXC",
+            logoSources: [
+                "myzoma/main/images/mexc.png",
+                "https://cryptologos.cc/logos/mexc-exchange-mexc-logo.png",
+                "https://www.mexc.com/favicon.ico"
+            ],
+            link: "https://www.mexc.com/register?inviteCode=YOUR_REF_CODE"
+        },
+        {
+            name: "Kraken",
+            logoSources: [
+                "myzoma/main/images/kraken.png",
+                "https://cryptologos.cc/logos/kraken-kraken-logo.png",
+                "https://www.kraken.com/favicon.ico"
+            ],
+            link: "https://www.kraken.com/sign-up?ref=YOUR_REF_CODE"
+        },
+        {
+            name: "Coinbase",
+            logoSources: [
+                "myzoma/main/images/coinbase.png",
+                "https://cryptologos.cc/logos/coinbase-exchange-coinbase-logo.png",
+                "https://www.coinbase.com/favicon.ico"
+            ],
+            link: "https://www.coinbase.com/join/YOUR_REF_CODE"
         }
-        // يمكنك إضافة المزيد من المنصات بنفس الطريقة
     ];
 
-    // دالة لتحميل الصور مع تعدد المصادر
-    async function loadPlatformLogo(platform) {
+    // دالة ذكية لتحميل الصور
+    async function loadPlatformLogos() {
         const container = document.getElementById('platforms-container');
-        const link = document.createElement('a');
-        link.href = platform.link;
-        link.target = '_blank';
-        link.title = `سجل في ${platform.name}`;
         
-        // محاولة تحميل الصور بالتسلسل
-        for (const src of platform.logoSources) {
-            try {
-                const img = new Image();
-                img.src = src;
-                img.className = 'platform-logo';
-                img.alt = platform.name;
-                
-                await new Promise((resolve) => {
-                    img.onload = resolve;
-                    img.onerror = () => resolve(false);
-                });
-                
-                if (img.complete && img.naturalWidth !== 0) {
-                    link.appendChild(img);
-                    container.appendChild(link);
-                    return;
+        for (const platform of tradingPlatforms) {
+            const link = document.createElement('a');
+            link.href = platform.link;
+            link.target = '_blank';
+            link.className = 'platform-link';
+            link.title = `سجل في ${platform.name} واحصل على مكافأة`;
+            
+            let logoLoaded = false;
+            
+            // محاولة تحميل كل مصدر للصورة
+            for (const src of platform.logoSources) {
+                try {
+                    const img = new Image();
+                    img.src = src;
+                    img.className = 'platform-logo';
+                    img.alt = platform.name;
+                    
+                    await new Promise((resolve) => {
+                        img.onload = () => {
+                            if (img.naturalWidth > 0) {
+                                logoLoaded = true;
+                                resolve();
+                            }
+                        };
+                        img.onerror = resolve;
+                        setTimeout(resolve, 500); // وقت انتظار 500ms
+                    });
+                    
+                    if (logoLoaded) {
+                        link.appendChild(img);
+                        break;
+                    }
+                } catch (e) {
+                    console.error(`Error loading ${src}:`, e);
                 }
-            } catch (e) {
-                console.log(`Failed to load ${src}`, e);
             }
+            
+            // إذا فشل تحميل الصور
+            if (!logoLoaded) {
+                const fallback = document.createElement('span');
+                fallback.className = 'platform-name-fallback';
+                fallback.textContent = platform.name.substring(0, 3);
+                link.appendChild(fallback);
+            }
+            
+            container.appendChild(link);
         }
-        
-        // إذا فشل كل شيء، عرض اسم المنصة
-        const fallback = document.createElement('span');
-        fallback.className = 'platform-name-fallback';
-        fallback.textContent = platform.name.substring(0, 3);
-        link.appendChild(fallback);
-        container.appendChild(link);
     }
 
-    // تحميل جميع المنصات
-    tradingPlatforms.forEach(loadPlatformLogo);
+    // تحميل الشعارات عند اكتمال تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', loadPlatformLogos);
 </script>
 <div style="height:62px; background-color: #0f171c; overflow:hidden; box-sizing: border-box; border: 1px solid #0f171c; border-radius: 4px; text-align: right; line-height:14px; block-size:62px; font-size: 12px; font-feature-settings: normal; text-size-adjust: 100%; box-shadow: inset 0 -20px 0 0 #262B38;padding:1px;padding: 0px; margin: 0px; width: 100%;"><div style="height:40px; padding:0px; margin:0px; width: 100%;"><iframe src="https://widget.coinlib.io/widget?type=horizontal_v2&theme=dark&pref_coin_id=1505&invert_hover=no" width="100%" height="36px" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" border="0" style="border:0;margin:0;padding:0;"></iframe></div><div style="color: #0f171c; line-height: 14px; font-weight: 400; font-size: 11px; box-sizing: border-box; padding: 2px 6px; width: 100%; font-family: Verdana, Tahoma, Arial, sans-serif;"><a href="https://coinlib.io" target="_blank" style="font-weight: 500; color: #0f171c; text-decoration:none; font-size:11px">Cryptocurrency Prices</a>&nbsp;by Coinlib</div></div>
 <script>
