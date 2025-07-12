@@ -8,98 +8,34 @@
       <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-  
-
 <body>
     <div class="container">
-<header class="header">
-    <div class="header-content">
-        <div class="logo-section">
-            <div class="logo">
-                <i class="fas fa-rocket"></i>
-            </div>
-            <div class="site-info">
-                <h1 class="site-name">
-                    <span class="blue-part">CRYPTO</span>
-                    <span class="gold-part">YASER</span>
-                </h1>
-                <p class="site-tagline">بوابتك الى التداول المحترف والمسؤل</p>
-            </div>
-        </div>
-        
-        <!-- جدول المنصات المخفي -->
-        <div class="platforms-section">
-            <div class="platforms-toggle">
-                <button class="toggle-btn" id="togglePlatformsBtn">
-                    <i class="fas fa-exchange-alt"></i>
-                    منصات التداول
-                </button>
-            </div>
-            <div class="platforms-table" id="platformsTable">
-                <div class="platforms-header">
-                    <h3>سجل الان وفعل حسابك واحصل على مكافأه 50 USDT</h3>
+    <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="site-info">
+                        <h1 class="site-name">
+                            <span class="blue-part">CRYPTO</span>
+                            <span class="gold-part">YASER</span>
+                        </h1>
+                        <p class="site-tagline">بوابتك الى التداول المحترف والمسؤل</p>
+                    </div>
                 </div>
-                <div class="platforms-grid">
-                    <a href="https://www.binance.com/ar/register" target="_blank" class="platform-item">
-                        <img src="images/binance-logo.png" alt="Binance" class="platform-logo">
-                        <span class="platform-name">Binance</span>
-                    </a>
-                    <a href="https://www.okx.com/join" target="_blank" class="platform-item">
-                        <img src="images/okx-logo.png" alt="OKX" class="platform-logo">
-                        <span class="platform-name">OKX</span>
-                    </a>
-                    <a href="https://www.bybit.com/register" target="_blank" class="platform-item">
-                        <img src="images/bybit-logo.png" alt="Bybit" class="platform-logo">
-                        <span class="platform-name">Bybit</span>
-                    </a>
-                    <a href="https://www.coinbase.com/signup" target="_blank" class="platform-item">
-                        <img src="images/coinbase-logo.png" alt="Coinbase" class="platform-logo">
-                        <span class="platform-name">Coinbase</span>
-                    </a>
+                <div class="support-section">
+                    <div class="capital-strategy-item" style="display: flex; flex-direction: column; align-items: center;">
+                        <span class="strategy-medal">💳</span>
+                        <span class="strategy-score-range">الدعم اختياري من 5-10$</span>
+                        <a href="https://buy.stripe.com/test_aFa00j9CSfHn3NV4an97G03" target="_blank" class="donate-btn">
+                            إرســال دعــم ♥️
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="support-section">
-            <div class="capital-strategy-item" style="display: flex; flex-direction: column; align-items: center;">
-                <span class="strategy-medal">💳</span>
-                <span class="strategy-score-range">الدعم اختياري من 5-10$</span>
-                <a href="https://buy.stripe.com/test_aFa00j9CSfHn3NV4an97G03" target="_blank" class="donate-btn">
-                    إرســال دعــم ♥️
-                </a>
-            </div>
-        </div>
-    </div>
-</header>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const toggleBtn = document.getElementById('togglePlatformsBtn');
-    const platformsTable = document.getElementById('platformsTable');
-    
-    // دالة إظهار وإخفاء جدول المنصات
-    toggleBtn.addEventListener('click', function() {
-        platformsTable.classList.toggle('show');
-    });
-    
-    // إخفاء الجدول عند النقر خارجه
-    document.addEventListener('click', function(event) {
-        const platformsSection = document.querySelector('.platforms-section');
-        if (!platformsSection.contains(event.target)) {
-            platformsTable.classList.remove('show');
-        }
-    });
-    
-    // منع إخفاء الجدول عند النقر داخله
-    platformsTable.addEventListener('click', function(event) {
-        event.stopPropagation();
-    });
-});
-</script>
-
-
-            <div style="height:62px; background-color: #0f171c; overflow:hidden; box-sizing: border-box; border: 1px solid #0f171c; border-radius: 4px; text-align: right; line-height:14px; block-size:62px; font-size: 12px; font-feature-settings: normal; text-size-adjust: 100%; box-shadow: inset 0 -20px 0 0 #262B38;padding:1px;padding: 0px; margin: 0px; width: 100%;"><div style="height:40px; padding:0px; margin:0px; width: 100%;"><iframe src="https://widget.coinlib.io/widget?type=horizontal_v2&theme=dark&pref_coin_id=1505&invert_hover=no" width="100%" height="36px" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" border="0" style="border:0;margin:0;padding:0;"></iframe></div><div style="color: #0f171c; line-height: 14px; font-weight: 400; font-size: 11px; box-sizing: border-box; padding: 2px 6px; width: 100%; font-family: Verdana, Tahoma, Arial, sans-serif;"><a href="https://coinlib.io" target="_blank" style="font-weight: 500; color: #0f171c; text-decoration:none; font-size:11px">Cryptocurrency Prices</a>&nbsp;by Coinlib</div></div>
-
+        </header>
+<div style="height:62px; background-color: #0f171c; overflow:hidden; box-sizing: border-box; border: 1px solid #0f171c; border-radius: 4px; text-align: right; line-height:14px; block-size:62px; font-size: 12px; font-feature-settings: normal; text-size-adjust: 100%; box-shadow: inset 0 -20px 0 0 #262B38;padding:1px;padding: 0px; margin: 0px; width: 100%;"><div style="height:40px; padding:0px; margin:0px; width: 100%;"><iframe src="https://widget.coinlib.io/widget?type=horizontal_v2&theme=dark&pref_coin_id=1505&invert_hover=no" width="100%" height="36px" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" border="0" style="border:0;margin:0;padding:0;"></iframe></div><div style="color: #0f171c; line-height: 14px; font-weight: 400; font-size: 11px; box-sizing: border-box; padding: 2px 6px; width: 100%; font-family: Verdana, Tahoma, Arial, sans-serif;"><a href="https://coinlib.io" target="_blank" style="font-weight: 500; color: #0f171c; text-decoration:none; font-size:11px">Cryptocurrency Prices</a>&nbsp;by Coinlib</div></div>
 <script>
 // دالة عرض الأهداف المستقبلية
 function displayFutureTargets() {
