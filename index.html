@@ -26,11 +26,25 @@
                 <p class="site-tagline">بوابتك الى التداول المحترف والمسؤل</p>
             </div>
         </div>
+        <header class="header">
+    <div class="header-content">
+        <div class="logo-section">
+            <div class="logo">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <div class="site-info">
+                <h1 class="site-name">
+                    <span class="blue-part">CRYPTO</span>
+                    <span class="gold-part">YASER</span>
+                </h1>
+                <p class="site-tagline">بوابتك الى التداول المحترف والمسؤل</p>
+            </div>
+        </div>
         
         <!-- جدول المنصات المخفي -->
         <div class="platforms-section">
             <div class="platforms-toggle">
-                <button class="toggle-btn" onclick="togglePlatforms()">
+                <button class="toggle-btn" id="togglePlatformsBtn">
                     <i class="fas fa-exchange-alt"></i>
                     منصات التداول
                 </button>
@@ -41,19 +55,19 @@
                 </div>
                 <div class="platforms-grid">
                     <a href="https://www.binance.com/ar/register" target="_blank" class="platform-item">
-                        <img src="https://cryptologos.cc/logos/binance-coin-bnb-logo.png" alt="Binance" class="platform-logo">
+                        <img src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/bnb.svg" alt="Binance" class="platform-logo">
                         <span class="platform-name">Binance</span>
                     </a>
                     <a href="https://www.okx.com/join" target="_blank" class="platform-item">
-                        <img src="https://cryptologos.cc/logos/okb-okb-logo.png" alt="OKX" class="platform-logo">
+                        <img src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/okb.svg" alt="OKX" class="platform-logo">
                         <span class="platform-name">OKX</span>
                     </a>
                     <a href="https://www.bybit.com/register" target="_blank" class="platform-item">
-                        <img src="https://cryptologos.cc/logos/bybit-token-bit-logo.png" alt="Bybit" class="platform-logo">
+                        <img src="https://cdn.jsdelivr.net/gh/spothq/cryptocurrency-icons@master/svg/color/bit.svg" alt="Bybit" class="platform-logo">
                         <span class="platform-name">Bybit</span>
                     </a>
                     <a href="https://www.coinbase.com/signup" target="_blank" class="platform-item">
-                        <img src="https://cryptologos.cc/logos/coinbase-coin-logo.png" alt="Coinbase" class="platform-logo">
+                        <img src="https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/usdc.svg" alt="Coinbase" class="platform-logo">
                         <span class="platform-name">Coinbase</span>
                     </a>
                 </div>
@@ -71,6 +85,30 @@
         </div>
     </div>
 </header>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const toggleBtn = document.getElementById('togglePlatformsBtn');
+    const platformsTable = document.getElementById('platformsTable');
+    
+    toggleBtn.addEventListener('click', function() {
+        platformsTable.classList.toggle('show');
+    });
+    
+    document.addEventListener('click', function(event) {
+        const platformsSection = document.querySelector('.platforms-section');
+        if (!platformsSection.contains(event.target)) {
+            platformsTable.classList.remove('show');
+        }
+    });
+    
+    platformsTable.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+});
+</script>
+
+       
 
             <div style="height:62px; background-color: #0f171c; overflow:hidden; box-sizing: border-box; border: 1px solid #0f171c; border-radius: 4px; text-align: right; line-height:14px; block-size:62px; font-size: 12px; font-feature-settings: normal; text-size-adjust: 100%; box-shadow: inset 0 -20px 0 0 #262B38;padding:1px;padding: 0px; margin: 0px; width: 100%;"><div style="height:40px; padding:0px; margin:0px; width: 100%;"><iframe src="https://widget.coinlib.io/widget?type=horizontal_v2&theme=dark&pref_coin_id=1505&invert_hover=no" width="100%" height="36px" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" border="0" style="border:0;margin:0;padding:0;"></iframe></div><div style="color: #0f171c; line-height: 14px; font-weight: 400; font-size: 11px; box-sizing: border-box; padding: 2px 6px; width: 100%; font-family: Verdana, Tahoma, Arial, sans-serif;"><a href="https://coinlib.io" target="_blank" style="font-weight: 500; color: #0f171c; text-decoration:none; font-size:11px">Cryptocurrency Prices</a>&nbsp;by Coinlib</div></div>
 
