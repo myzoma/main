@@ -2,45 +2,73 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8">
-  <title>إشارات تداول البيتكوين</title>
+  <title>📊 إشارات تحليلية BTC</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f7fa;
+      color: #333;
+      padding: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 0 10px #ccc;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+    h2 {
+      color: #007bff;
+    }
+    .signal {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+    .bullish { color: green; }
+    .bearish { color: red; }
+    .neutral { color: gray; }
+  </style>
 </head>
 <body>
-  <h2>📊 إشارات تداول ذكية - BTC</h2>
-  <div id="signals">جاري التحميل...</div>
+  <div class="card">
+    <h2>📊 إشارات تحليلية - BTC</h2>
+    <div id="signals">جاري تحميل الإشارات...</div>
+  </div>
 
   <script>
-    const baseUrl = 'https://min-api.cryptocompare.com/data/tradingsignals/intotheblock/latest';
-    const params = {
-        fsym: "BTC",
-        sign: true,
-        api_key: "d8327d5ec253cca36be4df82ff7e1e2830e26400b402075afedeb6e2f4f17a5a"
-    };
-    const url = new URL(baseUrl);
-    url.search = new URLSearchParams(params).toString();
+    const url = 'https://min-api.cryptocompare.com/data/tradingsignals/intotheblock/latest?fsym=BTC&sign=true&api_key=d8327d5ec253cca36be4df82ff7e1e2830e26400b402075afedeb6e2f4f17a5a';
 
-    const options = {
-        method: 'GET',
-        headers: {
-            "Content-type": "application/json; charset=UTF-8"
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const d = data.Data;
+
+        function renderSignal(title, obj) {
+          let sentimentClass = obj.sentiment;
+          let sentimentText = {
+            bullish: '📈 إيجابي (Bullish)',
+            bearish: '📉 سلبي (Bearish)',
+            neutral: '⚖️ حيادي (Neutral)'
+          }[obj.sentiment] || '❔ غير معروف';
+
+          return `<div class="signal ${sentimentClass}">
+                    <strong>${title}:</strong> ${sentimentText}
+                  </div>`;
         }
-    };
 
-    fetch(url, options)
-      .then((response) => response.json())
-      .then((data) => {
-        const signals = data.Data;
-        document.getElementById("signals").innerHTML = `
-          <ul>
-            <li>🧠 عنوان مربح: ${signals.inTheMoney ? '✅ إيجابي' : '❌ سلبي'}</li>
-            <li>🐋 حيتان نشطة: ${signals.largeTransactions ? '✅ مرتفع' : '❌ منخفض'}</li>
-            <li>🔗 زخم الشبكة: ${signals.networkMomentum ? '✅ صاعد' : '❌ هابط'}</li>
-            <li>📈 إشارات قصيرة المدى: ${signals.concentration ? '✅ متفائل' : '❌ حذر'}</li>
-          </ul>
+        const html = `
+          ${renderSignal("حركة العملات الداخلة/خارجة", d.inOutVar)}
+          ${renderSignal("نمو صافي العناوين", d.addressesNetGrowth)}
+          ${renderSignal("تغير تركّز الحيتان", d.concentrationVar)}
+          ${renderSignal("تغير الحركات الكبيرة", d.largetxsVar)}
         `;
+
+        document.getElementById("signals").innerHTML = html;
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
-        document.getElementById("signals").innerText = "فشل في تحميل الإشارات.";
+        document.getElementById("signals").innerHTML = 'فشل في تحميل البيانات.';
       });
   </script>
 </body>
