@@ -163,7 +163,7 @@ body {
             0 0 45px rgba(0, 212, 255, 0.2);
     }
     50% { 
-        opacity: 0.9;
+        opacity: 0.8;
         text-shadow: 
             0 0 20px rgba(0, 212, 255, 1),
             0 0 30px rgba(0, 212, 255, 0.8),
@@ -190,7 +190,7 @@ body {
 /* تأثيرات لمعان مختلفة لكل شعار */
 .crypto-symbol:nth-child(odd) {
     animation: 
-        gentleFloat 6s infinite ease-in-out,
+        gentleFloat 4s infinite ease-in-out,
         starSparkle 2.5s infinite ease-in-out;
 }
 
@@ -209,7 +209,7 @@ body {
         0 0 35px rgba(0, 212, 255, 0.8),
         0 0 45px rgba(0, 212, 255, 0.6),
         0 0 55px rgba(0, 212, 255, 0.4) !important;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 /* التأكد من أن محتوى الهيدر يظهر فوق الشعارات */
@@ -221,7 +221,7 @@ body {
 /* تأثير لمعان إضافي للشعارات المميزة */
 .crypto-symbol:nth-child(3n) {
     animation: 
-        gentleFloat 5s infinite ease-in-out,
+        gentleFloat 3s infinite ease-in-out,
         starSparkle 2s infinite ease-in-out,
         extraSparkle 4s infinite ease-in-out;
 }
