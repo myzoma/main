@@ -46,14 +46,12 @@
 </header>
 
 <style>
-    .trading-platforms-table {
-        background: rgba(25, 35, 60, 0.9);
-        border-radius: 12px;
-        padding: 12px;
-        margin: 0 15px;
-        min-width: 320px;
-        backdrop-filter: blur(6px);
-        border: 1px solid rgba(255, 215, 0, 0.15);
+   .trading-platforms-table {
+        background: transparent !important; /* إزالة الخلفية */
+        border: none !important; /* إزالة الإطار */
+        box-shadow: none !important; /* إزالة الظل */
+        backdrop-filter: none !important; /* إزالة تأثير البلور */
+        padding: 5px !important; /* تقليل المساحة الداخلية */
     }
     
     .platforms-container {
@@ -99,12 +97,9 @@
     }
     
     .register-promo {
-        margin-top: 10px;
-        text-align: center;
-        font-size: 11px;
-        color: #FFD700;
-        font-weight: bold;
-        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        opacity: 0.7; /* جعل النص شبه شفاف */
+        font-size: 10px !important;
+        margin-top: 5px !important;
     }
 </style>
 <script>
