@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>إشارات تداول البيتكوين</title>
+</head>
+<body>
+  <h2>📊 إشارات تداول ذكية - BTC</h2>
+  <div id="signals">جاري التحميل...</div>
+
+  <script>
+    const baseUrl = 'https://min-api.cryptocompare.com/data/tradingsignals/intotheblock/latest';
+    const params = {
+        fsym: "BTC",
+        sign: true,
+        api_key: "d8327d5ec253cca36be4df82ff7e1e2830e26400b402075afedeb6e2f4f17a5a"
+    };
+    const url = new URL(baseUrl);
+    url.search = new URLSearchParams(params).toString();
+
+    const options = {
+        method: 'GET',
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        }
+    };
+
+    fetch(url, options)
+      .then((response) => response.json())
+      .then((data) => {
+        const signals = data.Data;
+        document.getElementById("signals").innerHTML = `
+          <ul>
+            <li>🧠 عنوان مربح: ${signals.inTheMoney ? '✅ إيجابي' : '❌ سلبي'}</li>
+            <li>🐋 حيتان نشطة: ${signals.largeTransactions ? '✅ مرتفع' : '❌ منخفض'}</li>
+            <li>🔗 زخم الشبكة: ${signals.networkMomentum ? '✅ صاعد' : '❌ هابط'}</li>
+            <li>📈 إشارات قصيرة المدى: ${signals.concentration ? '✅ متفائل' : '❌ حذر'}</li>
+          </ul>
+        `;
+      })
+      .catch((err) => {
+        console.error(err);
+        document.getElementById("signals").innerText = "فشل في تحميل الإشارات.";
+      });
+  </script>
+</body>
+</html>
