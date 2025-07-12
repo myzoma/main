@@ -133,14 +133,15 @@
             link: "https://www.okx.com/join/YOUR_REF_CODE"
         },
         {
-            name: "KuCoin",
-            logoSources: [
-                "myzoma/main/images/kucoin.png",
-                "https://cryptologos.cc/logos/kucoin-coin-kcs-logo.png",
-                "https://www.kucoin.com/favicon.ico"
-            ],
-            link: "https://www.kucoin.com/r/YOUR_REF_CODE"
-        },
+        name: "KuCoin",
+        logoSources: [
+            "myzoma/main/images/kucoin.png",
+            "https://cryptologos.cc/logos/kucoin-coin-kcs-logo.png",
+            "https://assets.staticimg.com/cms/media/1lB3PkckFDyfxz6VudCEACBeRRBi6sQQ7DDjz0yWM.svg", // شعار KuCoin الرسمي
+            "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/kcs.svg"
+        ],
+        link: "https://www.kucoin.com/r/YOUR_REF_CODE"
+    },
         {
             name: "HTX",
             logoSources: [
@@ -168,16 +169,17 @@
             ],
             link: "https://www.bitget.com/register?ref=YOUR_REF_CODE"
         },
-        {
-            name: "MEXC",
-            logoSources: [
-                "myzoma/main/images/mexc.png",
-                "https://cryptologos.cc/logos/mexc-exchange-mexc-logo.png",
-                "https://www.mexc.com/favicon.ico"
-            ],
-            link: "https://www.mexc.com/register?inviteCode=YOUR_REF_CODE"
-        },
-        {
+         {
+        name: "MEXC",
+        logoSources: [
+            "myzoma/main/images/mexc.png",
+            "https://cryptologos.cc/logos/mexc-exchange-mexc-logo.png",
+            "https://www.mexc.com/static/favicon.ico",
+            "https://www.mexc.com/static/assets/images/logo-dark.svg"
+        ],
+        link: "https://www.mexc.com/register?inviteCode=YOUR_REF_CODE"
+    }
+];
             name: "Kraken",
             logoSources: [
                 "myzoma/main/images/kraken.png",
@@ -198,58 +200,52 @@
     ];
 
     // دالة ذكية لتحميل الصور
-    async function loadPlatformLogos() {
-        const container = document.getElementById('platforms-container');
+   async function loadPlatformLogos() {
+    const container = document.getElementById('platforms-container');
+    
+    for (const platform of tradingPlatforms) {
+        const link = document.createElement('a');
+        link.href = platform.link;
+        link.target = '_blank';
+        link.className = 'platform-link';
+        link.title = `سجل في ${platform.name}`;
         
-        for (const platform of tradingPlatforms) {
-            const link = document.createElement('a');
-            link.href = platform.link;
-            link.target = '_blank';
-            link.className = 'platform-link';
-            link.title = `سجل في ${platform.name} واحصل على مكافأة`;
-            
-            let logoLoaded = false;
-            
-            // محاولة تحميل كل مصدر للصورة
-            for (const src of platform.logoSources) {
-                try {
-                    const img = new Image();
-                    img.src = src;
-                    img.className = 'platform-logo';
-                    img.alt = platform.name;
-                    
-                    await new Promise((resolve) => {
-                        img.onload = () => {
-                            if (img.naturalWidth > 0) {
-                                logoLoaded = true;
-                                resolve();
-                            }
-                        };
-                        img.onerror = resolve;
-                        setTimeout(resolve, 500); // وقت انتظار 500ms
-                    });
-                    
-                    if (logoLoaded) {
-                        link.appendChild(img);
-                        break;
-                    }
-                } catch (e) {
-                    console.error(`Error loading ${src}:`, e);
-                }
-            }
-            
-            // إذا فشل تحميل الصور
-            if (!logoLoaded) {
-                const fallback = document.createElement('span');
-                fallback.className = 'platform-name-fallback';
-                fallback.textContent = platform.name.substring(0, 3);
-                link.appendChild(fallback);
-            }
-            
-            container.appendChild(link);
+        let img = new Image();
+        img.className = 'platform-logo';
+        img.alt = platform.name;
+        
+        // دالة مساعدة لتحميل الصور
+        const tryLoadImage = async (src) => {
+            return new Promise((resolve) => {
+                const testImg = new Image();
+                testImg.src = src;
+                testImg.onload = () => resolve(src);
+                testImg.onerror = () => resolve(null);
+                setTimeout(() => resolve(null), 1000); // مهلة 1 ثانية
+            });
+        };
+        
+        // محاولة جميع المصادر
+        let loadedSrc = null;
+        for (const src of platform.logoSources) {
+            loadedSrc = await tryLoadImage(src);
+            if (loadedSrc) break;
         }
+        
+        if (loadedSrc) {
+            img.src = loadedSrc;
+            link.appendChild(img);
+        } else {
+            // إذا فشل كل شيء، عرض اسم مختصر
+            const fallback = document.createElement('span');
+            fallback.className = 'platform-name-fallback';
+            fallback.textContent = platform.name === 'KuCoin' ? 'KUC' : 'MEX';
+            link.appendChild(fallback);
+        }
+        
+        container.appendChild(link);
     }
-
+}
     // تحميل الشعارات عند اكتمال تحميل الصفحة
     document.addEventListener('DOMContentLoaded', loadPlatformLogos);
 </script>
