@@ -108,65 +108,69 @@
 </style>
 
 <script>
-    // قائمة منصات التداول وروابط التسجيل - يمكنك تعديلها
-    const tradingPlatforms = [
-        { 
-            name: "Binance", 
-            logo: "myzoma/main/images/binance.png", 
-            link: "https://accounts.binance.com/register?ref=YOUR_REF_CODE" 
-        },
-        { 
-            name: "Bybit", 
-            logo: "myzoma/main/images/bybit.png", 
-            link: "https://www.bybit.com/register?ref=YOUR_REF_CODE" 
-        },
-        { 
-            name: "OKX", 
-            logo: "myzoma/main/images/okx.png", 
-            link: "https://www.okx.com/join/YOUR_REF_CODE" 
-        },
-        { 
-            name: "KuCoin", 
-            logo: "myzoma/main/images/kucoin.png", 
-            link: "https://www.kucoin.com/r/YOUR_REF_CODE" 
-        },
-        { 
-            name: "Gate.io", 
-            logo: "myzoma/main/images/gateio.png", 
-            link: "https://www.gate.io/signup/YOUR_REF_CODE" 
-        },
-        { 
-            name: "HTX (Huobi)", 
-            logo: "myzoma/main/images/htx.png", 
-            link: "https://www.htx.com/invite/YOUR_REF_CODE" 
-        }
-    ];
+   // قائمة منصات التداول مع مسارات صحيحة للصور
+const tradingPlatforms = [
+    { 
+        name: "Binance", 
+        logo: "images/binance.png", // مسار معدل
+        fallback: "https://cryptologos.cc/logos/bnb-bnb-logo.png?v=025",
+        link: "https://accounts.binance.com/register?ref=YOUR_REF_CODE" 
+    },
+    { 
+        name: "Bybit", 
+        logo: "images/bybit.png", // مسار معدل
+        fallback: "https://cryptologos.cc/logos/bybit-exchange-bybit-logo.png?v=025",
+        link: "https://www.bybit.com/register?ref=YOUR_REF_CODE" 
+    },
+    // ... باقي المنصات بنفس النمط
+];
+
+// دالة محسنة لمعالجة الصور
+function createPlatformLink(platform) {
+    const link = document.createElement('a');
+    link.href = platform.link;
+    link.target = '_blank';
+    link.title = `سجل في ${platform.name} واحصل على مكافأة`;
     
-    // إنشاء شعارات المنصات
-    const container = document.querySelector('.platforms-container');
+    const img = document.createElement('img');
+    img.className = 'platform-logo';
+    img.alt = platform.name;
+    img.loading = "lazy";
     
-    tradingPlatforms.forEach(platform => {
-        const link = document.createElement('a');
-        link.href = platform.link;
-        link.target = '_blank';
-        link.title = `سجل في ${platform.name} واحصل على مكافأة`;
-        link.className = 'platform-link';
+    // محاولة تحميل الصورة المحلية
+    const localImagePath = `myzoma/main/${platform.logo}`;
+    img.src = localImagePath;
+    
+    img.onerror = function() {
+        // إذا فشلت الصورة المحلية، جرب الصورة الخارجية
+        this.src = platform.fallback;
         
-        const img = document.createElement('img');
-        img.src = platform.logo;
-        img.className = 'platform-logo';
-        img.alt = platform.name;
-        img.loading = "lazy";
-        
-        // إذا فشل تحميل الصورة
-        img.onerror = function() {
-            this.src = 'myzoma/main/images/exchange-placeholder.png';
-            this.style.opacity = '0.7';
+        this.onerror = function() {
+            // إذا فشلت كل المحاولات، عرض اسم المنصة
+            this.style.display = 'none';
+            const span = document.createElement('span');
+            span.textContent = platform.name.substring(0,3);
+            span.style.cssText = `
+                color: #FFD700;
+                font-weight: bold;
+                font-size: 12px;
+                display: inline-block;
+                min-width: 30px;
+                text-align: center;
+            `;
+            link.appendChild(span);
         };
-        
-        link.appendChild(img);
-        container.appendChild(link);
-    });
+    };
+    
+    link.appendChild(img);
+    return link;
+}
+
+// إضافة المنصات إلى الصفحة
+const container = document.querySelector('.platforms-container');
+tradingPlatforms.forEach(platform => {
+    container.appendChild(createPlatformLink(platform));
+});
 </script>
 <div style="height:62px; background-color: #0f171c; overflow:hidden; box-sizing: border-box; border: 1px solid #0f171c; border-radius: 4px; text-align: right; line-height:14px; block-size:62px; font-size: 12px; font-feature-settings: normal; text-size-adjust: 100%; box-shadow: inset 0 -20px 0 0 #262B38;padding:1px;padding: 0px; margin: 0px; width: 100%;"><div style="height:40px; padding:0px; margin:0px; width: 100%;"><iframe src="https://widget.coinlib.io/widget?type=horizontal_v2&theme=dark&pref_coin_id=1505&invert_hover=no" width="100%" height="36px" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" border="0" style="border:0;margin:0;padding:0;"></iframe></div><div style="color: #0f171c; line-height: 14px; font-weight: 400; font-size: 11px; box-sizing: border-box; padding: 2px 6px; width: 100%; font-family: Verdana, Tahoma, Arial, sans-serif;"><a href="https://coinlib.io" target="_blank" style="font-weight: 500; color: #0f171c; text-decoration:none; font-size:11px">Cryptocurrency Prices</a>&nbsp;by Coinlib</div></div>
 <script>
