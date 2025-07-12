@@ -1373,19 +1373,26 @@ html {
 }
 
 .platform-logo {
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     object-fit: contain;
     margin-bottom: 8px;
-    border-radius: 50%;
-    background: white;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
     padding: 5px;
+    transition: all 0.3s ease;
+}
+
+.platform-item:hover .platform-logo {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
 .platform-name {
     font-size: 14px;
     font-weight: bold;
     text-align: center;
+    margin-top: 5px;
 }
 
 /* تحسين التصميم المتجاوب */
@@ -1405,8 +1412,8 @@ html {
     }
     
     .platform-logo {
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
     }
     
     .platforms-header h3 {
@@ -1419,8 +1426,9 @@ html {
         min-width: 280px;
     }
     
-    .platforms-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .platform-logo {
+        width: 30px;
+        height: 30px;
     }
 }
 
@@ -1448,6 +1456,3 @@ html {
         order: 3;
     }
 }
-
-
-
