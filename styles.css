@@ -1273,6 +1273,181 @@ html {
     transform: translateY(-2px);
 }
 
+/* إضافة أنماط جدول المنصات */
+.platforms-section {
+    position: relative;
+    margin: 0 20px;
+}
+
+.platforms-toggle {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.toggle-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.toggle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.toggle-btn i {
+    margin-right: 8px;
+}
+
+.platforms-table {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    z-index: 1000;
+    min-width: 400px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    border: 2px solid #ffd700;
+}
+
+.platforms-table.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(10px);
+}
+
+.platforms-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 10px;
+    border: 1px solid #ffd700;
+}
+
+.platforms-header h3 {
+    color: #ffd700;
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.platforms-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.platform-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.platform-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-color: #ffd700;
+}
+
+.platform-logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+    margin-bottom: 8px;
+    border-radius: 50%;
+    background: white;
+    padding: 5px;
+}
+
+.platform-name {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* تحسين التصميم المتجاوب */
+@media (max-width: 768px) {
+    .platforms-table {
+        min-width: 300px;
+        padding: 15px;
+    }
+    
+    .platforms-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    
+    .platform-item {
+        padding: 10px;
+    }
+    
+    .platform-logo {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .platforms-header h3 {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .platforms-table {
+        min-width: 280px;
+    }
+    
+    .platforms-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* تحسين تخطيط الهيدر */
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .platforms-section {
+        order: 2;
+        margin: 10px 0;
+    }
+    
+    .support-section {
+        order: 3;
+    }
+}
 
 
 
