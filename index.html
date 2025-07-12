@@ -25,9 +25,9 @@
             </div>
         </div>
         
-     <div class="trading-platforms-table">
+    <div class="trading-platforms-table">
     <div class="platforms-container" id="platforms-container">
-        <!-- سيتم إضافة المنصات هنا عبر JavaScript -->
+        <!-- سيتم إضافة الشعارات هنا -->
     </div>
     <div class="register-promo">
         <span>سجل الان وفعل حسابك لتحصل على مكافأة 50 دولار</span>
@@ -46,204 +46,133 @@
 </header>
 
 <style>
-   .trading-platforms-table {
-        background: transparent !important; /* إزالة الخلفية */
-        border: none !important; /* إزالة الإطار */
-        box-shadow: none !important; /* إزالة الظل */
-        backdrop-filter: none !important; /* إزالة تأثير البلور */
-        padding: 5px !important; /* تقليل المساحة الداخلية */
-    }
-    
     .platforms-container {
         display: flex;
         flex-wrap: wrap;
-        gap: 14px;
+        gap: 12px;
         justify-content: center;
-        align-items: center;
-    }
-    
-    .platform-link {
-        display: inline-block;
-        transition: all 0.3s ease;
+        padding: 8px;
     }
     
     .platform-logo {
-        width: 36px;
-        height: 36px;
+        width: 32px;
+        height: 32px;
         object-fit: contain;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
         transition: all 0.3s ease;
+        opacity: 0.9;
+        background: rgba(255,255,255,0.05);
     }
     
     .platform-link:hover .platform-logo {
         transform: scale(1.15);
-        background: rgba(255, 215, 0, 0.2);
-        box-shadow: 0 4px 8px rgba(255, 215, 0, 0.1);
-    }
-    
-    .platform-name-fallback {
-        color: #FFD700;
-        font-weight: 700;
-        font-size: 11px;
-        min-width: 36px;
-        text-align: center;
-        display: inline-block;
-        background: rgba(0, 0, 0, 0.3);
-        padding: 6px 4px;
-        border-radius: 6px;
+        opacity: 1;
+        background: rgba(255,215,0,0.1);
     }
     
     .register-promo {
-        opacity: 0.7; /* جعل النص شبه شفاف */
-        font-size: 10px !important;
-        margin-top: 5px !important;
+        text-align: center;
+        font-size: 11px;
+        color: rgba(255,215,0,0.8);
+        margin-top: 8px;
     }
 </style>
 <script>
-    // جميع منصات التداول الرئيسية مع مصادر متعددة للصور
+    // مصادر خارجية مضمونة لجميع المنصات
     const tradingPlatforms = [
         {
             name: "Binance",
-            logoSources: [
-                "myzoma/main/images/binance.png",
-                "https://cryptologos.cc/logos/bnb-bnb-logo.png",
-                "https://bin.bnbstatic.com/static/images/common/favicon.ico"
-            ],
+            logo: "https://s2.coinmarketcap.com/static/img/exchanges/64x64/270.png",
             link: "https://accounts.binance.com/register?ref=YOUR_REF_CODE"
         },
         {
             name: "Bybit",
-            logoSources: [
-                "myzoma/main/images/bybit.png",
-                "https://cryptologos.cc/logos/bybit-exchange-bybit-logo.png",
-                "https://www.bybit.com/favicon.ico"
-            ],
+            logo: "https://s2.coinmarketcap.com/static/img/exchanges/64x64/285.png",
             link: "https://www.bybit.com/register?ref=YOUR_REF_CODE"
         },
         {
             name: "OKX",
-            logoSources: [
-                "myzoma/main/images/okx.png",
-                "https://cryptologos.cc/logos/okx-okx-logo.png",
-                "https://www.okx.com/favicon.ico"
-            ],
+            logo: "https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png",
             link: "https://www.okx.com/join/YOUR_REF_CODE"
         },
-          {
-        name: "KuCoin",
-        logoSources: [
-            "https://s2.coinmarketcap.com/static/img/exchanges/64x64/311.png",
-            "https://cryptologos.cc/logos/kucoin-coin-kcs-logo.png?v=025",
-            "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@master/svg/color/kcs.svg"
-        ],
-        link: "https://www.kucoin.com/r/YOUR_REF_CODE"
-    },
+        {
+            name: "KuCoin",
+            logo: "https://s2.coinmarketcap.com/static/img/exchanges/64x64/311.png",
+            link: "https://www.kucoin.com/r/YOUR_REF_CODE"
+        },
         {
             name: "HTX",
-            logoSources: [
-                "myzoma/main/images/htx.png",
-                "https://cryptologos.cc/logos/htx-token-htx-logo.png",
-                "https://www.htx.com/favicon.ico"
-            ],
+            logo: "https://s2.coinmarketcap.com/static/img/exchanges/64x64/102.png",
             link: "https://www.htx.com/invite/YOUR_REF_CODE"
         },
         {
             name: "Gate.io",
-            logoSources: [
-                "myzoma/main/images/gateio.png",
-                "https://cryptologos.cc/logos/gate-io-gt-logo.png",
-                "https://www.gate.io/favicon.ico"
-            ],
+            logo: "https://s2.coinmarketcap.com/static/img/exchanges/64x64/302.png",
             link: "https://www.gate.io/signup/YOUR_REF_CODE"
         },
         {
             name: "Bitget",
-            logoSources: [
-                "myzoma/main/images/bitget.png",
-                "https://cryptologos.cc/logos/bitget-exchange-bitget-logo.png",
-                "https://www.bitget.com/favicon.ico"
-            ],
+            logo: "https://s2.coinmarketcap.com/static/img/exchanges/64x64/278.png",
             link: "https://www.bitget.com/register?ref=YOUR_REF_CODE"
         },
-           {
-        name: "MEXC",
-        logoSources: [
-            "https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png",
-            "https://www.mexc.com/static/favicon.ico",
-            "https://www.mexc.com/static/assets/images/logo.svg"
-        ],
-        link: "https://www.mexc.com/register?inviteCode=YOUR_REF_CODE"
-    },
+        {
+            name: "MEXC",
+            logo: "https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png",
+            link: "https://www.mexc.com/register?inviteCode=YOUR_REF_CODE"
+        },
         {
             name: "Kraken",
-            logoSources: [
-                "myzoma/main/images/kraken.png",
-                "https://cryptologos.cc/logos/kraken-kraken-logo.png",
-                "https://www.kraken.com/favicon.ico"
-            ],
+            logo: "https://s2.coinmarketcap.com/static/img/exchanges/64x64/24.png",
             link: "https://www.kraken.com/sign-up?ref=YOUR_REF_CODE"
         },
         {
             name: "Coinbase",
-            logoSources: [
-                "myzoma/main/images/coinbase.png",
-                "https://cryptologos.cc/logos/coinbase-exchange-coinbase-logo.png",
-                "https://www.coinbase.com/favicon.ico"
-            ],
+            logo: "https://s2.coinmarketcap.com/static/img/exchanges/64x64/89.png",
             link: "https://www.coinbase.com/join/YOUR_REF_CODE"
         }
     ];
 
-    // دالة ذكية لتحميل الصور
-  async function loadPlatformLogos() {
-    const container = document.getElementById('platforms-container');
-    
-    // مصادر احتياطية عامة
-    const fallbackSources = {
-        "KuCoin": "https://s2.coinmarketcap.com/static/img/exchanges/64x64/311.png",
-        "MEXC": "https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png",
-        "HTX": "https://s2.coinmarketcap.com/static/img/exchanges/64x64/102.png",
-        "Gate.io": "https://s2.coinmarketcap.com/static/img/exchanges/64x64/302.png",
-        "Bitget": "https://s2.coinmarketcap.com/static/img/exchanges/64x64/278.png"
-    };
-
-    for (const platform of tradingPlatforms) {
-        const link = document.createElement('a');
-        link.href = platform.link;
-        link.target = '_blank';
-        link.className = 'platform-link';
-        link.title = `سجل في ${platform.name}`;
+    // دالة محسنة لتحميل الشعارات
+    function loadPlatformLogos() {
+        const container = document.getElementById('platforms-container');
         
-        const img = new Image();
-        img.className = 'platform-logo';
-        img.alt = platform.name;
-        
-        // مصدر احتياطي مضمون
-        const guaranteedSource = fallbackSources[platform.name] || platform.logoSources[0];
-        
-        // محاولة تحميل الصورة مع التعامل مع الأخطاء
-        try {
-            await new Promise((resolve) => {
-                img.onload = resolve;
-                img.onerror = () => {
-                    img.src = guaranteedSource;
-                    resolve();
-                };
-                img.src = platform.logoSources[0];
-                setTimeout(resolve, 1000); // مهلة 1 ثانية
-            });
-        } catch (e) {
-            console.error(`Error loading image for ${platform.name}:`, e);
-            img.src = guaranteedSource;
-        }
-        
-        link.appendChild(img);
-        container.appendChild(link);
+        tradingPlatforms.forEach(platform => {
+            const link = document.createElement('a');
+            link.href = platform.link;
+            link.target = '_blank';
+            link.className = 'platform-link';
+            link.title = `سجل في ${platform.name}`;
+            
+            const img = new Image();
+            img.className = 'platform-logo';
+            img.alt = platform.name;
+            img.src = platform.logo;
+            
+            // معالجة أخطاء التحميل
+            img.onerror = function() {
+                // إذا فشل التحميل، عرض اسم مختصر بدلاً من الصورة
+                const fallback = document.createElement('span');
+                fallback.textContent = platform.name.substring(0,3);
+                fallback.style.cssText = `
+                    display: inline-block;
+                    width: 32px;
+                    height: 32px;
+                    line-height: 32px;
+                    text-align: center;
+                    color: #FFD700;
+                    font-weight: bold;
+                    background: rgba(0,0,0,0.2);
+                    border-radius: 6px;
+                `;
+                link.innerHTML = '';
+                link.appendChild(fallback);
+            };
+            
+            link.appendChild(img);
+            container.appendChild(link);
+        });
     }
-}
+
     // تحميل الشعارات عند اكتمال تحميل الصفحة
     document.addEventListener('DOMContentLoaded', loadPlatformLogos);
 </script>
