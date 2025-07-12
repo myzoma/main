@@ -40,36 +40,23 @@
                     <h3>سجل الان وفعل حسابك واحصل على مكافأه 50 USDT</h3>
                 </div>
                 <div class="platforms-grid">
-    <a href="https://www.binance.com/ar/register" target="_blank" class="platform-item">
-        <div class="platform-logo binance-svg">
-            <svg viewBox="0 0 126.61 126.61" width="40" height="40">
-                <g fill="#f3ba2f">
-                    <path d="M38.73 53.2l24.59-24.58 24.6 24.6 14.3-14.31L63.32 0 24.42 38.9l14.31 14.3z"/>
-                    <path d="M0 63.31l14.3-14.31 14.31 14.31-14.31 14.3L0 63.31z"/>
-                    <path d="M38.73 73.41l24.59 24.6 24.6-24.6 14.31 14.31-38.9 38.89-38.9-38.9 14.3-14.3z"/>
-                    <path d="M98 49l14.31 14.31L98 77.61l-14.31-14.3L98 49z"/>
-                    <path d="M77.83 63.3L63.32 48.78 52.16 59.95l-3.14 3.15-.21.2 14.51 14.52 14.51-14.52z"/>
-                </g>
-            </svg>
-        </div>
-        <span class="platform-name">Binance</span>
-    </a>
-    
-    <a href="https://www.okx.com/join" target="_blank" class="platform-item">
-        <img src="https://www.okx.com/cdn/assets/imgs/221/58E63FEA47A2B7D7.png" alt="OKX" class="platform-logo">
-        <span class="platform-name">OKX</span>
-    </a>
-    
-    <a href="https://www.bybit.com/register" target="_blank" class="platform-item">
-        <img src="https://img.icons8.com/color/48/000000/bitcoin.png" alt="Bybit" class="platform-logo">
-        <span class="platform-name">Bybit</span>
-    </a>
-    
-    <a href="https://www.coinbase.com/signup" target="_blank" class="platform-item">
-        <img src="https://img.icons8.com/color/48/000000/coinbase.png" alt="Coinbase" class="platform-logo">
-        <span class="platform-name">Coinbase</span>
-    </a>
-</div>
+                    <a href="https://www.binance.com/ar/register" target="_blank" class="platform-item">
+                        <img src="images/binance-logo.png" alt="Binance" class="platform-logo">
+                        <span class="platform-name">Binance</span>
+                    </a>
+                    <a href="https://www.okx.com/join" target="_blank" class="platform-item">
+                        <img src="images/okx-logo.png" alt="OKX" class="platform-logo">
+                        <span class="platform-name">OKX</span>
+                    </a>
+                    <a href="https://www.bybit.com/register" target="_blank" class="platform-item">
+                        <img src="images/bybit-logo.png" alt="Bybit" class="platform-logo">
+                        <span class="platform-name">Bybit</span>
+                    </a>
+                    <a href="https://www.coinbase.com/signup" target="_blank" class="platform-item">
+                        <img src="images/coinbase-logo.png" alt="Coinbase" class="platform-logo">
+                        <span class="platform-name">Coinbase</span>
+                    </a>
+                </div>
             </div>
         </div>
         
@@ -85,16 +72,17 @@
     </div>
 </header>
 
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const toggleBtn = document.getElementById('togglePlatformsBtn');
     const platformsTable = document.getElementById('platformsTable');
     
+    // دالة إظهار وإخفاء جدول المنصات
     toggleBtn.addEventListener('click', function() {
         platformsTable.classList.toggle('show');
     });
     
+    // إخفاء الجدول عند النقر خارجه
     document.addEventListener('click', function(event) {
         const platformsSection = document.querySelector('.platforms-section');
         if (!platformsSection.contains(event.target)) {
@@ -102,13 +90,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    // منع إخفاء الجدول عند النقر داخله
     platformsTable.addEventListener('click', function(event) {
         event.stopPropagation();
     });
 });
 </script>
 
-       
 
             <div style="height:62px; background-color: #0f171c; overflow:hidden; box-sizing: border-box; border: 1px solid #0f171c; border-radius: 4px; text-align: right; line-height:14px; block-size:62px; font-size: 12px; font-feature-settings: normal; text-size-adjust: 100%; box-shadow: inset 0 -20px 0 0 #262B38;padding:1px;padding: 0px; margin: 0px; width: 100%;"><div style="height:40px; padding:0px; margin:0px; width: 100%;"><iframe src="https://widget.coinlib.io/widget?type=horizontal_v2&theme=dark&pref_coin_id=1505&invert_hover=no" width="100%" height="36px" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" border="0" style="border:0;margin:0;padding:0;"></iframe></div><div style="color: #0f171c; line-height: 14px; font-weight: 400; font-size: 11px; box-sizing: border-box; padding: 2px 6px; width: 100%; font-family: Verdana, Tahoma, Arial, sans-serif;"><a href="https://coinlib.io" target="_blank" style="font-weight: 500; color: #0f171c; text-decoration:none; font-size:11px">Cryptocurrency Prices</a>&nbsp;by Coinlib</div></div>
 
