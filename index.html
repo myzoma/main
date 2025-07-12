@@ -132,13 +132,12 @@
             ],
             link: "https://www.okx.com/join/YOUR_REF_CODE"
         },
-        {
+          {
         name: "KuCoin",
         logoSources: [
-            "myzoma/main/images/kucoin.png",
-            "https://cryptologos.cc/logos/kucoin-coin-kcs-logo.png",
-            "https://assets.staticimg.com/cms/media/1lB3PkckFDyfxz6VudCEACBeRRBi6sQQ7DDjz0yWM.svg", // شعار KuCoin الرسمي
-            "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@1a63530be6e374711a8554f31b17e4cb92c25fa5/svg/color/kcs.svg"
+            "https://s2.coinmarketcap.com/static/img/exchanges/64x64/311.png",
+            "https://cryptologos.cc/logos/kucoin-coin-kcs-logo.png?v=025",
+            "https://cdn.jsdelivr.net/gh/atomiclabs/cryptocurrency-icons@master/svg/color/kcs.svg"
         ],
         link: "https://www.kucoin.com/r/YOUR_REF_CODE"
     },
@@ -169,16 +168,15 @@
             ],
             link: "https://www.bitget.com/register?ref=YOUR_REF_CODE"
         },
-         {
+           {
         name: "MEXC",
         logoSources: [
-            "myzoma/main/images/mexc.png",
-            "https://cryptologos.cc/logos/mexc-exchange-mexc-logo.png",
+            "https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png",
             "https://www.mexc.com/static/favicon.ico",
-            "https://www.mexc.com/static/assets/images/logo-dark.svg"
+            "https://www.mexc.com/static/assets/images/logo.svg"
         ],
         link: "https://www.mexc.com/register?inviteCode=YOUR_REF_CODE"
- },
+    },
         {
             name: "Kraken",
             logoSources: [
@@ -200,9 +198,18 @@
     ];
 
     // دالة ذكية لتحميل الصور
-   async function loadPlatformLogos() {
+  async function loadPlatformLogos() {
     const container = document.getElementById('platforms-container');
     
+    // مصادر احتياطية عامة
+    const fallbackSources = {
+        "KuCoin": "https://s2.coinmarketcap.com/static/img/exchanges/64x64/311.png",
+        "MEXC": "https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png",
+        "HTX": "https://s2.coinmarketcap.com/static/img/exchanges/64x64/102.png",
+        "Gate.io": "https://s2.coinmarketcap.com/static/img/exchanges/64x64/302.png",
+        "Bitget": "https://s2.coinmarketcap.com/static/img/exchanges/64x64/278.png"
+    };
+
     for (const platform of tradingPlatforms) {
         const link = document.createElement('a');
         link.href = platform.link;
@@ -210,39 +217,30 @@
         link.className = 'platform-link';
         link.title = `سجل في ${platform.name}`;
         
-        let img = new Image();
+        const img = new Image();
         img.className = 'platform-logo';
         img.alt = platform.name;
         
-        // دالة مساعدة لتحميل الصور
-        const tryLoadImage = async (src) => {
-            return new Promise((resolve) => {
-                const testImg = new Image();
-                testImg.src = src;
-                testImg.onload = () => resolve(src);
-                testImg.onerror = () => resolve(null);
-                setTimeout(() => resolve(null), 1000); // مهلة 1 ثانية
+        // مصدر احتياطي مضمون
+        const guaranteedSource = fallbackSources[platform.name] || platform.logoSources[0];
+        
+        // محاولة تحميل الصورة مع التعامل مع الأخطاء
+        try {
+            await new Promise((resolve) => {
+                img.onload = resolve;
+                img.onerror = () => {
+                    img.src = guaranteedSource;
+                    resolve();
+                };
+                img.src = platform.logoSources[0];
+                setTimeout(resolve, 1000); // مهلة 1 ثانية
             });
-        };
-        
-        // محاولة جميع المصادر
-        let loadedSrc = null;
-        for (const src of platform.logoSources) {
-            loadedSrc = await tryLoadImage(src);
-            if (loadedSrc) break;
+        } catch (e) {
+            console.error(`Error loading image for ${platform.name}:`, e);
+            img.src = guaranteedSource;
         }
         
-        if (loadedSrc) {
-            img.src = loadedSrc;
-            link.appendChild(img);
-        } else {
-            // إذا فشل كل شيء، عرض اسم مختصر
-            const fallback = document.createElement('span');
-            fallback.className = 'platform-name-fallback';
-            fallback.textContent = platform.name === 'KuCoin' ? 'KUC' : 'MEX';
-            link.appendChild(fallback);
-        }
-        
+        link.appendChild(img);
         container.appendChild(link);
     }
 }
