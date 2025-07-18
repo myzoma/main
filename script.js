@@ -101,6 +101,20 @@ const pages = [
         ]
     },
      {
+        id: 9,
+        title: "مؤشــر موجات اليـوت",
+        description: "تحليل موحات اليوت ",
+        icon: "fa-solid fa-wave-square",
+        url: "https://myzoma.github.io/liot/",
+        features: [
+            "الموجات الدافعة:",
+            "الموجات التصحيحية",
+            "الزجزاج",
+            "المثلث",
+            "المسطح",
+        ]
+    },
+     {
         id: 7,
         title: "اخبار السوق",
         description: "اقرأ أحدث المقالات والأخبار",
