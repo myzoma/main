@@ -6,6 +6,13 @@ const pages = [
         description: "الصفحة الرئيسية للموقع تحتوي على نظرة عامة شاملة",
         icon: "fas fa-home",
         url: "https://edraone.blogspot.com/",
+         features: [
+            "افضل 60 عملة",
+            "من حيث السيولة",
+            "صفقات الشراء",
+            "من حيث اختراق المقاومات",
+  "مدعوم بمؤشر ST,Yas-1 و ST,Yas-2",
+        ]
     },
     {
         id: 2,
